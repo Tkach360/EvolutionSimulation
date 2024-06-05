@@ -3,6 +3,6 @@ module com.example.evolutionsimulation {
     requires javafx.fxml;
 
 
-    opens com.example.evolutionsimulation to javafx.fxml;
-    exports com.example.evolutionsimulation;
+    opens com.tkach360.evolutionsimulation to javafx.fxml;
+    exports com.tkach360.evolutionsimulation;
 }

@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.evolutionsimulation/com.example.evolutionsimulation.Main
+                                com.example.evolutionsimulation/com.tkach360.evolutionsimulation.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
