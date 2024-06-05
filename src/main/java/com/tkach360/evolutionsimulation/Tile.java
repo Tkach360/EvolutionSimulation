@@ -8,9 +8,9 @@ public class Tile {
     private double cy; // координата Y
 
     private double soilEnergy; // энергия в почве тайла
-    private double lighting; // освещенность тайла
+    private int lighting; // освещенность тайла
 
-    public Tile(double cx, double cy, double soilEnergy, double lighting) {
+    public Tile(double cx, double cy, double soilEnergy, int lighting) {
         this.cx = cx;
         this.cy = cy;
         this.soilEnergy = soilEnergy;
@@ -25,13 +25,13 @@ public class Tile {
         this.soilEnergy = soilEnergy;
     }
 
-    public double getLighting() {
+    public int getLighting() {
         return lighting;
     }
 
-    public void setLighting(double lighting) {
+    public void setLighting(int lighting) {
         if(lighting < 0) lighting = 0;
-        if(lighting > 1) lighting = 1;
+        if(lighting > 4) lighting = 4;
         this.lighting = lighting;
     }
 
