@@ -30,11 +30,10 @@ public class DefaultDrawStrategy extends AbstractDrawStrategy{
             drawBot(bot);
         }
 
-        // наколадываем освещение
-        Color colorlight = Color.rgb(0, 0, 0, 0.6); // освещение - параметр тайла
+        // накладываем освещение
         for(Tile[] rowTiles : tileMap.getTiles()){
             for(Tile tile : rowTiles){
-                drawTileLight(tile, colorlight);
+                drawTileLight(tile);
             }
         }
     }
@@ -52,7 +51,9 @@ public class DefaultDrawStrategy extends AbstractDrawStrategy{
         );
     }
 
-    private void drawTileLight(Tile tile, Color colorLight){
+    private void drawTileLight(Tile tile){
+
+        Color colorLight = Color.rgb(0, 0, 0, 0.1 * (4 - tile.getLighting()));
         gc.setFill(colorLight);
         gc.fillRect(tile.getCx(), tile.getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
     }
