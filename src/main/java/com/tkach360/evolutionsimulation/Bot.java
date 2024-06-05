@@ -16,6 +16,14 @@ public class Bot{
         this.soil = soil;
     }
 
+    // этот конструктор надо изменить так, чтобы подставлялись рандомные значения параметров
+    public Bot(Tile tile){
+        this.tile = tile;
+        this.predation = 5;
+        this.photosynthesis = 5;
+        this.soil = 5;
+    }
+
     public Tile getTile() {
         return tile;
     }
