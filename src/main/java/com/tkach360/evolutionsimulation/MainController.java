@@ -23,6 +23,7 @@ public class MainController implements Initializable {
         bots = new ArrayList<Bot>();
         tileMap = new TileMap(canvas);
         drawStrategy = new DefaultDrawStrategy(tileMap, bots, canvas.getGraphicsContext2D());
+        repaint();
     }
 
     @FXML
