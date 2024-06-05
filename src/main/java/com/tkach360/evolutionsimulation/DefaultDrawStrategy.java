@@ -24,8 +24,18 @@ public class DefaultDrawStrategy extends AbstractDrawStrategy{
 
     @Override
     public void drawAll() {
+
+        // рисуем ботов
         for(Bot bot : bots){
             drawBot(bot);
+        }
+
+        // наколадываем освещение
+        Color colorlight = Color.rgb(0, 0, 0, 0.6); // освещение - параметр тайла
+        for(Tile[] rowTiles : tileMap.getTiles()){
+            for(Tile tile : rowTiles){
+                drawTileLight(tile, colorlight);
+            }
         }
     }
 
@@ -34,7 +44,17 @@ public class DefaultDrawStrategy extends AbstractDrawStrategy{
         Tile bt = bot.getTile();
         gc.fillRect(bt.getCx(), bt.getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
         gc.setFill(getBotColor(bot));
-        gc.fillRect(bt.getCx()+TileMap.EDGE_DISTANCE, bt.getCy()+TileMap.EDGE_DISTANCE, TileMap.TILE_SIDE, TileMap.TILE_SIDE);
+        gc.fillRect(
+                bt.getCx()+TileMap.EDGE_DISTANCE,
+                bt.getCy()+TileMap.EDGE_DISTANCE,
+                TileMap.TILE_SIDE - 2*TileMap.EDGE_DISTANCE,
+                TileMap.TILE_SIDE - 2*TileMap.EDGE_DISTANCE
+        );
+    }
+
+    private void drawTileLight(Tile tile, Color colorLight){
+        gc.setFill(colorLight);
+        gc.fillRect(tile.getCx(), tile.getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
     }
 
     /*тут надо придумать логику*/
