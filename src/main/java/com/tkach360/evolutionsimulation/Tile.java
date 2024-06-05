@@ -30,6 +30,8 @@ public class Tile {
     }
 
     public void setLighting(double lighting) {
+        if(lighting < 0) lighting = 0;
+        if(lighting > 1) lighting = 1;
         this.lighting = lighting;
     }
 
