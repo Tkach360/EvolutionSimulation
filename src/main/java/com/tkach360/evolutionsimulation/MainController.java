@@ -14,15 +14,18 @@ public class MainController implements Initializable {
     @FXML
     private Canvas canvas;
 
-    private ArrayList<Bot> bots;
+    private ArrayList<AbstractTileObject> abstractTileObjects;
+
+    //private ArrayList<Bot> bots;
     private TileMap tileMap;
     private AbstractDrawStrategy drawStrategy;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        bots = new ArrayList<Bot>();
+        //bots = new ArrayList<Bot>();
+        abstractTileObjects = new ArrayList<AbstractTileObject>();
         tileMap = new TileMap(canvas);
-        drawStrategy = new DefaultDrawStrategy(tileMap, bots, canvas.getGraphicsContext2D());
+        drawStrategy = new DefaultDrawStrategy(tileMap, abstractTileObjects, canvas.getGraphicsContext2D());
         repaint();
     }
 
@@ -31,7 +34,11 @@ public class MainController implements Initializable {
         int tX = (int)(e.getX() / TileMap.TILE_SIDE);
         int tY = (int)(e.getY() / TileMap.TILE_SIDE);
 
-        bots.add(new Bot(tileMap.getTiles()[tX][tY]));
+        if(tileMap.getTiles()[tX][tY].getAbstractTileObject() == null) {
+            abstractTileObjects.add(new Bot(tileMap.getTiles()[tX][tY]));
+
+            System.out.println("добавил бота");
+        }
         repaint();
 
         System.out.println("нажал");

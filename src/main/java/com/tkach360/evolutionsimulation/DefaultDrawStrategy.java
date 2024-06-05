@@ -12,13 +12,13 @@ import java.util.ArrayList;
  */
 public class DefaultDrawStrategy extends AbstractDrawStrategy{
 
-    private ArrayList<Bot> bots;
+    private ArrayList<AbstractTileObject> abstractTileObjects;
     private TileMap tileMap;
     private Color shadow = Color.rgb(0,0,0,0.6);
 
-    public DefaultDrawStrategy(TileMap tileMap, ArrayList<Bot> bots, GraphicsContext gc) {
+    public DefaultDrawStrategy(TileMap tileMap, ArrayList<AbstractTileObject> abstractTileObjects, GraphicsContext gc) {
         this.tileMap = tileMap;
-        this.bots = bots;
+        this.abstractTileObjects = abstractTileObjects;
         this.gc = gc;
     }
 
@@ -26,8 +26,8 @@ public class DefaultDrawStrategy extends AbstractDrawStrategy{
     public void drawAll() {
 
         // рисуем ботов
-        for(Bot bot : bots){
-            drawBot(bot);
+        for(AbstractTileObject abstractTileObjects : abstractTileObjects){
+            if(abstractTileObjects instanceof Bot) drawBot((Bot)abstractTileObjects);
         }
 
         // накладываем освещение
