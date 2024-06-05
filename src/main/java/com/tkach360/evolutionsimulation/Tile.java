@@ -14,7 +14,7 @@ public class Tile {
         this.cx = cx;
         this.cy = cy;
         this.soilEnergy = soilEnergy;
-        this.lighting = lighting;
+        setLighting(lighting);
     }
 
     public double getSoilEnergy() {
@@ -34,6 +34,7 @@ public class Tile {
         if(lighting > 1) lighting = 1;
         this.lighting = lighting;
     }
+
 
     public double getCx() {
         return cx;
