@@ -1,10 +1,17 @@
 package com.tkach360.evolutionsimulation;
 
+import javafx.scene.paint.Color;
+
 import java.util.Random;
 
 /** класс бота ещё не завершен*/
 public class Bot extends AbstractTileObject{
-    /** ссылка на тайл, в котором находится бот*/
+
+    public static final Color PHOTOSYNTHESIS_COLOR = Color.rgb(0, 210, 0);
+    public static final Color PREDATION_COLOR = Color.rgb(210, 0, 0);
+    public static final Color SOIL_COLOR = Color.rgb(0, 0, 210);
+
+    private Color color; // бот получает цвет в зависимости от последнего источника энергии
 
     private int predation;
     private int photosynthesis;
@@ -15,6 +22,7 @@ public class Bot extends AbstractTileObject{
         this.predation = NumRangeController.setInRange(predation, 0, 4);
         this.photosynthesis = NumRangeController.setInRange(photosynthesis, 0, 4);
         this.soil = NumRangeController.setInRange(soil, 0, 4);
+        this.color = PHOTOSYNTHESIS_COLOR;
     }
 
     // этот конструктор надо изменить так, чтобы подставлялись рандомные значения параметров
@@ -24,6 +32,7 @@ public class Bot extends AbstractTileObject{
         this.predation = random.nextInt(5);
         this.photosynthesis = random.nextInt(5);
         this.soil = random.nextInt(5);
+        this.color = PHOTOSYNTHESIS_COLOR;
     }
 
     public Tile getTile() {
@@ -57,5 +66,13 @@ public class Bot extends AbstractTileObject{
 
     public void setSoil(int soil) {
         this.soil = NumRangeController.setInRange(soil, 0, 4);;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

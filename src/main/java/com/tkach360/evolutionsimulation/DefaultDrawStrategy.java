@@ -39,7 +39,7 @@ public class DefaultDrawStrategy extends AbstractDrawStrategy{
         gc.setFill(Color.BLACK);
         Tile bt = bot.getTile();
         gc.fillRect(bt.getCx(), bt.getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
-        gc.setFill(getBotColor(bot));
+        gc.setFill(bot.getColor());
         gc.fillRect(
                 bt.getCx()+TileMap.EDGE_DISTANCE,
                 bt.getCy()+TileMap.EDGE_DISTANCE,
@@ -54,11 +54,11 @@ public class DefaultDrawStrategy extends AbstractDrawStrategy{
         gc.setFill(colorLight);
         gc.fillRect(tile.getCx(), tile.getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
     }
-
-    /*тут надо придумать логику*/
+/*
+    *//*тут надо придумать логику*//*
     private Color getBotColor(Bot bot){
-        Color color = Color.GREEN;
+        Color color = Color.rgb(0, 210, 0);
 
         return color;
-    }
+    }*/
 }
