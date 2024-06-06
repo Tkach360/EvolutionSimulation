@@ -8,31 +8,29 @@ public class Tile {
     private double cy; // координата Y
     private AbstractTileObject abstractTileObject; // ссылка на объект, который находится в тайле
 
-    private double soilEnergy; // энергия в почве тайла
+    private int soilEnergy; // энергия в почве тайла
     private int lighting; // освещенность тайла
 
-    public Tile(double cx, double cy, double soilEnergy, int lighting) {
+    public Tile(double cx, double cy, int soilEnergy, int lighting) {
         this.cx = cx;
         this.cy = cy;
-        this.soilEnergy = soilEnergy;
+        setSoilEnergy(soilEnergy);
         setLighting(lighting);
         abstractTileObject = null;
     }
 
-    public double getSoilEnergy() {
+    public int getSoilEnergy() {
         return soilEnergy;
     }
-    public void setSoilEnergy(double soilEnergy) {
-        this.soilEnergy = soilEnergy;
+    public void setSoilEnergy(int soilEnergy) {
+        this.soilEnergy = setRound5(soilEnergy);
     }
 
     public int getLighting() {
         return lighting;
     }
     public void setLighting(int lighting) {
-        if(lighting < 0) lighting = 0;
-        if(lighting > 4) lighting = 4;
-        this.lighting = lighting;
+        this.lighting = setRound5(lighting);
     }
 
     public double getCx() {
@@ -47,6 +45,12 @@ public class Tile {
     }
     public void setAbstractTileObject(AbstractTileObject abstractTileObject) {
         this.abstractTileObject = abstractTileObject;
+    }
+
+    private int setRound5(int x){
+        if(x < 0) x = 0;
+        if(x > 4) x = 4;
+        return x;
     }
 
     @Override
