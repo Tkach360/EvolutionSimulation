@@ -7,12 +7,14 @@ import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
     @FXML
     private Canvas canvas;
+    private Random random;
 
     private ArrayList<AbstractTileObject> abstractTileObjects;
 
@@ -23,9 +25,18 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //bots = new ArrayList<Bot>();
+        random = new Random(1);
         abstractTileObjects = new ArrayList<AbstractTileObject>();
         tileMap = new TileMap(canvas);
-        drawStrategy = new DefaultDrawStrategy(tileMap, abstractTileObjects, canvas.getGraphicsContext2D());
+        drawStrategy = new DefaultDrawStrategy(canvas.getGraphicsContext2D(), tileMap, abstractTileObjects);
+        //drawStrategy = new SoilEnergyDrawStrategy(tileMap, canvas.getGraphicsContext2D());
+
+       /* for(Tile[] rowTiles : tileMap.getTiles()){
+            for(Tile tile : rowTiles){
+                tile.setLighting(random.nextInt(5));
+            }
+        }*/
+
         repaint();
     }
 

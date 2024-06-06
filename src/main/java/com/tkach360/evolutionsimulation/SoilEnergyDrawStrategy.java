@@ -5,11 +5,8 @@ import javafx.scene.paint.Color;
 
 public class SoilEnergyDrawStrategy extends AbstractDrawStrategy{
 
-    private TileMap tileMap;
-
-    public SoilEnergyDrawStrategy(TileMap tileMap, GraphicsContext gc) {
-        this.tileMap = tileMap;
-        this.gc = gc;
+    public SoilEnergyDrawStrategy(GraphicsContext gc, TileMap tileMap) {
+        super(gc, tileMap);
     }
 
     @Override

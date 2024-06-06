@@ -13,13 +13,10 @@ import java.util.ArrayList;
 public class DefaultDrawStrategy extends AbstractDrawStrategy{
 
     private ArrayList<AbstractTileObject> abstractTileObjects;
-    private TileMap tileMap;
-    private Color shadow = Color.rgb(0,0,0,0.6);
 
-    public DefaultDrawStrategy(TileMap tileMap, ArrayList<AbstractTileObject> abstractTileObjects, GraphicsContext gc) {
-        this.tileMap = tileMap;
+    public DefaultDrawStrategy(GraphicsContext gc, TileMap tileMap, ArrayList<AbstractTileObject> abstractTileObjects) {
+        super(gc, tileMap);
         this.abstractTileObjects = abstractTileObjects;
-        this.gc = gc;
     }
 
     @Override
