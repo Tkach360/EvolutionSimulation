@@ -18,24 +18,15 @@ public class MainController implements Initializable {
 
     private ArrayList<AbstractTileObject> abstractTileObjects;
 
-    //private ArrayList<Bot> bots;
     private TileMap tileMap;
     private AbstractDrawStrategy drawStrategy;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //bots = new ArrayList<Bot>();
         random = new Random(1);
         abstractTileObjects = new ArrayList<AbstractTileObject>();
         tileMap = new TileMap(canvas);
         drawStrategy = new DefaultDrawStrategy(canvas.getGraphicsContext2D(), tileMap, abstractTileObjects);
-        //drawStrategy = new SoilEnergyDrawStrategy(tileMap, canvas.getGraphicsContext2D());
-
-       /* for(Tile[] rowTiles : tileMap.getTiles()){
-            for(Tile tile : rowTiles){
-                tile.setLighting(random.nextInt(5));
-            }
-        }*/
 
         repaint();
     }

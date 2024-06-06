@@ -5,11 +5,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
-/**
- * класс еще не закончен
- * надо сделать логику получения цвета бота
- * сделать затемнение тайлов
- */
+/** описывает стандартный режим рисования объектов на поле*/
 public class DefaultDrawStrategy extends AbstractDrawStrategy{
 
     private ArrayList<AbstractTileObject> abstractTileObjects;
@@ -54,11 +50,4 @@ public class DefaultDrawStrategy extends AbstractDrawStrategy{
         gc.setFill(colorLight);
         gc.fillRect(tile.getCx(), tile.getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
     }
-/*
-    *//*тут надо придумать логику*//*
-    private Color getBotColor(Bot bot){
-        Color color = Color.rgb(0, 210, 0);
-
-        return color;
-    }*/
 }

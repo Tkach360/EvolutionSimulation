@@ -1,7 +1,7 @@
 package com.tkach360.evolutionsimulation;
 
 import java.util.Objects;
-
+/** описывает логику тайла - одного поля, в котором могут находиться объекты */
 public class Tile {
 
     private double cx; // координата X
@@ -52,6 +52,8 @@ public class Tile {
         if(x > 4) x = 4;
         return x;
     }
+
+    // TODO: изменить стандартные методы
 
     @Override
     public boolean equals(Object o) {

@@ -3,6 +3,7 @@ package com.tkach360.evolutionsimulation;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+/** описывает стратегию рисования энергии почвы на поле */
 public class SoilEnergyDrawStrategy extends AbstractDrawStrategy{
 
     public SoilEnergyDrawStrategy(GraphicsContext gc, TileMap tileMap) {

@@ -20,6 +20,8 @@ public abstract class AbstractDrawStrategy {
     /*** рисует все объекты в  соответствии со стратегией рисования*/
     public abstract void drawAll();
 
+
+    // TODO: подумать
 /*    protected void drawNet(){
         System.out.println("рисую сетку");
         for(Tile[] rowTiles : tileMap.getTiles()){

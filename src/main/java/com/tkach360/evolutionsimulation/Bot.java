@@ -4,11 +4,17 @@ import javafx.scene.paint.Color;
 
 import java.util.Random;
 
-/** класс бота ещё не завершен*/
+/** класс бота
+ * основной класс проекта*/
 public class Bot extends AbstractTileObject{
 
+    /** устанавливается если последним источником энергии бота был фотосинтез */
     public static final Color PHOTOSYNTHESIS_COLOR = Color.rgb(0, 210, 0);
+
+    /** устанавливается если последним источником энергии бота было хищничество */
     public static final Color PREDATION_COLOR = Color.rgb(210, 0, 0);
+
+    /** устанавливается если последним источником энергии бота была энергия почвы */
     public static final Color SOIL_COLOR = Color.rgb(0, 0, 210);
 
     private Color color; // бот получает цвет в зависимости от последнего источника энергии
@@ -25,7 +31,6 @@ public class Bot extends AbstractTileObject{
         this.color = PHOTOSYNTHESIS_COLOR;
     }
 
-    // этот конструктор надо изменить так, чтобы подставлялись рандомные значения параметров
     public Bot(Tile tile, Random random){
         this.tile = tile;
         tile.setAbstractTileObject(this);
@@ -75,4 +80,6 @@ public class Bot extends AbstractTileObject{
     public void setColor(Color color) {
         this.color = color;
     }
+
+    // TODO: добавить стандартные методы
 }

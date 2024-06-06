@@ -14,7 +14,7 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 1024, 600);
         stage.setTitle("Evolution Simulation");
         stage.setScene(scene);
-        stage.setMaximized(true); // можно потом подумать над setFullScreen
+        stage.setMaximized(true); // TODO: подумать над FullScreen
         stage.show();
     }
 

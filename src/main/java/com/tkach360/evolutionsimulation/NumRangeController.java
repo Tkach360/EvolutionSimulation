@@ -1,5 +1,5 @@
 package com.tkach360.evolutionsimulation;
-
+// TODO: подумать
 /** класс содержащий методы для установки значения в определенном диапазоне */
 public class NumRangeController {
 
