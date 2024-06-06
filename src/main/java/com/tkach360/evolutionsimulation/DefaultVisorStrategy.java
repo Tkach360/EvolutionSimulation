@@ -17,6 +17,7 @@ public class DefaultVisorStrategy extends AbstractVisorStrategy {
 
     @Override
     public void drawAll() {
+        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
 
         // рисуем ботов
         for(AbstractTileObject abstractTileObjects : abstractTileObjects){

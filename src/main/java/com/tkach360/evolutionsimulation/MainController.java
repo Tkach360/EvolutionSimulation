@@ -28,7 +28,7 @@ public class MainController implements Initializable {
         tileMap = new TileMap(canvas);
         visorStrategy = new DefaultVisorStrategy(canvas.getGraphicsContext2D(), tileMap, abstractTileObjects);
 
-        repaint();
+        visorStrategy.drawAll();
     }
 
     @FXML
@@ -44,15 +44,8 @@ public class MainController implements Initializable {
 
             System.out.println("добавил бота");
         }
-        repaint();
-
-        System.out.println("нажал");
-    }
-
-    private void repaint(){
-        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         visorStrategy.drawAll();
 
-        System.out.println("перерисоавл");
+        System.out.println("нажал");
     }
 }
