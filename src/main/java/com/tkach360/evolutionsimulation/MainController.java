@@ -34,6 +34,9 @@ public class MainController implements Initializable {
         int tX = (int)(e.getX() / TileMap.TILE_SIDE);
         int tY = (int)(e.getY() / TileMap.TILE_SIDE);
 
+        /* если нажал не на tileMap, то ничего не происходит */
+        if(tX > tileMap.getTiles().length || tY > tileMap.getTiles()[0].length) return;
+
         if(tileMap.getTiles()[tX][tY].getAbstractTileObject() == null) {
             abstractTileObjects.add(new Bot(tileMap.getTiles()[tX][tY]));
 
