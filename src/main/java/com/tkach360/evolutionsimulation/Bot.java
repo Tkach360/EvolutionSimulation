@@ -10,9 +10,9 @@ public class Bot extends AbstractTileObject{
 
     public Bot(Tile tile, int predation, int photosynthesis, int soil) {
         this.tile = tile;
-        this.predation = predation;
-        this.photosynthesis = photosynthesis;
-        this.soil = soil;
+        this.predation = NumRangeController.setInRange(predation, 0, 4);
+        this.photosynthesis = NumRangeController.setInRange(photosynthesis, 0, 4);
+        this.soil = NumRangeController.setInRange(soil, 0, 4);
     }
 
     // этот конструктор надо изменить так, чтобы подставлялись рандомные значения параметров
@@ -38,7 +38,7 @@ public class Bot extends AbstractTileObject{
     }
 
     public void setPredation(int predation) {
-        this.predation = predation;
+        this.predation = NumRangeController.setInRange(predation, 0, 4);
     }
 
     public int getPhotosynthesis() {
@@ -46,7 +46,7 @@ public class Bot extends AbstractTileObject{
     }
 
     public void setPhotosynthesis(int photosynthesis) {
-        this.photosynthesis = photosynthesis;
+        this.photosynthesis = NumRangeController.setInRange(photosynthesis, 0, 4);
     }
 
     public int getSoil() {
@@ -54,6 +54,6 @@ public class Bot extends AbstractTileObject{
     }
 
     public void setSoil(int soil) {
-        this.soil = soil;
+        this.soil = NumRangeController.setInRange(soil, 0, 4);;
     }
 }
