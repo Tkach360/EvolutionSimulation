@@ -5,6 +5,6 @@
 
 <AnchorPane prefHeight="1024" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tkach360.evolutionsimulation.MainController">
     <children>
-        <Canvas fx:id="canvas" height="600.0" onMouseClicked="#onMouseClicked" width="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+        <Canvas fx:id="canvas" height="805.0" onMouseClicked="#onMouseClicked" width="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
     </children>
 </AnchorPane>
