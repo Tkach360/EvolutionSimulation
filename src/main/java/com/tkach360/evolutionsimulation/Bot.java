@@ -1,5 +1,7 @@
 package com.tkach360.evolutionsimulation;
 
+import java.util.Random;
+
 /** класс бота ещё не завершен*/
 public class Bot extends AbstractTileObject{
     /** ссылка на тайл, в котором находится бот*/
@@ -16,12 +18,12 @@ public class Bot extends AbstractTileObject{
     }
 
     // этот конструктор надо изменить так, чтобы подставлялись рандомные значения параметров
-    public Bot(Tile tile){
+    public Bot(Tile tile, Random random){
         this.tile = tile;
         tile.setAbstractTileObject(this);
-        this.predation = 5;
-        this.photosynthesis = 5;
-        this.soil = 5;
+        this.predation = random.nextInt(5);
+        this.photosynthesis = random.nextInt(5);
+        this.soil = random.nextInt(5);
     }
 
     public Tile getTile() {

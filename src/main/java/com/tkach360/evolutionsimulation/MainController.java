@@ -49,7 +49,7 @@ public class MainController implements Initializable {
         if(tX > tileMap.getTiles().length || tY > tileMap.getTiles()[0].length) return;
 
         if(tileMap.getTiles()[tX][tY].getAbstractTileObject() == null) {
-            abstractTileObjects.add(new Bot(tileMap.getTiles()[tX][tY]));
+            abstractTileObjects.add(new Bot(tileMap.getTiles()[tX][tY], random));
 
             System.out.println("добавил бота");
         }
