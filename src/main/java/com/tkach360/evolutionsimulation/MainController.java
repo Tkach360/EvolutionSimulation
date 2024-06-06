@@ -19,14 +19,14 @@ public class MainController implements Initializable {
     private ArrayList<AbstractTileObject> abstractTileObjects;
 
     private TileMap tileMap;
-    private AbstractDrawStrategy drawStrategy;
+    private AbstractVisorStrategy visorStrategy;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         random = new Random(1);
         abstractTileObjects = new ArrayList<AbstractTileObject>();
         tileMap = new TileMap(canvas);
-        drawStrategy = new DefaultDrawStrategy(canvas.getGraphicsContext2D(), tileMap, abstractTileObjects);
+        visorStrategy = new DefaultVisorStrategy(canvas.getGraphicsContext2D(), tileMap, abstractTileObjects);
 
         repaint();
     }
@@ -51,7 +51,7 @@ public class MainController implements Initializable {
 
     private void repaint(){
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawStrategy.drawAll();
+        visorStrategy.drawAll();
 
         System.out.println("перерисоавл");
     }

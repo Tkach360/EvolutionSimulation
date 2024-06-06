@@ -4,9 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /** описывает стратегию рисования энергии почвы на поле */
-public class SoilEnergyDrawStrategy extends AbstractDrawStrategy{
+public class SoilEnergyVisorStrategy extends AbstractVisorStrategy {
 
-    public SoilEnergyDrawStrategy(GraphicsContext gc, TileMap tileMap) {
+    public SoilEnergyVisorStrategy(GraphicsContext gc, TileMap tileMap) {
         super(gc, tileMap);
     }
 
