@@ -5,46 +5,56 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tkach360.evolutionsimulation.MainController">
+<AnchorPane prefHeight="600.0" prefWidth="1024.0" stylesheets="/defaultStyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tkach360.evolutionsimulation.MainController">
 <children>
     <Canvas fx:id="canvas" height="800.0" style="-fx-background-color: #AFEEEE;" width="1200.0" />
-    <VBox minHeight="100.0" minWidth="100.0" prefWidth="365.0" style="-fx-background-color: #003e3d;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox minHeight="100.0" minWidth="100.0" prefWidth="365.0" fx:id="primeMenu" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
-            <FlowPane prefHeight="101.0" prefWidth="356.0" style="-fx-background-color: #013168;">
+            <TilePane prefHeight="103.0" prefWidth="366.0" styleClass="data-panel">
+               <children>
+                  <Label text="info" textFill="WHITE" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
+               </VBox.margin></TilePane>
+            <FlowPane prefHeight="102.0" prefWidth="235.0" styleClass="data-panel">
                 <VBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
                 </VBox.margin>
                 <children>
-                    <Label alignment="TOP_LEFT" text="Info:" textFill="WHITE" />
+                    <Label alignment="TOP_LEFT" styleClass="my-label" text="Info:" textFill="WHITE" />
                     <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="15.0" text="Info:" textFill="WHITE" />
                     <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="15.0" text="Info:" textFill="WHITE" />
-                </children>
-                <padding>
-                    <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-                </padding></FlowPane>
-            <FlowPane layoutX="15.0" layoutY="15.0" prefHeight="30.0" prefWidth="366.0" style="-fx-background-color: #013168;">
+                </children></FlowPane>
+            <FlowPane layoutX="15.0" layoutY="15.0" prefHeight="30.0" prefWidth="366.0" styleClass="data-panel">
                <children>
                   <Label alignment="TOP_LEFT" text="timeController:" textFill="WHITE" />
                </children>
-               <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </padding>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
+               </VBox.margin>
             </FlowPane>
-            <HBox prefHeight="146.0" prefWidth="366.0">
+            <HBox prefHeight="146.0" prefWidth="366.0" spacing="3">
                <children>
-                  <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #013168;">
+                  <FlowPane prefHeight="200.0" prefWidth="200.0" styleClass="data-panel">
                      <children>
                         <Label text="wisors" textFill="WHITE" />
                      </children></FlowPane>
-                  <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #013168;">
+                  <FlowPane prefHeight="200.0" prefWidth="200.0" styleClass="data-panel">
                      <children>
                         <Label text="graphs" textFill="WHITE" />
                      </children></FlowPane>
-               </children></HBox>
-            <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #013168;">
+               </children>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
+               </VBox.margin></HBox>
+            <FlowPane prefHeight="200.0" prefWidth="200.0" styleClass="data-panel">
                <children>
                   <Label text="functions" textFill="WHITE" />
                </children>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
+               </VBox.margin>
             </FlowPane>
         </children></VBox>
 </children>
