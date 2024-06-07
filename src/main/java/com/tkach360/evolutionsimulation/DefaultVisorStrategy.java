@@ -6,17 +6,18 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 /** описывает стандартный режим рисования объектов на поле*/
-public class DefaultDrawStrategy extends AbstractDrawStrategy{
+public class DefaultVisorStrategy extends AbstractVisorStrategy {
 
     private ArrayList<AbstractTileObject> abstractTileObjects;
 
-    public DefaultDrawStrategy(GraphicsContext gc, TileMap tileMap, ArrayList<AbstractTileObject> abstractTileObjects) {
+    public DefaultVisorStrategy(GraphicsContext gc, TileMap tileMap, ArrayList<AbstractTileObject> abstractTileObjects) {
         super(gc, tileMap);
         this.abstractTileObjects = abstractTileObjects;
     }
 
     @Override
     public void drawAll() {
+        gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
 
         // рисуем ботов
         for(AbstractTileObject abstractTileObjects : abstractTileObjects){

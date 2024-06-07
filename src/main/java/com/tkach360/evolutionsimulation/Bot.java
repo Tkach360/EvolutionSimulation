@@ -45,6 +45,7 @@ public class Bot extends AbstractTileObject{
     }
 
     public void setTile(Tile tile) {
+        this.tile.setAbstractTileObject(null);
         this.tile = tile;
         tile.setAbstractTileObject(this);
     }

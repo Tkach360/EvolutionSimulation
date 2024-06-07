@@ -1,0 +1,21 @@
+.label{
+    -fx-font-size:10pt;
+    -fx-text-fill: white;
+}
+
+.data-panel{
+    -fx-background-color: #353535;
+    -fx-background-radius: 7;
+    -fx-border-radius: 7;
+    -fx-border-color: blue;
+    -fx-padding: 5px 10px;
+    -fx-margin: 10;
+}
+
+.hbox{
+    -fx-spacing: 10;
+}
+
+#primeMenu{
+    -fx-background-color: #202020;
+}

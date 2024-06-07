@@ -1,18 +1,17 @@
 package com.tkach360.evolutionsimulation;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 /**
  * абстрактный класс для стратегии рисования
  * используется ка основа для режимов отрисовки
  */
-public abstract class AbstractDrawStrategy {
+public abstract class AbstractVisorStrategy {
 
     protected GraphicsContext gc;
     protected TileMap tileMap;
 
-    public AbstractDrawStrategy(GraphicsContext gc, TileMap tileMap) {
+    public AbstractVisorStrategy(GraphicsContext gc, TileMap tileMap) {
         this.gc = gc;
         this.tileMap = tileMap;
     }
