@@ -12,6 +12,11 @@
     -fx-margin: 10;
 }
 
+.set-button{
+    -fx-pref-height: 23;
+    -fx-pref-width: 135;
+}
+
 .hbox{
     -fx-spacing: 10;
 }

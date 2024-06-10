@@ -64,10 +64,20 @@
             </ToolBar>
             <HBox prefHeight="146.0" prefWidth="366.0" spacing="3">
                <children>
-                  <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #353535" styleClass="data-panel">
+                  <VBox prefHeight="146.0" prefWidth="206.0" style="-fx-background-color: #353535" styleClass="data-panel">
                      <children>
                         <Label text="wisors" textFill="WHITE" />
-                     </children></FlowPane>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <VBox.margin>
+                              <Insets left="2.0" />
+                           </VBox.margin>
+                           <children>
+                              <Button minHeight="15.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="130.0" styleClass="set-button" text="обычный просмотр" />
+                              <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="set-button" text="энергия почвы" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
                   <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #353535" styleClass="data-panel">
                      <children>
                         <Label text="graphs" textFill="WHITE" />
