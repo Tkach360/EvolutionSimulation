@@ -29,6 +29,6 @@ public class SoilEnergyVisorStrategy extends AbstractVisorStrategy {
         if(b < 0) b = 0;
 
         gc.setFill(Color.rgb(r, g, b));
-        gc.fillRect(tile.getCx(), tile.getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
+        gc.fillRect(tile.getField().getCx(), tile.getField().getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
     }
 }

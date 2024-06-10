@@ -36,8 +36,8 @@ public class VisibleArea {
     }
 
     public Pair<Integer, Integer> getTileInVisibleArea(int index, Tile thisTile){
-        int tX = (int)(thisTile.getCx() / TileMap.TILE_SIDE) + direction[0][index]; // TODO: при оптимизации посмотреть на это
-        int tY = (int)(thisTile.getCy() / TileMap.TILE_SIDE) + direction[1][index];
+        int tX = thisTile.getCx() + direction[0][index];
+        int tY = thisTile.getCy() + direction[1][index];
 
         return new Pair<Integer, Integer>(tX, tY);
     }

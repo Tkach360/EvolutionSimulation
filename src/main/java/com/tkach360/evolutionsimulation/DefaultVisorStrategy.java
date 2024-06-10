@@ -34,7 +34,7 @@ public class DefaultVisorStrategy extends AbstractVisorStrategy {
 
     private void drawBot(Bot bot){
         gc.setFill(Color.BLACK);
-        Tile bt = bot.getTile();
+        Field bt = bot.getTile().getField();
         gc.fillRect(bt.getCx(), bt.getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
         gc.setFill(bot.getColor());
         gc.fillRect(
@@ -49,6 +49,6 @@ public class DefaultVisorStrategy extends AbstractVisorStrategy {
 
         Color colorLight = Color.rgb(0, 0, 0, 0.1 * (4 - tile.getLighting()));
         gc.setFill(colorLight);
-        gc.fillRect(tile.getCx(), tile.getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
+        gc.fillRect(tile.getField().getCx(), tile.getField().getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
     }
 }

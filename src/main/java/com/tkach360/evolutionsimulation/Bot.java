@@ -1,6 +1,7 @@
 package com.tkach360.evolutionsimulation;
 
 import javafx.scene.paint.Color;
+import javafx.util.Pair;
 
 import java.util.Random;
 
@@ -41,6 +42,13 @@ public class Bot extends AbstractTileObject{
         this.photosynthesis = random.nextInt(5);
         this.soil = random.nextInt(5);
         this.color = PHOTOSYNTHESIS_COLOR;
+    }
+
+    public void moveForward(){
+        Pair<Integer, Integer> tileForward = visibleArea.getTileInVisibleArea(1, this.tile);
+        if(tileMap.getTiles()[tileForward.getKey()][tileForward.getValue()].getAbstractTileObject() == null){
+
+        }
     }
 
     public Tile getTile() {

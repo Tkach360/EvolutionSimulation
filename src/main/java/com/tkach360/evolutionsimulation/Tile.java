@@ -4,16 +4,18 @@ import java.util.Objects;
 /** описывает логику тайла - одного поля, в котором могут находиться объекты */
 public class Tile {
 
-    private double cx; // координата X
-    private double cy; // координата Y
+    private Field field;
+    private int cx; // координата X
+    private int cy; // координата Y
     private AbstractTileObject abstractTileObject; // ссылка на объект, который находится в тайле
 
     private int soilEnergy; // энергия в почве тайла
     private int lighting; // освещенность тайла
 
-    public Tile(double cx, double cy, int soilEnergy, int lighting) {
+    public Tile(int cx, int cy, int soilEnergy, int lighting) {
         this.cx = cx;
         this.cy = cy;
+        this.field = new Field(TileMap.TILE_SIDE * cx, TileMap.TILE_SIDE * cy);
         setSoilEnergy(soilEnergy);
         setLighting(lighting);
         abstractTileObject = null;
@@ -33,10 +35,10 @@ public class Tile {
         this.lighting = setRound5(lighting);
     }
 
-    public double getCx() {
+    public int getCx() {
         return cx;
     }
-    public double getCy() {
+    public int getCy() {
         return cy;
     }
 
@@ -45,6 +47,10 @@ public class Tile {
     }
     public void setAbstractTileObject(AbstractTileObject abstractTileObject) {
         this.abstractTileObject = abstractTileObject;
+    }
+
+    public Field getField() {
+        return field;
     }
 
     private int setRound5(int x){
