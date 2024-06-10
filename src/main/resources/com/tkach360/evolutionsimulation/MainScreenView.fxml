@@ -78,10 +78,20 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #353535" styleClass="data-panel">
+                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="146.0" prefWidth="206.0" style="-fx-background-color: #353535" styleClass="data-panel">
                      <children>
                         <Label text="graphs" textFill="WHITE" />
-                     </children></FlowPane>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <VBox.margin>
+                              <Insets left="2.0" />
+                           </VBox.margin>
+                           <children>
+                              <Button minHeight="15.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="130.0" styleClass="set-button" text="кол-во мобов/время" />
+                              <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="set-button" text="кол-во типов/время" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
                </children>
                <VBox.margin>
                   <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
