@@ -15,15 +15,25 @@
                   <Label text="info" textFill="WHITE" />
                   <FlowPane prefHeight="14.0" prefWidth="354.0">
                      <children>
-                        <VBox prefHeight="38.0" prefWidth="102.0">
+                        <VBox prefHeight="38.0" prefWidth="95.0">
                            <children>
                               <Label text="Тиков со старта:" textFill="WHITE" />
                               <Label text="Кол-во ботов:" textFill="WHITE" />
                            </children>
                         </VBox>
-                        <VBox prefHeight="22.0" prefWidth="32.0">
+                        <VBox prefHeight="38.0" prefWidth="64.0">
                            <children>
+                              <Label prefHeight="18.0" prefWidth="40.0" text="Label" textFill="WHITE" />
                               <Label text="Label" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="38.0" prefWidth="72.0">
+                           <children>
+                              <Label text="Last update: " textFill="WHITE" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="27.0" prefWidth="100.0">
+                           <children>
                               <Label text="Label" textFill="WHITE" />
                            </children>
                         </VBox>
