@@ -19,12 +19,14 @@ public class Bot extends AbstractTileObject{
 
     private Color color; // бот получает цвет в зависимости от последнего источника энергии
 
+    private VisibleArea visibleArea;
     private int predation;
     private int photosynthesis;
     private int soil;
 
-    public Bot(Tile tile, int predation, int photosynthesis, int soil) {
+    public Bot(Tile tile, int[][] direction, int predation, int photosynthesis, int soil) {
         this.tile = tile;
+        this.visibleArea = new VisibleArea(direction);
         this.predation = NumRangeController.setInRange(predation, 0, 4);
         this.photosynthesis = NumRangeController.setInRange(photosynthesis, 0, 4);
         this.soil = NumRangeController.setInRange(soil, 0, 4);
@@ -33,6 +35,7 @@ public class Bot extends AbstractTileObject{
 
     public Bot(Tile tile, Random random){
         this.tile = tile;
+        this.visibleArea = new VisibleArea(random);
         tile.setAbstractTileObject(this);
         this.predation = random.nextInt(5);
         this.photosynthesis = random.nextInt(5);
@@ -80,6 +83,10 @@ public class Bot extends AbstractTileObject{
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public void setVisibleArea(int[][] visibleArea) {
+        this.visibleArea = new VisibleArea(visibleArea);
     }
 
     // TODO: добавить стандартные методы
