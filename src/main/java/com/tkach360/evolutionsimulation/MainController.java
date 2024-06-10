@@ -1,11 +1,16 @@
 package com.tkach360.evolutionsimulation;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,6 +25,7 @@ public class MainController implements Initializable {
     @FXML
     private Canvas canvas;
     private Random random;
+    private Timeline timeline;
 
     private ArrayList<AbstractTileObject> abstractTileObjects;
 
@@ -32,7 +38,26 @@ public class MainController implements Initializable {
         TileMap.getInstance(canvas);
         visorStrategy = new DefaultVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance(), abstractTileObjects);
 
-        visorStrategy.drawAll();
+        timeline = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                update();
+                visorStrategy.drawAll();
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
+    // TODO: это тестовый update
+    private void update(){
+        for(AbstractTileObject bot : abstractTileObjects){
+            if(bot instanceof Bot){
+                Bot b = (Bot) bot;
+                if (b.getVisibleArea().getTileInVisibleArea(1, b.getTile()).getAbstractTileObject() != null) b.getVisibleArea().setDirection(random);
+                b.moveForward();
+            }
+        }
     }
 
     @FXML
@@ -52,4 +77,7 @@ public class MainController implements Initializable {
 
         System.out.println("нажал");
     }
+
+
+
 }
