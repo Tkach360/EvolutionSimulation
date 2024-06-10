@@ -18,6 +18,14 @@ public class VisibleArea {
     }
 
     public VisibleArea(Random random) {
+        setDirection(random);
+    }
+
+    public int[][] getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Random random){
         this.direction = switch (random.nextInt(4)){
             case 0 -> UP;
             case 1 -> DOWN;
@@ -27,18 +35,19 @@ public class VisibleArea {
         };
     }
 
-    public int[][] getDirection() {
-        return direction;
-    }
-
     public void setDirection(int[][] direction) {
         this.direction = direction;
     }
 
-    public Pair<Integer, Integer> getTileInVisibleArea(int index, Tile thisTile){
+    public Tile getTileInVisibleArea(int index, Tile thisTile){
         int tX = thisTile.getCx() + direction[0][index];
         int tY = thisTile.getCy() + direction[1][index];
 
-        return new Pair<Integer, Integer>(tX, tY);
+        if(tX > TileMap.getInstance().getCountColumns() - 1) tX = 0;
+        if(tY > TileMap.getInstance().getCountRows() - 1) tY = 0;
+        if(tX < 0) tX = TileMap.getInstance().getCountColumns() - 1;
+        if(tY < 0) tY = TileMap.getInstance().getCountRows() - 1;
+
+        return TileMap.getInstance().getTiles()[tX][tY];
     }
 }
