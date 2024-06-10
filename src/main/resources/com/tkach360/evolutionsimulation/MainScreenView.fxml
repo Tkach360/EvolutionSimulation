@@ -74,8 +74,8 @@
                                     <Insets left="2.0" />
                                  </VBox.margin>
                                  <children>
-                                    <Button minHeight="15.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="130.0" styleClass="set-button" text="обычный просмотр" />
-                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="set-button" text="энергия почвы" />
+                                    <RadioButton mnemonicParsing="false" text="обычный просмотр" textFill="WHITE" />
+                                    <RadioButton mnemonicParsing="false" text="энергия почвы" textFill="WHITE" />
                                  </children>
                               </VBox>
                            </children>
@@ -88,8 +88,8 @@
                                     <Insets left="2.0" />
                                  </VBox.margin>
                                  <children>
-                                    <Button minHeight="15.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="130.0" styleClass="set-button" text="кол-во мобов/время" />
-                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="set-button" text="кол-во типов/время" />
+                                    <RadioButton mnemonicParsing="false" text="кол-во ботов/время" textFill="WHITE" />
+                                    <RadioButton layoutX="10.0" layoutY="59.0" mnemonicParsing="false" text="кол-во типов/время" textFill="WHITE" />
                                  </children>
                               </VBox>
                            </children>
