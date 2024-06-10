@@ -62,7 +62,7 @@
                   <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
                </VBox.margin>
             </ToolBar>
-            <HBox prefHeight="146.0" prefWidth="366.0" spacing="3">
+            <HBox prefHeight="87.0" prefWidth="360.0" spacing="3">
                <children>
                   <VBox prefHeight="146.0" prefWidth="206.0" style="-fx-background-color: #353535" styleClass="data-panel">
                      <children>
@@ -96,14 +96,40 @@
                <VBox.margin>
                   <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
                </VBox.margin></HBox>
-            <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #353535" styleClass="data-panel">
+            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #353535" styleClass="data-panel">
                <children>
                   <Label text="functions" textFill="WHITE" />
+                  <HBox prefHeight="180.0" prefWidth="360.0">
+                     <children>
+                        <VBox prefHeight="180.0" prefWidth="139.0">
+                           <children>
+                              <RadioButton mnemonicParsing="false" text="просмотр бота" textFill="WHITE" />
+                              <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="просмотр тайла" textFill="WHITE" />
+                           </children>
+                           <HBox.margin>
+                              <Insets left="2.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="180.0" prefWidth="96.0">
+                           <children>
+                              <RadioButton mnemonicParsing="false" text="+ бот" textFill="WHITE" />
+                              <RadioButton mnemonicParsing="false" text="- бот" textFill="WHITE" />
+                           </children></VBox>
+                        <VBox prefHeight="180.0" prefWidth="166.0">
+                           <children>
+                              <RadioButton mnemonicParsing="false" text="+ свет" textFill="WHITE" />
+                              <RadioButton mnemonicParsing="false" text="- свет" textFill="WHITE" />
+                              <RadioButton layoutX="10.0" layoutY="28.0" mnemonicParsing="false" text="+ энергия почвы" textFill="WHITE" />
+                              <RadioButton layoutX="10.0" layoutY="45.0" mnemonicParsing="false" text="- энергия почвы" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
                <VBox.margin>
                   <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
                </VBox.margin>
-            </FlowPane>
+            </VBox>
         </children></VBox>
 </children>
 </AnchorPane>
