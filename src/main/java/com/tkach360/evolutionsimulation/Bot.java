@@ -1,5 +1,6 @@
 package com.tkach360.evolutionsimulation;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
@@ -45,10 +46,14 @@ public class Bot extends AbstractTileObject{
     }
 
     public void moveForward(){
-        Pair<Integer, Integer> tileForward = visibleArea.getTileInVisibleArea(1, this.tile);
-        if(tileMap.getTiles()[tileForward.getKey()][tileForward.getValue()].getAbstractTileObject() == null){
-
+        Tile tileForward = visibleArea.getTileInVisibleArea(1, this.tile);
+        if(tileForward.getAbstractTileObject() == null){
+            setTile(tileForward);
         }
+    }
+
+    public void rotate(int[][] visibleArea) {
+        this.visibleArea = new VisibleArea(visibleArea);
     }
 
     public Tile getTile() {
@@ -93,8 +98,12 @@ public class Bot extends AbstractTileObject{
         this.color = color;
     }
 
-    public void setVisibleArea(int[][] visibleArea) {
-        this.visibleArea = new VisibleArea(visibleArea);
+    public VisibleArea getVisibleArea() {
+        return visibleArea;
+    }
+
+    public void setVisibleArea(VisibleArea visibleArea) {
+        this.visibleArea = visibleArea;
     }
 
     // TODO: добавить стандартные методы
