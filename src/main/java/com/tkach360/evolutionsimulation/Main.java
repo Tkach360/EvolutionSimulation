@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MainScreenView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1024, 600);
+        Scene scene = new Scene(fxmlLoader.load(), 1534, 800);
         stage.setTitle("Evolution Simulation");
         stage.setScene(scene);
         stage.setMaximized(true); // TODO: подумать над FullScreen

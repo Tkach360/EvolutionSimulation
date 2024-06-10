@@ -5,131 +5,138 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1024.0" stylesheets="/defaultStyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tkach360.evolutionsimulation.MainController">
+<AnchorPane prefHeight="800.0" prefWidth="1534.0" stylesheets="/defaultStyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tkach360.evolutionsimulation.MainController">
 <children>
-    <VBox fx:id="primeMenu" minHeight="100.0" minWidth="100.0" prefWidth="365.0" style="-fx-background-color: black" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <children>
-            <VBox prefHeight="52.0" prefWidth="360.0" style="-fx-background-color: #353535" styleClass="data-panel">
-               <children>
-                  <Label text="info" textFill="WHITE" />
-                  <FlowPane prefHeight="14.0" prefWidth="354.0">
+      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+          <Canvas fx:id="canvas" height="800.0" onMouseClicked="#onMouseClicked" style="-fx-background-color: #1AAEEE;" width="1179.0" />
+          <VBox fx:id="primeMenu" alignment="TOP_RIGHT" minHeight="100.0" minWidth="100.0" prefHeight="800.0" prefWidth="406.0" style="-fx-background-color: black" HBox.hgrow="ALWAYS">
+              <children>
+                  <VBox prefHeight="52.0" prefWidth="360.0" style="-fx-background-color: #353535" styleClass="data-panel">
                      <children>
-                        <VBox prefHeight="38.0" prefWidth="95.0">
+                        <Label text="info" textFill="WHITE" />
+                        <FlowPane prefHeight="14.0" prefWidth="354.0">
                            <children>
-                              <Label text="Тиков со старта:" textFill="WHITE" />
-                              <Label text="Кол-во ботов:" textFill="WHITE" />
+                              <VBox prefHeight="38.0" prefWidth="105.0">
+                                 <children>
+                                    <Label text="Тиков со старта:" textFill="WHITE" />
+                                    <Label text="Кол-во ботов:" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="38.0" prefWidth="64.0">
+                                 <children>
+                                    <Label prefHeight="18.0" prefWidth="40.0" text="Label" textFill="WHITE" />
+                                    <Label text="Label" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="38.0" prefWidth="85.0">
+                                 <children>
+                                    <Label text="Last update: " textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="38.0" prefWidth="36.0">
+                                 <children>
+                                    <Label text="Label" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
+                           </VBox.margin>
+                        </FlowPane>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="2.0" left="3.0" right="3.0" top="2.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #353535" styleClass="data-panel">
+                    <items>
+                        <Label alignment="TOP_LEFT" text="timeController:" textFill="WHITE" />
+                      <Button mnemonicParsing="false" text="&lt;&lt;" />
+                        <Button mnemonicParsing="false" text="||" />
+                        <Button mnemonicParsing="false" text="&gt;&gt;" />
+                        <Label text="xSpeed" textFill="WHITE" />
+                    </items>
+                     <VBox.margin>
+                        <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
+                     </VBox.margin>
+                  </ToolBar>
+                  <HBox prefHeight="87.0" prefWidth="360.0" spacing="3">
+                     <children>
+                        <VBox prefHeight="146.0" prefWidth="206.0" style="-fx-background-color: #353535" styleClass="data-panel">
+                           <children>
+                              <Label text="wisors" textFill="WHITE" />
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <VBox.margin>
+                                    <Insets left="2.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <Button minHeight="15.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="130.0" styleClass="set-button" text="обычный просмотр" />
+                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="set-button" text="энергия почвы" />
+                                 </children>
+                              </VBox>
                            </children>
                         </VBox>
-                        <VBox prefHeight="38.0" prefWidth="64.0">
+                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="146.0" prefWidth="206.0" style="-fx-background-color: #353535" styleClass="data-panel">
                            <children>
-                              <Label prefHeight="18.0" prefWidth="40.0" text="Label" textFill="WHITE" />
-                              <Label text="Label" textFill="WHITE" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="38.0" prefWidth="72.0">
-                           <children>
-                              <Label text="Last update: " textFill="WHITE" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="27.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Label" textFill="WHITE" />
+                              <Label text="graphs" textFill="WHITE" />
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <VBox.margin>
+                                    <Insets left="2.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <Button minHeight="15.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="130.0" styleClass="set-button" text="кол-во мобов/время" />
+                                    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="set-button" text="кол-во типов/время" />
+                                 </children>
+                              </VBox>
                            </children>
                         </VBox>
                      </children>
                      <VBox.margin>
                         <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
                      </VBox.margin>
-                  </FlowPane>
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <VBox.margin>
-                  <Insets bottom="2.0" left="3.0" right="3.0" top="2.0" />
-               </VBox.margin>
-            </VBox>
-            <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #353535" styleClass="data-panel">
-              <items>
-                  <Label alignment="TOP_LEFT" text="timeController:" textFill="WHITE" />
-                <Button mnemonicParsing="false" text="&lt;&lt;" />
-                  <Button mnemonicParsing="false" text="||" />
-                  <Button mnemonicParsing="false" text="&gt;&gt;" />
-                  <Label text="xSpeed" textFill="WHITE" />
-              </items>
-               <VBox.margin>
-                  <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
-               </VBox.margin>
-            </ToolBar>
-            <HBox prefHeight="87.0" prefWidth="360.0" spacing="3">
-               <children>
-                  <VBox prefHeight="146.0" prefWidth="206.0" style="-fx-background-color: #353535" styleClass="data-panel">
-                     <children>
-                        <Label text="wisors" textFill="WHITE" />
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <VBox.margin>
-                              <Insets left="2.0" />
-                           </VBox.margin>
-                           <children>
-                              <Button minHeight="15.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="130.0" styleClass="set-button" text="обычный просмотр" />
-                              <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="set-button" text="энергия почвы" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="146.0" prefWidth="206.0" style="-fx-background-color: #353535" styleClass="data-panel">
-                     <children>
-                        <Label text="graphs" textFill="WHITE" />
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <VBox.margin>
-                              <Insets left="2.0" />
-                           </VBox.margin>
-                           <children>
-                              <Button minHeight="15.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="130.0" styleClass="set-button" text="кол-во мобов/время" />
-                              <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" styleClass="set-button" text="кол-во типов/время" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
-               </VBox.margin></HBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #353535" styleClass="data-panel">
-               <children>
-                  <Label text="functions" textFill="WHITE" />
-                  <HBox prefHeight="180.0" prefWidth="360.0">
-                     <children>
-                        <VBox prefHeight="180.0" prefWidth="139.0">
-                           <children>
-                              <RadioButton mnemonicParsing="false" text="просмотр бота" textFill="WHITE" />
-                              <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="просмотр тайла" textFill="WHITE" />
-                           </children>
-                           <HBox.margin>
-                              <Insets left="2.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="180.0" prefWidth="96.0">
-                           <children>
-                              <RadioButton mnemonicParsing="false" text="+ бот" textFill="WHITE" />
-                              <RadioButton mnemonicParsing="false" text="- бот" textFill="WHITE" />
-                           </children></VBox>
-                        <VBox prefHeight="180.0" prefWidth="166.0">
-                           <children>
-                              <RadioButton mnemonicParsing="false" text="+ свет" textFill="WHITE" />
-                              <RadioButton mnemonicParsing="false" text="- свет" textFill="WHITE" />
-                              <RadioButton layoutX="10.0" layoutY="28.0" mnemonicParsing="false" text="+ энергия почвы" textFill="WHITE" />
-                              <RadioButton layoutX="10.0" layoutY="45.0" mnemonicParsing="false" text="- энергия почвы" textFill="WHITE" />
-                           </children>
-                        </VBox>
-                     </children>
                   </HBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
-               </VBox.margin>
+                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #353535" styleClass="data-panel">
+                     <children>
+                        <Label text="functions" textFill="WHITE" />
+                        <HBox prefHeight="180.0" prefWidth="360.0">
+                           <children>
+                              <VBox prefHeight="180.0" prefWidth="139.0">
+                                 <children>
+                                    <RadioButton mnemonicParsing="false" text="просмотр бота" textFill="WHITE" />
+                                    <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="просмотр тайла" textFill="WHITE" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="2.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox prefHeight="180.0" prefWidth="96.0">
+                                 <children>
+                                    <RadioButton mnemonicParsing="false" text="+ бот" textFill="WHITE" />
+                                    <RadioButton mnemonicParsing="false" text="- бот" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="180.0" prefWidth="166.0">
+                                 <children>
+                                    <RadioButton mnemonicParsing="false" text="+ свет" textFill="WHITE" />
+                                    <RadioButton mnemonicParsing="false" text="- свет" textFill="WHITE" />
+                                    <RadioButton layoutX="10.0" layoutY="28.0" mnemonicParsing="false" text="+ энергия почвы" textFill="WHITE" />
+                                    <RadioButton layoutX="10.0" layoutY="45.0" mnemonicParsing="false" text="- энергия почвы" textFill="WHITE" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
+                     </VBox.margin>
+                  </VBox>
+              </children>
             </VBox>
-        </children></VBox>
-    <Canvas fx:id="canvas" height="800.0" onMouseClicked="#onMouseClicked" style="-fx-background-color: #AFEEEE;" width="1200.0" AnchorPane.rightAnchor="365.0" />
+         </children>
+      </HBox>
 </children>
 </AnchorPane>
