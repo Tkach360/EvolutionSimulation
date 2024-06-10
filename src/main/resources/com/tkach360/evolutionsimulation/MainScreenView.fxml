@@ -7,7 +7,6 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1024.0" stylesheets="/defaultStyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tkach360.evolutionsimulation.MainController">
 <children>
-    <Canvas fx:id="canvas" height="800.0" style="-fx-background-color: #AFEEEE;" width="1200.0" />
     <VBox fx:id="primeMenu" minHeight="100.0" minWidth="100.0" prefWidth="365.0" style="-fx-background-color: black" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
             <VBox prefHeight="52.0" prefWidth="360.0" style="-fx-background-color: #353535" styleClass="data-panel">
@@ -131,5 +130,6 @@
                </VBox.margin>
             </VBox>
         </children></VBox>
+    <Canvas fx:id="canvas" height="800.0" onMouseClicked="#onMouseClicked" style="-fx-background-color: #AFEEEE;" width="1200.0" AnchorPane.rightAnchor="365.0" />
 </children>
 </AnchorPane>
