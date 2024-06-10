@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 /** описывает поле тайлов */
 public class TileMap {
 
+    private static TileMap instance;
     public static final double TILE_SIDE = 5; // размер тайла
     public static final double EDGE_DISTANCE = 0.5; // // TODO: подумать
 
@@ -12,7 +13,7 @@ public class TileMap {
     private Canvas canvas;
     private Tile[][] tiles;
 
-    public TileMap(Canvas canvas) {
+    private TileMap(Canvas canvas) {
         this.canvas = canvas;
 
         int countColumns = (int)(canvas.getWidth() / TILE_SIDE);
@@ -28,6 +29,15 @@ public class TileMap {
         }
 
         this.countTiles = countColumns * countRows;
+    }
+
+    public static TileMap getInstance(Canvas canvas){
+        if(instance == null) instance = new TileMap(canvas);
+        return instance;
+    }
+
+    public static TileMap getInstance(){
+        return instance;
     }
 
     public int getCountTiles() {
