@@ -40,14 +40,18 @@
                   <Insets bottom="2.0" left="3.0" right="3.0" top="2.0" />
                </VBox.margin>
             </VBox>
-            <FlowPane layoutX="15.0" layoutY="15.0" prefHeight="30.0" prefWidth="366.0" style="-fx-background-color: #353535" styleClass="data-panel">
-               <children>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #353535" styleClass="data-panel">
+              <items>
                   <Label alignment="TOP_LEFT" text="timeController:" textFill="WHITE" />
-               </children>
+                <Button mnemonicParsing="false" text="&lt;&lt;" />
+                  <Button mnemonicParsing="false" text="||" />
+                  <Button mnemonicParsing="false" text="&gt;&gt;" />
+                  <Label text="xSpeed" textFill="WHITE" />
+              </items>
                <VBox.margin>
                   <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
                </VBox.margin>
-            </FlowPane>
+            </ToolBar>
             <HBox prefHeight="146.0" prefWidth="366.0" spacing="3">
                <children>
                   <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #353535" styleClass="data-panel">
