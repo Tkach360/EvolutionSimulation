@@ -26,7 +26,7 @@
                               <VBox prefHeight="38.0" prefWidth="64.0">
                                  <children>
                                     <Label fx:id="countTiksLabel" prefHeight="18.0" prefWidth="40.0" text="Label" textFill="WHITE" />
-                                    <Label text="Label" textFill="WHITE" />
+                                    <Label fx:id="countBotsLabel" text="Label" textFill="WHITE" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="38.0" prefWidth="85.0">

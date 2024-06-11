@@ -30,6 +30,8 @@ public class MainController implements Initializable {
     @FXML
     private Label countTiksLabel;
     @FXML
+    private Label countBotsLabel;
+    @FXML
     private Label timeSpeedLabel;
 
     private final double MIN_TIME_SPEED = 0.25;
@@ -37,6 +39,7 @@ public class MainController implements Initializable {
     private final double MAX_TIME_SPEED = 32.0;
 
     private int countUpdate;
+    private int countBots;
 
     @FXML
     private Canvas canvas;
@@ -65,9 +68,11 @@ public class MainController implements Initializable {
         //timeline.play();
 
         countUpdate = 0;
+        countBots = 0;
 
         timeSpeedLabel.setText("x" + Double.toString(timeline.getCurrentRate()));
         countTiksLabel.setText(Integer.toString(countUpdate));
+        countBotsLabel.setText(Integer.toString(countBots));
     }
 
     // TODO: это тестовый update
@@ -84,6 +89,11 @@ public class MainController implements Initializable {
 
     private void updateTable(){
         countTiksLabel.setText(Integer.toString(++countUpdate));
+
+        int newCountBots = 0;
+        for(AbstractTileObject abs : abstractTileObjects) if(abs instanceof Bot) newCountBots++;
+        countBots = newCountBots;
+        countBotsLabel.setText(Integer.toString(countBots));
     }
 
     @FXML
