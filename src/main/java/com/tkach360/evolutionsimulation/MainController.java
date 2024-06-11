@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -22,26 +23,19 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-    @FXML
-    private VBox primeMenu;
-    @FXML
-    private Button pauseButton;
+    @FXML private VBox primeMenu;
+    @FXML private Button pauseButton;
 
-    @FXML
-    private Label countTiksLabel;
-    @FXML
-    private Label countBotsLabel;
-    @FXML
-    private Label timeSpeedLabel;
-    @FXML
-    private Label lastUpdateTimeLabel;
+    @FXML private Label countTiksLabel;
+    @FXML private Label countBotsLabel;
+    @FXML private Label timeSpeedLabel;
+    @FXML private Label lastUpdateTimeLabel;
 
     private final double MIN_TIME_SPEED = 0.25;
     private final double DEFAULT_TIME_SPEED = 1.0;
     private final double MAX_TIME_SPEED = 32.0;
 
-    @FXML
-    private Canvas canvas;
+    @FXML private Canvas canvas;
     private Random random;
     private Timeline timeline;
 
