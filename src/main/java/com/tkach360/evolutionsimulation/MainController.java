@@ -28,11 +28,15 @@ public class MainController implements Initializable {
     private Button pauseButton;
 
     @FXML
+    private Label countTiksLabel;
+    @FXML
     private Label timeSpeedLabel;
 
     private final double MIN_TIME_SPEED = 0.25;
     private final double DEFAULT_TIME_SPEED = 1.0;
     private final double MAX_TIME_SPEED = 32.0;
+
+    private int countUpdate;
 
     @FXML
     private Canvas canvas;
@@ -60,7 +64,10 @@ public class MainController implements Initializable {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
+        countUpdate = 0;
+
         timeSpeedLabel.setText("x" + Double.toString(timeline.getCurrentRate()));
+        countTiksLabel.setText(Integer.toString(countUpdate));
     }
 
     // TODO: это тестовый update
@@ -72,6 +79,11 @@ public class MainController implements Initializable {
                 b.moveForward();
             }
         }
+        updateTable();
+    }
+
+    private void updateTable(){
+        countTiksLabel.setText(Integer.toString(++countUpdate));
     }
 
     @FXML
