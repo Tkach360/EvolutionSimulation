@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -25,6 +26,10 @@ public class MainController implements Initializable {
 
     @FXML private VBox primeMenu;
     @FXML private Button pauseButton;
+
+    private ToggleGroup wisorsToggle;
+    @FXML private RadioButton setDefaultVisor;
+    @FXML private RadioButton setSoilVisor;
 
     @FXML private Label countTiksLabel;
     @FXML private Label countBotsLabel;
@@ -44,9 +49,9 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initializeWisorsToggle();
 
         random = new Random(1); // TODO: убрать когда реализую выборочное добавление
-
         abstractTileObjects = new ArrayList<AbstractTileObject>();
         TileMap.getInstance(canvas);
         updateController = new UpdateController(
@@ -129,6 +134,13 @@ public class MainController implements Initializable {
         timeline.play();
     }
 
-
+    private void initializeWisorsToggle(){
+        wisorsToggle = new ToggleGroup();
+        setDefaultVisor.setToggleGroup(wisorsToggle);
+        setSoilVisor.setToggleGroup(wisorsToggle);
+        setDefaultVisor.setOnAction(actionEvent -> {updateController.setVisorStrategy(new DefaultVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance(), abstractTileObjects));});
+        setSoilVisor.setOnAction(actionEvent -> {updateController.setVisorStrategy(new SoilEnergyVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance()));});
+        setDefaultVisor.fire();
+    }
 
 }
