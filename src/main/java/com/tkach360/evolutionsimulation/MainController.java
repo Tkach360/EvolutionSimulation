@@ -62,7 +62,7 @@ public class MainController implements Initializable {
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+        //timeline.play();
 
         countUpdate = 0;
 
@@ -97,6 +97,7 @@ public class MainController implements Initializable {
         if(TileMap.getInstance().getTiles()[tX][tY].getAbstractTileObject() == null) {
             abstractTileObjects.add(new Bot(TileMap.getInstance().getTiles()[tX][tY], random));
 
+            if(timeline.getStatus() != Animation.Status.RUNNING) timeline.play();
             System.out.println("добавил бота");
         }
         visorStrategy.drawAll();
