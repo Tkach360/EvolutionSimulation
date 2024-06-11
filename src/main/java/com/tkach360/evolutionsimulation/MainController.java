@@ -1,5 +1,6 @@
 package com.tkach360.evolutionsimulation;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -7,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -21,6 +23,8 @@ public class MainController implements Initializable {
 
     @FXML
     private VBox primeMenu;
+    @FXML
+    private Button pauseButton;
 
     @FXML
     private Canvas canvas;
@@ -76,6 +80,18 @@ public class MainController implements Initializable {
         visorStrategy.drawAll();
 
         System.out.println("нажал");
+    }
+
+    @FXML
+    private void pause(){
+        if(timeline.getStatus() == Animation.Status.RUNNING){
+            timeline.pause();
+            pauseButton.setText("▶");
+        }
+        else {
+            timeline.play();
+            pauseButton.setText("||");
+        }
     }
 
 
