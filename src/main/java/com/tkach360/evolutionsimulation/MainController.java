@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -27,6 +28,13 @@ public class MainController implements Initializable {
     private Button pauseButton;
 
     @FXML
+    private Label timeSpeedLabel;
+
+    private final double MIN_TIME_SPEED = 0.25;
+    private final double DEFAULT_TIME_SPEED = 1.0;
+    private final double MAX_TIME_SPEED = 32.0;
+
+    @FXML
     private Canvas canvas;
     private Random random;
     private Timeline timeline;
@@ -42,7 +50,7 @@ public class MainController implements Initializable {
         TileMap.getInstance(canvas);
         visorStrategy = new DefaultVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance(), abstractTileObjects);
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 update();
@@ -51,6 +59,8 @@ public class MainController implements Initializable {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+
+        timeSpeedLabel.setText("x" + Double.toString(timeline.getCurrentRate()));
     }
 
     // TODO: это тестовый update
@@ -92,6 +102,29 @@ public class MainController implements Initializable {
             timeline.play();
             pauseButton.setText("||");
         }
+    }
+
+    @FXML
+    private void slowedTime(){
+        changeSpeed(0.5);
+    }
+
+    @FXML
+    private void accelerationTime(){
+        changeSpeed(2.0);
+    }
+
+    private void changeSpeed(double delta){
+        double newRate = timeline.getCurrentRate() * delta;
+
+        if(newRate < MIN_TIME_SPEED || newRate > MAX_TIME_SPEED){
+            System.out.println("так");
+            return;
+        }
+
+        timeSpeedLabel.setText("x" + Double.toString(newRate));
+        timeline.setRate(newRate);
+        timeline.play();
     }
 
 
