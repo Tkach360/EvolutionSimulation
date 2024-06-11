@@ -40,71 +40,46 @@ public class MainController implements Initializable {
     private final double DEFAULT_TIME_SPEED = 1.0;
     private final double MAX_TIME_SPEED = 32.0;
 
-    private int countUpdate;
-    private int countBots;
-    private long lastUpdateTime;
-
     @FXML
     private Canvas canvas;
     private Random random;
     private Timeline timeline;
 
     private ArrayList<AbstractTileObject> abstractTileObjects;
-
-    private AbstractVisorStrategy visorStrategy;
+    private UpdateController updateController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        random = new Random(1);
+
+        random = new Random(1); // TODO: убрать когда реализую выборочное добавление
+
         abstractTileObjects = new ArrayList<AbstractTileObject>();
         TileMap.getInstance(canvas);
-        visorStrategy = new DefaultVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance(), abstractTileObjects);
+        updateController = new UpdateController(
+                abstractTileObjects,
+                new DefaultVisorStrategy(
+                        canvas.getGraphicsContext2D(),
+                        TileMap.getInstance(),
+                        abstractTileObjects)
+        );
 
         timeline = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
-                long startUpdateTime = System.nanoTime();
-                update();
-                long endUpdateTime = System.nanoTime();
-                lastUpdateTime = endUpdateTime - startUpdateTime;
-                lastUpdateTimeLabel.setText(Long.toString(lastUpdateTime) + "ns");
-
-                visorStrategy.drawAll();
+                updateController.updateAll();
+                updateTable();
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
-        //timeline.play();
 
-        countUpdate = 0;
-        countBots = 0;
-        lastUpdateTime = 0;
-
-        timeSpeedLabel.setText("x" + Double.toString(timeline.getCurrentRate()));
-        countTiksLabel.setText(Integer.toString(countUpdate));
-        countBotsLabel.setText(Integer.toString(countBots));
-        lastUpdateTimeLabel.setText(Long.toString(lastUpdateTime) + "ns");
-    }
-
-    // TODO: это тестовый update
-    private void update(){
-        for(AbstractTileObject bot : abstractTileObjects){
-            if(bot instanceof Bot){
-                Bot b = (Bot) bot;
-                if (b.getVisibleArea().getTileInVisibleArea(1, b.getTile()).getAbstractTileObject() != null) b.getVisibleArea().setDirection(random);
-                b.moveForward();
-            }
-        }
         updateTable();
     }
 
     private void updateTable(){
-        countTiksLabel.setText(Integer.toString(++countUpdate));
-
-        int newCountBots = 0;
-        for(AbstractTileObject abs : abstractTileObjects) if(abs instanceof Bot) newCountBots++;
-        countBots = newCountBots;
-        countBotsLabel.setText(Integer.toString(countBots));
+        timeSpeedLabel.setText("x" + Double.toString(timeline.getCurrentRate()));
+        countTiksLabel.setText(Integer.toString(updateController.getCountUpdate()));
+        countBotsLabel.setText(Integer.toString(updateController.getCountBots()));
+        lastUpdateTimeLabel.setText(Long.toString(updateController.getLastUpdateTime()) + "ns");
     }
 
     @FXML
@@ -121,7 +96,6 @@ public class MainController implements Initializable {
             if(timeline.getStatus() != Animation.Status.RUNNING) timeline.play();
             System.out.println("добавил бота");
         }
-        visorStrategy.drawAll();
 
         System.out.println("нажал");
     }
