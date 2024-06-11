@@ -33,6 +33,8 @@ public class MainController implements Initializable {
     private Label countBotsLabel;
     @FXML
     private Label timeSpeedLabel;
+    @FXML
+    private Label lastUpdateTimeLabel;
 
     private final double MIN_TIME_SPEED = 0.25;
     private final double DEFAULT_TIME_SPEED = 1.0;
@@ -40,6 +42,7 @@ public class MainController implements Initializable {
 
     private int countUpdate;
     private int countBots;
+    private long lastUpdateTime;
 
     @FXML
     private Canvas canvas;
@@ -60,7 +63,13 @@ public class MainController implements Initializable {
         timeline = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
+                long startUpdateTime = System.nanoTime();
                 update();
+                long endUpdateTime = System.nanoTime();
+                lastUpdateTime = endUpdateTime - startUpdateTime;
+                lastUpdateTimeLabel.setText(Long.toString(lastUpdateTime) + "ns");
+
                 visorStrategy.drawAll();
             }
         }));
@@ -69,10 +78,12 @@ public class MainController implements Initializable {
 
         countUpdate = 0;
         countBots = 0;
+        lastUpdateTime = 0;
 
         timeSpeedLabel.setText("x" + Double.toString(timeline.getCurrentRate()));
         countTiksLabel.setText(Integer.toString(countUpdate));
         countBotsLabel.setText(Integer.toString(countBots));
+        lastUpdateTimeLabel.setText(Long.toString(lastUpdateTime) + "ns");
     }
 
     // TODO: это тестовый update
