@@ -53,6 +53,10 @@ public class Tile {
         return field;
     }
 
+    public void changeLighting(int value){
+        setLighting(this.lighting + value);
+    }
+
     private int setRound5(int x){
         if(x < 0) x = 0;
         if(x > 4) x = 4;
