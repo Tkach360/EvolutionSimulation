@@ -25,14 +25,14 @@ public class Tile {
         return soilEnergy;
     }
     public void setSoilEnergy(int soilEnergy) {
-        this.soilEnergy = setRound5(soilEnergy);
+        this.soilEnergy = NumRangeController.setInRange(soilEnergy, 0, 4);
     }
 
     public int getLighting() {
         return lighting;
     }
     public void setLighting(int lighting) {
-        this.lighting = setRound5(lighting);
+        this.lighting = NumRangeController.setInRange(lighting, 0, 4);
     }
 
     public int getCx() {
@@ -59,12 +59,6 @@ public class Tile {
 
     public void changeSoil(int value){
         setSoilEnergy(this.soilEnergy + value);
-    }
-
-    private int setRound5(int x){
-        if(x < 0) x = 0;
-        if(x > 4) x = 4;
-        return x;
     }
 
     // TODO: изменить стандартные методы
