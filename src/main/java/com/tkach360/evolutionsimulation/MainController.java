@@ -47,6 +47,7 @@ public class MainController implements Initializable {
     private final double MIN_TIME_SPEED = 0.25;
     private final double DEFAULT_TIME_SPEED = 1.0;
     private final double MAX_TIME_SPEED = 32.0;
+    private double currentTimeRate;
 
     @FXML private Canvas canvas;
     private Timeline timeline;
@@ -57,6 +58,7 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        currentTimeRate = 1.0;
         mouseFunction = new MouseFunctionController(1, new BotsAdder()); // slider для контроля за этим идеально подходит
         sliderWidthBrush.valueProperty().addListener((observable, oldValue, newValue) -> {
             mouseFunction.setWidthBrush(newValue.intValue());
@@ -85,7 +87,7 @@ public class MainController implements Initializable {
     }
 
     private void updateTable(){
-        timeSpeedLabel.setText("x" + Double.toString(timeline.getCurrentRate()));
+        timeSpeedLabel.setText("x" + Double.toString(currentTimeRate));
         countTiksLabel.setText(Integer.toString(updateController.getCountUpdate()));
         countBotsLabel.setText(Integer.toString(updateController.getCountBots()));
         lastUpdateTimeLabel.setText(Long.toString(updateController.getLastUpdateTime()) + "ns");
@@ -130,16 +132,16 @@ public class MainController implements Initializable {
     }
 
     private void changeSpeed(double delta){
-        double newRate = timeline.getCurrentRate() * delta;
+        double newRate = currentTimeRate * delta;
 
         if(newRate < MIN_TIME_SPEED || newRate > MAX_TIME_SPEED){
-            System.out.println("так");
+            System.out.println("так " + Double.toString(newRate));
             return;
         }
 
-        timeSpeedLabel.setText("x" + Double.toString(newRate));
-        timeline.setRate(newRate);
-        timeline.play();
+        currentTimeRate = newRate;
+        timeSpeedLabel.setText("x" + Double.toString(currentTimeRate));
+        timeline.setRate(currentTimeRate);
     }
 
     private void initializeWisorsToggle(){
