@@ -8,11 +8,9 @@ public class UpdateController {
     private int countUpdate;
     private int countBots;
     private long lastUpdateTime;
-    private ArrayList<AbstractTileObject> abstractTileObjects;
     private AbstractVisorStrategy visorStrategy;
 
-    public UpdateController(ArrayList<AbstractTileObject> abstractTileObjects, AbstractVisorStrategy visorStrategy) {
-        this.abstractTileObjects = abstractTileObjects;
+    public UpdateController(AbstractVisorStrategy visorStrategy) {
         this.visorStrategy = visorStrategy;
         this.lastUpdateTime = 0;
         this.countUpdate = 0;
@@ -21,21 +19,17 @@ public class UpdateController {
 
     // TODO: тестовый
     private void updateTileObjects(){
-
-        Random random = new Random(1);
-        for(AbstractTileObject bot : abstractTileObjects){
-            if(bot instanceof Bot){
-                Bot b = (Bot) bot;
-                if (b.getVisibleArea().getTileInVisibleArea(1, b.getTile()).getAbstractTileObject() != null) b.getVisibleArea().setDirection(random);
-                b.moveForward();
-            }
-        }
+        BotsController.getInstance().update();
     }
 
-    private void updateValues(){
+    public void updateValues(){
         countUpdate++;
         int newCountBots = 0;
-        for(AbstractTileObject bot : abstractTileObjects) if(bot instanceof Bot) newCountBots++;
+        int index = BotsController.getInstance().getNextBotNodeIndex(0);
+        while(index != 0){
+            newCountBots++;
+            index = BotsController.getInstance().getNextBotNodeIndex(index);
+        }
         countBots = newCountBots;
     }
 
@@ -54,14 +48,6 @@ public class UpdateController {
     public void updateVisor(AbstractVisorStrategy newVisorStrategy){
         setVisorStrategy(newVisorStrategy);
         this.visorStrategy.drawAll();
-    }
-
-    public ArrayList<AbstractTileObject> getAbstractTileObjects() {
-        return abstractTileObjects;
-    }
-
-    public void setAbstractTileObjects(ArrayList<AbstractTileObject> abstractTileObjects) {
-        this.abstractTileObjects = abstractTileObjects;
     }
 
     public AbstractVisorStrategy getVisorStrategy() {

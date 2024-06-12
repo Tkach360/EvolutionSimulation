@@ -8,11 +8,8 @@ import java.util.ArrayList;
 /** описывает стандартный режим рисования объектов на поле*/
 public class DefaultVisorStrategy extends AbstractVisorStrategy {
 
-    private ArrayList<AbstractTileObject> abstractTileObjects;
-
-    public DefaultVisorStrategy(GraphicsContext gc, TileMap tileMap, ArrayList<AbstractTileObject> abstractTileObjects) {
+    public DefaultVisorStrategy(GraphicsContext gc, TileMap tileMap) {
         super(gc, tileMap);
-        this.abstractTileObjects = abstractTileObjects;
     }
 
     @Override
@@ -20,8 +17,10 @@ public class DefaultVisorStrategy extends AbstractVisorStrategy {
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
 
         // рисуем ботов
-        for(AbstractTileObject abstractTileObjects : abstractTileObjects){
-            if(abstractTileObjects instanceof Bot) drawBot((Bot)abstractTileObjects);
+        int index = BotsController.getInstance().getNextBotNodeIndex(0);
+        while(index != 0){
+            drawBot(BotsController.getInstance().getBot(index));
+            index = BotsController.getInstance().getNextBotNodeIndex(index);
         }
 
         // накладываем освещение
@@ -30,6 +29,8 @@ public class DefaultVisorStrategy extends AbstractVisorStrategy {
                 drawTileLight(tile);
             }
         }
+
+        System.out.println("перерисовал");
     }
 
     private void drawBot(Bot bot){
