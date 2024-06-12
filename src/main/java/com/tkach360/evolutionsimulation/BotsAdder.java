@@ -1,6 +1,5 @@
 package com.tkach360.evolutionsimulation;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class BotsAdder implements IMouseFunction{

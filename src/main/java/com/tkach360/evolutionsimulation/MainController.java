@@ -57,13 +57,13 @@ public class MainController implements Initializable {
     private AbstractTileObject[] abstractTileObjects1;
     private ArrayList<AbstractTileObject> abstractTileObjects;
     private UpdateController updateController;
-    private IMouseFunction mouseFunction;
+    private MouseFunctionController mouseFunction;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         random = new Random(1); // TODO: убрать когда реализую выборочное добавление
-        mouseFunction = new BotsAdder();
+        mouseFunction = new MouseFunctionController(50, new BotsAdder()); // slider для контроля за этим идеально подходит
         abstractTileObjects = new ArrayList<AbstractTileObject>(); //
         TileMap.getInstance(canvas);
         BotsController.getInstance(TileMap.getInstance().getCountTiles());
@@ -104,7 +104,7 @@ public class MainController implements Initializable {
         /* если нажал не на tileMap, то ничего не происходит */
         if(tX >= TileMap.getInstance().getCountColumns() || tY >= TileMap.getInstance().getCountRows()) return;
 
-        mouseFunction.doFunc(TileMap.getInstance().getTiles()[tX][tY]);
+        mouseFunction.changeTiles(TileMap.getInstance().getTiles()[tX][tY]);
         updateController.getVisorStrategy().drawAll();
         updateController.updateValues();
         updateTable();
@@ -168,10 +168,10 @@ public class MainController implements Initializable {
         RBviewBot.setToggleGroup(functionsToggle);
         RBviewTile.setToggleGroup(functionsToggle);
 
-        RBaddBot.setOnAction(actionEvent -> mouseFunction = new BotsAdder());
-        RBdelBot.setOnAction(actionEvent -> mouseFunction = new BotsDeleter(8)); // TODO: изменить размер кисти
-        RBaddLight.setOnAction(actionEvent -> mouseFunction = new LightAdder(6, 1));
-        RBdelLight.setOnAction(actionEvent -> mouseFunction = new LightAdder(6, -1));
+        RBaddBot.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new BotsAdder()));
+        RBdelBot.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new BotsDeleter())); // TODO: изменить размер кисти
+        RBaddLight.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new LightAdder(1)));
+        RBdelLight.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new LightAdder(-1)));
 
         RBaddBot.fire();
     }
