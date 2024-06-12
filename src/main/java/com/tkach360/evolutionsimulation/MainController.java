@@ -54,21 +54,25 @@ public class MainController implements Initializable {
     private Random random;
     private Timeline timeline;
 
+    private AbstractTileObject[] abstractTileObjects1;
     private ArrayList<AbstractTileObject> abstractTileObjects;
     private UpdateController updateController;
+    private IMouseFunction mouseFunction;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         random = new Random(1); // TODO: убрать когда реализую выборочное добавление
-        abstractTileObjects = new ArrayList<AbstractTileObject>();
+        mouseFunction = new BotsAdder();
+        abstractTileObjects = new ArrayList<AbstractTileObject>(); //
         TileMap.getInstance(canvas);
-        updateController = new UpdateController(
-                abstractTileObjects,
-                new DefaultVisorStrategy(
+        BotsController.getInstance(TileMap.getInstance().getCountTiles());
+
+        abstractTileObjects1 = new AbstractTileObject[TileMap.getInstance().getCountTiles()];
+
+        updateController = new UpdateController(new DefaultVisorStrategy(
                         canvas.getGraphicsContext2D(),
-                        TileMap.getInstance(),
-                        abstractTileObjects)
+                        TileMap.getInstance())
         );
 
         timeline = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
@@ -79,6 +83,7 @@ public class MainController implements Initializable {
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
+
         initializeWisorsToggle();
         initializeFunctionsToggle();
         updateTable();
@@ -97,14 +102,12 @@ public class MainController implements Initializable {
         int tY = (int)(e.getY() / TileMap.TILE_SIDE);
 
         /* если нажал не на tileMap, то ничего не происходит */
-        if(tX >= TileMap.getInstance().getTiles().length || tY >= TileMap.getInstance().getTiles()[0].length) return;
+        if(tX >= TileMap.getInstance().getCountColumns() || tY >= TileMap.getInstance().getCountRows()) return;
 
-        if(TileMap.getInstance().getTiles()[tX][tY].getAbstractTileObject() == null) {
-            abstractTileObjects.add(new Bot(TileMap.getInstance().getTiles()[tX][tY], random));
-
-            if(timeline.getStatus() != Animation.Status.RUNNING) timeline.play();
-            System.out.println("добавил бота");
-        }
+        mouseFunction.doFunc(TileMap.getInstance().getTiles()[tX][tY]);
+        updateController.getVisorStrategy().drawAll();
+        updateController.updateValues();
+        updateTable();
 
         System.out.println("нажал");
     }
@@ -148,7 +151,7 @@ public class MainController implements Initializable {
         wisorsToggle = new ToggleGroup();
         RBsetDefaultVisor.setToggleGroup(wisorsToggle);
         RBsetSoilVisor.setToggleGroup(wisorsToggle);
-        RBsetDefaultVisor.setOnAction(actionEvent -> {updateController.updateVisor(new DefaultVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance(), abstractTileObjects));});
+        RBsetDefaultVisor.setOnAction(actionEvent -> {updateController.updateVisor(new DefaultVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance()));});
         RBsetSoilVisor.setOnAction(actionEvent -> {updateController.updateVisor(new SoilEnergyVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance()));});
 
         RBsetDefaultVisor.fire();
@@ -164,6 +167,9 @@ public class MainController implements Initializable {
         RBdelSoilEnergy.setToggleGroup(functionsToggle);
         RBviewBot.setToggleGroup(functionsToggle);
         RBviewTile.setToggleGroup(functionsToggle);
+
+        RBaddBot.setOnAction(actionEvent -> mouseFunction = new BotsAdder());
+        RBdelBot.setOnAction(actionEvent -> mouseFunction = new BotsDeleter(abstractTileObjects));
 
         RBaddBot.fire();
     }

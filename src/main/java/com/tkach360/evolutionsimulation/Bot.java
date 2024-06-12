@@ -45,11 +45,18 @@ public class Bot extends AbstractTileObject{
         this.color = PHOTOSYNTHESIS_COLOR;
     }
 
-    public void moveForward(){
+    private void moveForward(){
         Tile tileForward = visibleArea.getTileInVisibleArea(1, this.tile);
         if(tileForward.getAbstractTileObject() == null){
             setTile(tileForward);
         }
+    }
+
+    // TODO: этот метод отвечает за принятие решения о действии и собственно действии
+    // index необходим для реализации размножения
+    public void doSomething(int index){
+        if (getVisibleArea().getTileInVisibleArea(1, getTile()).getAbstractTileObject() != null) getVisibleArea().setDirection(new Random()); // TODO: random убрать он для тестов
+        moveForward();
     }
 
     public void rotate(int[][] visibleArea) {
