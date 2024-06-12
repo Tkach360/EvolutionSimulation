@@ -51,24 +51,17 @@ public class MainController implements Initializable {
     private final double MAX_TIME_SPEED = 32.0;
 
     @FXML private Canvas canvas;
-    private Random random;
     private Timeline timeline;
 
-    private AbstractTileObject[] abstractTileObjects1;
-    private ArrayList<AbstractTileObject> abstractTileObjects;
     private UpdateController updateController;
     private MouseFunctionController mouseFunction;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        random = new Random(1); // TODO: убрать когда реализую выборочное добавление
         mouseFunction = new MouseFunctionController(50, new BotsAdder()); // slider для контроля за этим идеально подходит
-        abstractTileObjects = new ArrayList<AbstractTileObject>(); //
         TileMap.getInstance(canvas);
         BotsController.getInstance(TileMap.getInstance().getCountTiles());
-
-        abstractTileObjects1 = new AbstractTileObject[TileMap.getInstance().getCountTiles()];
 
         updateController = new UpdateController(new DefaultVisorStrategy(
                         canvas.getGraphicsContext2D(),
