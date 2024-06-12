@@ -165,6 +165,8 @@ public class MainController implements Initializable {
         RBdelBot.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new BotsDeleter())); // TODO: изменить размер кисти
         RBaddLight.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new LightAdder(1)));
         RBdelLight.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new LightAdder(-1)));
+        RBaddSoilEnergy.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new SoilEnergyAdder(1)));
+        RBdelSoilEnergy.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new SoilEnergyAdder(-1)));
 
         RBaddBot.fire();
     }

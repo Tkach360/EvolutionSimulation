@@ -57,6 +57,10 @@ public class Tile {
         setLighting(this.lighting + value);
     }
 
+    public void changeSoil(int value){
+        setSoilEnergy(this.soilEnergy + value);
+    }
+
     private int setRound5(int x){
         if(x < 0) x = 0;
         if(x > 4) x = 4;
