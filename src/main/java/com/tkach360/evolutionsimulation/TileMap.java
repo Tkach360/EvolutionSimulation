@@ -9,16 +9,14 @@ public class TileMap {
     public static final double TILE_SIDE = 5; // размер тайла
     public static final double EDGE_DISTANCE = 0.5; // // TODO: подумать
 
-    private int countColumns;
-    private int countRows;
     private Canvas canvas;
     private Tile[][] tiles;
 
     private TileMap(Canvas canvas) {
         this.canvas = canvas;
 
-        countColumns = (int)(canvas.getWidth() / TILE_SIDE);
-        countRows = (int)(canvas.getHeight() / TILE_SIDE);
+        int countColumns = (int)(canvas.getWidth() / TILE_SIDE);
+        int countRows = (int)(canvas.getHeight() / TILE_SIDE);
 
         this.tiles = new Tile[countColumns][countRows];
 
@@ -40,11 +38,11 @@ public class TileMap {
     }
 
     public int getCountColumns() {
-        return countColumns;
+        return tiles.length;
     }
 
     public int getCountRows() {
-        return countRows;
+        return tiles[0].length;
     }
 
     public Canvas getCanvas() {
@@ -55,5 +53,8 @@ public class TileMap {
         return tiles;
     }
 
+    public int getCountTiles(){
+        return tiles.length * tiles[0].length;
+    }
 
 }
