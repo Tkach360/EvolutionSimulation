@@ -75,6 +75,12 @@ public class MainController implements Initializable {
         timeline = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                /*if(updateController.getCountBots() == 0) {
+                    timeline.pause();
+                    pauseButton.setText("▶");
+                    return;
+                }*/
+                if(updateController.getCountBots() == 0) pause();
                 updateController.updateAll();
                 updateTable();
             }
@@ -111,7 +117,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void pause(){
-        if(timeline.getStatus() == Animation.Status.RUNNING){
+        if(timeline.getStatus() == Animation.Status.RUNNING || updateController.getCountBots() == 0){
             timeline.pause();
             pauseButton.setText("▶");
         }

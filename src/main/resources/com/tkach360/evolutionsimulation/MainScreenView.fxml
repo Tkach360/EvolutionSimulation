@@ -56,7 +56,7 @@
                     <items>
                         <Label alignment="TOP_LEFT" text="timeController:" textFill="WHITE" />
                         <Button mnemonicParsing="false" onAction="#slowedTime" text="&lt;&lt;" />
-                        <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#pause" text="||" />
+                        <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#pause" text="▶" />
                         <Button mnemonicParsing="false" onAction="#accelerationTime" text="&gt;&gt;" />
                         <Label fx:id="timeSpeedLabel" text="xSpeed" textFill="WHITE" />
                     </items>
