@@ -74,8 +74,8 @@
                                     <Insets left="2.0" />
                                  </VBox.margin>
                                  <children>
-                                    <RadioButton mnemonicParsing="false" fx:id="setDefaultVisor" text="обычный просмотр" textFill="WHITE" />
-                                    <RadioButton mnemonicParsing="false" fx:id="setSoilVisor" text="энергия почвы" textFill="WHITE" />
+                                    <RadioButton fx:id="RBsetDefaultVisor" mnemonicParsing="false" text="обычный просмотр" textFill="WHITE" />
+                                    <RadioButton fx:id="RBsetSoilVisor" mnemonicParsing="false" text="энергия почвы" textFill="WHITE" />
                                  </children>
                               </VBox>
                            </children>
@@ -106,8 +106,8 @@
                            <children>
                               <VBox prefHeight="180.0" prefWidth="139.0">
                                  <children>
-                                    <RadioButton mnemonicParsing="false" text="просмотр бота" textFill="WHITE" />
-                                    <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="просмотр тайла" textFill="WHITE" />
+                                    <RadioButton fx:id="RBviewBot" mnemonicParsing="false" text="просмотр бота" textFill="WHITE" />
+                                    <RadioButton fx:id="RBviewTile" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="просмотр тайла" textFill="WHITE" />
                                  </children>
                                  <HBox.margin>
                                     <Insets left="2.0" />
@@ -115,16 +115,16 @@
                               </VBox>
                               <VBox prefHeight="180.0" prefWidth="96.0">
                                  <children>
-                                    <RadioButton mnemonicParsing="false" text="+ бот" textFill="WHITE" />
-                                    <RadioButton mnemonicParsing="false" text="- бот" textFill="WHITE" />
+                                    <RadioButton fx:id="RBaddBot" mnemonicParsing="false" text="+ бот" textFill="WHITE" />
+                                    <RadioButton fx:id="RBdelBot" mnemonicParsing="false" text="- бот" textFill="WHITE" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="180.0" prefWidth="166.0">
                                  <children>
-                                    <RadioButton mnemonicParsing="false" text="+ свет" textFill="WHITE" />
-                                    <RadioButton mnemonicParsing="false" text="- свет" textFill="WHITE" />
-                                    <RadioButton layoutX="10.0" layoutY="28.0" mnemonicParsing="false" text="+ энергия почвы" textFill="WHITE" />
-                                    <RadioButton layoutX="10.0" layoutY="45.0" mnemonicParsing="false" text="- энергия почвы" textFill="WHITE" />
+                                    <RadioButton fx:id="RBaddLight" mnemonicParsing="false" text="+ свет" textFill="WHITE" />
+                                    <RadioButton fx:id="RBdelLight" mnemonicParsing="false" text="- свет" textFill="WHITE" />
+                                    <RadioButton fx:id="RBaddSoilEnergy" layoutX="10.0" layoutY="28.0" mnemonicParsing="false" text="+ энергия почвы" textFill="WHITE" />
+                                    <RadioButton fx:id="RBdelSoilEnergy" layoutX="10.0" layoutY="45.0" mnemonicParsing="false" text="- энергия почвы" textFill="WHITE" />
                                  </children>
                               </VBox>
                            </children>

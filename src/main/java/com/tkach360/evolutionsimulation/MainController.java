@@ -28,8 +28,18 @@ public class MainController implements Initializable {
     @FXML private Button pauseButton;
 
     private ToggleGroup wisorsToggle;
-    @FXML private RadioButton setDefaultVisor;
-    @FXML private RadioButton setSoilVisor;
+    @FXML private RadioButton RBsetDefaultVisor;
+    @FXML private RadioButton RBsetSoilVisor;
+
+    private ToggleGroup functionsToggle;
+    @FXML private RadioButton RBviewBot;
+    @FXML private RadioButton RBviewTile;
+    @FXML private RadioButton RBaddBot;
+    @FXML private RadioButton RBdelBot;
+    @FXML private RadioButton RBaddSoilEnergy;
+    @FXML private RadioButton RBdelSoilEnergy;
+    @FXML private RadioButton RBaddLight;
+    @FXML private RadioButton RBdelLight;
 
     @FXML private Label countTiksLabel;
     @FXML private Label countBotsLabel;
@@ -49,7 +59,6 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initializeWisorsToggle();
 
         random = new Random(1); // TODO: убрать когда реализую выборочное добавление
         abstractTileObjects = new ArrayList<AbstractTileObject>();
@@ -70,7 +79,8 @@ public class MainController implements Initializable {
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
-
+        initializeWisorsToggle();
+        initializeFunctionsToggle();
         updateTable();
     }
 
@@ -136,11 +146,26 @@ public class MainController implements Initializable {
 
     private void initializeWisorsToggle(){
         wisorsToggle = new ToggleGroup();
-        setDefaultVisor.setToggleGroup(wisorsToggle);
-        setSoilVisor.setToggleGroup(wisorsToggle);
-        setDefaultVisor.setOnAction(actionEvent -> {updateController.setVisorStrategy(new DefaultVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance(), abstractTileObjects));});
-        setSoilVisor.setOnAction(actionEvent -> {updateController.setVisorStrategy(new SoilEnergyVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance()));});
-        setDefaultVisor.fire();
+        RBsetDefaultVisor.setToggleGroup(wisorsToggle);
+        RBsetSoilVisor.setToggleGroup(wisorsToggle);
+        RBsetDefaultVisor.setOnAction(actionEvent -> {updateController.setVisorStrategy(new DefaultVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance(), abstractTileObjects));});
+        RBsetSoilVisor.setOnAction(actionEvent -> {updateController.setVisorStrategy(new SoilEnergyVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance()));});
+
+        RBsetDefaultVisor.fire();
+    }
+
+    private void initializeFunctionsToggle(){
+        functionsToggle = new ToggleGroup();
+        RBaddBot.setToggleGroup(functionsToggle);
+        RBdelBot.setToggleGroup(functionsToggle);
+        RBaddLight.setToggleGroup(functionsToggle);
+        RBdelLight.setToggleGroup(functionsToggle);
+        RBaddSoilEnergy.setToggleGroup(functionsToggle);
+        RBdelSoilEnergy.setToggleGroup(functionsToggle);
+        RBviewBot.setToggleGroup(functionsToggle);
+        RBviewTile.setToggleGroup(functionsToggle);
+
+        RBaddBot.fire();
     }
 
 }
