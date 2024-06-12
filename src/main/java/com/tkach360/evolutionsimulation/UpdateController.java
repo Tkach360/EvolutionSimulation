@@ -51,6 +51,11 @@ public class UpdateController {
         visorStrategy.drawAll();
     }
 
+    public void updateVisor(AbstractVisorStrategy newVisorStrategy){
+        setVisorStrategy(newVisorStrategy);
+        this.visorStrategy.drawAll();
+    }
+
     public ArrayList<AbstractTileObject> getAbstractTileObjects() {
         return abstractTileObjects;
     }

@@ -148,8 +148,8 @@ public class MainController implements Initializable {
         wisorsToggle = new ToggleGroup();
         RBsetDefaultVisor.setToggleGroup(wisorsToggle);
         RBsetSoilVisor.setToggleGroup(wisorsToggle);
-        RBsetDefaultVisor.setOnAction(actionEvent -> {updateController.setVisorStrategy(new DefaultVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance(), abstractTileObjects));});
-        RBsetSoilVisor.setOnAction(actionEvent -> {updateController.setVisorStrategy(new SoilEnergyVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance()));});
+        RBsetDefaultVisor.setOnAction(actionEvent -> {updateController.updateVisor(new DefaultVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance(), abstractTileObjects));});
+        RBsetSoilVisor.setOnAction(actionEvent -> {updateController.updateVisor(new SoilEnergyVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance()));});
 
         RBsetDefaultVisor.fire();
     }
