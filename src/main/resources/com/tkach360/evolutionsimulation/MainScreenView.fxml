@@ -102,6 +102,12 @@
                   <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #353535" styleClass="data-panel">
                      <children>
                         <Label text="functions" textFill="WHITE" />
+                        <HBox prefHeight="35.0" prefWidth="349.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="90.0" text="Ширина кисти" textFill="WHITE" />
+                              <Slider fx:id="sliderWidthBrush" max="50.0" prefHeight="33.0" prefWidth="253.0" showTickLabels="true" />
+                           </children>
+                        </HBox>
                         <HBox prefHeight="180.0" prefWidth="360.0">
                            <children>
                               <VBox prefHeight="180.0" prefWidth="139.0">

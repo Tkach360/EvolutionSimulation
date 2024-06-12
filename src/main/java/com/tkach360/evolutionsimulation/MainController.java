@@ -3,23 +3,19 @@ package com.tkach360.evolutionsimulation;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -41,6 +37,8 @@ public class MainController implements Initializable {
     @FXML private RadioButton RBaddLight;
     @FXML private RadioButton RBdelLight;
 
+    @FXML private Slider sliderWidthBrush;
+
     @FXML private Label countTiksLabel;
     @FXML private Label countBotsLabel;
     @FXML private Label timeSpeedLabel;
@@ -59,7 +57,11 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        mouseFunction = new MouseFunctionController(50, new BotsAdder()); // slider для контроля за этим идеально подходит
+        mouseFunction = new MouseFunctionController(1, new BotsAdder()); // slider для контроля за этим идеально подходит
+        sliderWidthBrush.valueProperty().addListener((observable, oldValue, newValue) -> {
+            mouseFunction.setWidthBrush(newValue.intValue());
+        });
+
         TileMap.getInstance(canvas);
         BotsController.getInstance(TileMap.getInstance().getCountTiles());
 
