@@ -23,7 +23,6 @@ public class UpdateController {
     }
 
     public void updateValues(){
-        countUpdate++;
         int newCountBots = 0;
         int index = BotsController.getInstance().getNextBotNodeIndex(0);
         while(index != 0){
@@ -34,6 +33,7 @@ public class UpdateController {
     }
 
     public void updateAll(){
+        countUpdate++;
         long startUpdateTime = System.nanoTime();
 
         updateTileObjects();
