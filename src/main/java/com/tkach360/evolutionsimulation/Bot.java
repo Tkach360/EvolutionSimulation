@@ -20,6 +20,7 @@ public class Bot extends AbstractTileObject{
     public static final Color SOIL_COLOR = Color.rgb(0, 0, 210);
 
     private Color color; // бот получает цвет в зависимости от последнего источника энергии
+    private BotNode botNode;
 
     private VisibleArea visibleArea;
     private int predation;
@@ -53,8 +54,7 @@ public class Bot extends AbstractTileObject{
     }
 
     // TODO: этот метод отвечает за принятие решения о действии и собственно действии
-    // index необходим для реализации размножения
-    public void doSomething(int index){
+    public void doSomething(){
         if (getVisibleArea().getTileInVisibleArea(1, getTile()).getAbstractTileObject() != null) getVisibleArea().setDirection(new Random()); // TODO: random убрать он для тестов
         moveForward();
     }
@@ -111,6 +111,19 @@ public class Bot extends AbstractTileObject{
 
     public void setVisibleArea(VisibleArea visibleArea) {
         this.visibleArea = visibleArea;
+    }
+
+    public BotNode getBotNode() {
+        return botNode;
+    }
+
+    public void setBotNode(BotNode botNode) {
+        this.botNode = botNode;
+    }
+
+    public void die(){
+        this.tile.setAbstractTileObject(null);
+        BotsController.getInstance().delBot(this);
     }
 
     // TODO: добавить стандартные методы

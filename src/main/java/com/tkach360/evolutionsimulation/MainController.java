@@ -169,7 +169,7 @@ public class MainController implements Initializable {
         RBviewTile.setToggleGroup(functionsToggle);
 
         RBaddBot.setOnAction(actionEvent -> mouseFunction = new BotsAdder());
-        RBdelBot.setOnAction(actionEvent -> mouseFunction = new BotsDeleter(abstractTileObjects));
+        RBdelBot.setOnAction(actionEvent -> mouseFunction = new BotsDeleter(8)); // TODO: изменить размер кисти
 
         RBaddBot.fire();
     }
