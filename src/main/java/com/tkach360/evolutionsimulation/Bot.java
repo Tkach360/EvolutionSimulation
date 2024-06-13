@@ -74,6 +74,14 @@ public class Bot extends AbstractTileObject{
         this.visibleArea = new VisibleArea(visibleArea);
     }
 
+    private void photosynthesize(){
+        changeEnergy(getEnergyFromSource(this.tile.getLighting(), photosynthesis));
+    }
+
+    private int getEnergyFromSource(int source, int efficiency){
+        return (source + 1) * efficiency;
+    }
+
     private void changeEnergy(int delta){
         setEnergy(this.energy + delta);
         if(this.energy == 0) die();
