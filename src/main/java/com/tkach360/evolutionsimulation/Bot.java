@@ -10,6 +10,13 @@ import java.util.Random;
  * основной класс проекта*/
 public class Bot extends AbstractTileObject{
 
+    /** количество энергии которое тратится за один тик */
+    public static int energyPerTik = 5;
+    /** максимально возможное количество энергии бота */
+    public static int maxEnergy = 100;
+    /** начальное количество энергии бота */
+    public static int defaultEnergy = maxEnergy;
+
     /** устанавливается если последним источником энергии бота был фотосинтез */
     public static final Color PHOTOSYNTHESIS_COLOR = Color.rgb(0, 210, 0);
 
@@ -22,12 +29,15 @@ public class Bot extends AbstractTileObject{
     private Color color; // бот получает цвет в зависимости от последнего источника энергии
     private BotNode botNode;
 
+    private int energy;
+
     private VisibleArea visibleArea;
     private int predation;
     private int photosynthesis;
     private int soil;
 
     public Bot(Tile tile, int[][] direction, int predation, int photosynthesis, int soil) {
+        this.energy = defaultEnergy;
         this.tile = tile;
         this.visibleArea = new VisibleArea(direction);
         this.predation = NumRangeController.setInRange(predation, 0, 4);
@@ -37,6 +47,7 @@ public class Bot extends AbstractTileObject{
     }
 
     public Bot(Tile tile, Random random){
+        this.energy = defaultEnergy;
         this.tile = tile;
         this.visibleArea = new VisibleArea(random);
         tile.setAbstractTileObject(this);
@@ -61,6 +72,16 @@ public class Bot extends AbstractTileObject{
 
     public void rotate(int[][] visibleArea) {
         this.visibleArea = new VisibleArea(visibleArea);
+    }
+
+    private void changeEnergy(int delta){
+        setEnergy(this.energy + delta);
+        if(this.energy == 0) die();
+    }
+
+    public void die(){
+        this.tile.setAbstractTileObject(null);
+        BotsController.getInstance().delBot(this);
     }
 
     public Tile getTile() {
@@ -121,9 +142,12 @@ public class Bot extends AbstractTileObject{
         this.botNode = botNode;
     }
 
-    public void die(){
-        this.tile.setAbstractTileObject(null);
-        BotsController.getInstance().delBot(this);
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = NumRangeController.setInRange(energy, 0, maxEnergy);
     }
 
     // TODO: добавить стандартные методы
