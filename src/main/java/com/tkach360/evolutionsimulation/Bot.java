@@ -78,6 +78,11 @@ public class Bot extends AbstractTileObject{
         changeEnergy(getEnergyFromSource(this.tile.getLighting(), photosynthesis));
     }
 
+    private void consumeSoil(){
+        changeEnergy(getEnergyFromSource(this.tile.getSoilEnergy(), soil));
+        this.tile.setSoilEnergy(0);
+    }
+
     private int getEnergyFromSource(int source, int efficiency){
         return (source + 1) * efficiency;
     }
