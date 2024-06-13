@@ -83,6 +83,11 @@ public class Bot extends AbstractTileObject{
         this.tile.setSoilEnergy(0);
     }
 
+    private void eatBot(Bot bot){
+        changeEnergy(getEnergyFromSource(bot.getEnergy() / 5, predation));
+        bot.die();
+    }
+
     private int getEnergyFromSource(int source, int efficiency){
         return (source + 1) * efficiency;
     }
