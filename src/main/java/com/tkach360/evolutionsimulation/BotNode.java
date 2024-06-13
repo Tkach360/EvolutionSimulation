@@ -17,6 +17,10 @@ public class BotNode{
         this.prev = prev;
     }
 
+    public int getIndex(){
+        return BotsController.getInstance().getNextBotNodeIndex(prev);
+    }
+
     public Bot getBot() {
         return bot;
     }
