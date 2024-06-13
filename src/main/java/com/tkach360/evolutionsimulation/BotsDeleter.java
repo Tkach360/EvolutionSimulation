@@ -10,7 +10,7 @@ public class BotsDeleter implements IMouseFunction{
     public void doFunc(Tile tile) {
         AbstractTileObject abs = tile.getAbstractTileObject();;
         if(abs instanceof Bot){
-            ((Bot)abs).die();
+            ((Bot)abs).delete();
         }
     }
 }
