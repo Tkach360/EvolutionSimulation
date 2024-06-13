@@ -16,6 +16,8 @@ public class Bot extends AbstractTileObject{
     public static int maxEnergy = 100;
     /** начальное количество энергии бота */
     public static int defaultEnergy = maxEnergy;
+    /** энергия, оставляемая ботом в почве после смерти */
+    public static int residualEnergyInSoil = 2;
 
     /** устанавливается если последним источником энергии бота был фотосинтез */
     public static final Color PHOTOSYNTHESIS_COLOR = Color.rgb(0, 210, 0);
@@ -98,6 +100,11 @@ public class Bot extends AbstractTileObject{
     }
 
     public void die(){
+        for(int i = 0; i < 9; i++) visibleArea.getTileInVisibleArea(i, this.tile).changeSoil(residualEnergyInSoil);
+        delete();
+    }
+
+    public void delete(){
         this.tile.setAbstractTileObject(null);
         BotsController.getInstance().delBot(this);
     }
