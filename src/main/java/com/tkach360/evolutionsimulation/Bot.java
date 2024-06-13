@@ -18,6 +18,10 @@ public class Bot extends AbstractTileObject{
     public static int defaultEnergy = maxEnergy;
     /** энергия, оставляемая ботом в почве после смерти */
     public static int residualEnergyInSoil = 2;
+    /** минимальная энергия необходимая для размножения, она передается потомку */
+    public static int minEnergyReproduction = 50;
+    /** показатель того, на сколько параметры потомка могут отличаться от параметров родителя */
+    public static int mutationSpread = 1;
 
     /** устанавливается если последним источником энергии бота был фотосинтез */
     public static final Color PHOTOSYNTHESIS_COLOR = Color.rgb(0, 210, 0);
@@ -97,6 +101,19 @@ public class Bot extends AbstractTileObject{
     private void changeEnergy(int delta){
         setEnergy(this.energy + delta);
         if(this.energy == 0) die();
+    }
+
+    // TODO: нужно доделать механику размножения с учетом алгоритма поведения
+    private void produceNewBot(Tile tile){
+        Random random = new Random();
+        int newPredation = this.predation + random.nextInt(-mutationSpread, mutationSpread);
+        int newPhotosynthesis = this.photosynthesis + random.nextInt(-mutationSpread, mutationSpread);
+        int newSoil = this.soil + random.nextInt(-mutationSpread, mutationSpread);
+        VisibleArea newVisibleArea = new VisibleArea(random);
+
+        Bot newBot = new Bot(tile, newVisibleArea.getDirection(), newPredation, newPhotosynthesis, newSoil);
+        newBot.setColor(this.color);
+        BotsController.getInstance().addBot(newBot, botNode.getIndex());
     }
 
     public void die(){
