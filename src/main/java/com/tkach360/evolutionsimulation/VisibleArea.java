@@ -6,10 +6,10 @@ import java.util.Random;
 
 public class VisibleArea {
 
-    public final static int[][] UP = {{-1, 0, 1, -1, 0, 1}, {-1, -1, -1, 0, 0, 0}};
-    public final static int[][] DOWN = {{1, 0, -1, 1, 0, -1}, {1, 1, 1, 0, 0, 0}};
-    public final static int[][] LEFT = {{-1, -1, -1, 0, 0, 0}, {1, 0, -1, 1, 0, -1}};
-    public final static int[][] RIGHT = {{1, 1, 1, 0, 0, 0}, {-1, 0, 1, -1, 0, 1}};
+    public final static int[][] UP = {{-1, 0, 1, -1, 0, 1, -1, 0, 1}, {-1, -1, -1, 0, 0, 0, 1, 1, 1}};
+    public final static int[][] DOWN = {{1, 0, -1, 1, 0, -1, 1, 0, -1}, {1, 1, 1, 0, 0, 0, -1, -1, -1}};
+    public final static int[][] LEFT = {{-1, -1, -1, 0, 0, 0, 1, 1, 1}, {1, 0, -1, 1, 0, -1, -1, -1, -1}};
+    public final static int[][] RIGHT = {{1, 1, 1, 0, 0, 0, -1, -1, -1}, {-1, 0, 1, -1, 0, 1, -1, 0, 1}};
 
     private int[][] direction;
 
