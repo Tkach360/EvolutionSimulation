@@ -15,7 +15,7 @@ public class Bot extends AbstractTileObject{
     /** максимально возможное количество энергии бота */
     public static int maxEnergy = 100;
     /** энергия, оставляемая ботом в почве после смерти */
-    public static int residualEnergyInSoil = 2;
+    public static int residualEnergyInSoil = 1;
     /** минимальная энергия необходимая для размножения, она передается потомку */
     public static int minEnergyReproduction = 50;
     /** начальное количество энергии бота */
@@ -102,6 +102,10 @@ public class Bot extends AbstractTileObject{
 
     private void changeEnergy(int delta){
         setEnergy(this.energy + delta);
+    }
+
+    public void updateState(){
+        changeEnergy(-energyPerTik);
         if(this.energy == 0) die();
     }
 
