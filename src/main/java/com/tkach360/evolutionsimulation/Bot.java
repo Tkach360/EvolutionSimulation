@@ -14,12 +14,12 @@ public class Bot extends AbstractTileObject{
     public static int energyPerTik = 5;
     /** максимально возможное количество энергии бота */
     public static int maxEnergy = 100;
-    /** начальное количество энергии бота */
-    public static int defaultEnergy = maxEnergy;
     /** энергия, оставляемая ботом в почве после смерти */
     public static int residualEnergyInSoil = 2;
     /** минимальная энергия необходимая для размножения, она передается потомку */
     public static int minEnergyReproduction = 50;
+    /** начальное количество энергии бота */
+    public static int defaultEnergy = minEnergyReproduction;
     /** показатель того, на сколько параметры потомка могут отличаться от параметров родителя */
     public static int mutationSpread = 1;
 
@@ -35,6 +35,7 @@ public class Bot extends AbstractTileObject{
     private Color color; // бот получает цвет в зависимости от последнего источника энергии
     private BotNode botNode;
 
+    private AbstractBehavior behavior;
     private int energy;
 
     private VisibleArea visibleArea;
@@ -43,6 +44,7 @@ public class Bot extends AbstractTileObject{
     private int soil;
 
     public Bot(Tile tile, int[][] direction, int predation, int photosynthesis, int soil) {
+        this.behavior = new TestBehavior(this);//
         this.energy = defaultEnergy;
         this.tile = tile;
         this.visibleArea = new VisibleArea(direction);
@@ -53,6 +55,7 @@ public class Bot extends AbstractTileObject{
     }
 
     public Bot(Tile tile, Random random){
+        this.behavior = new TestBehavior(this);//
         this.energy = defaultEnergy;
         this.tile = tile;
         this.visibleArea = new VisibleArea(random);
@@ -63,7 +66,7 @@ public class Bot extends AbstractTileObject{
         this.color = PHOTOSYNTHESIS_COLOR;
     }
 
-    private void moveForward(){
+    public void moveForward(){
         Tile tileForward = visibleArea.getTileInVisibleArea(1, this.tile);
         if(tileForward.getAbstractTileObject() == null){
             setTile(tileForward);
@@ -72,24 +75,23 @@ public class Bot extends AbstractTileObject{
 
     // TODO: этот метод отвечает за принятие решения о действии и собственно действии
     public void doSomething(){
-        if (getVisibleArea().getTileInVisibleArea(1, getTile()).getAbstractTileObject() != null) getVisibleArea().setDirection(new Random()); // TODO: random убрать он для тестов
-        moveForward();
+        behavior.doSomething();
     }
 
     public void rotate(int[][] visibleArea) {
         this.visibleArea = new VisibleArea(visibleArea);
     }
 
-    private void photosynthesize(){
+    public void photosynthesize(){
         changeEnergy(getEnergyFromSource(this.tile.getLighting(), photosynthesis));
     }
 
-    private void consumeSoil(){
+    public void consumeSoil(){
         changeEnergy(getEnergyFromSource(this.tile.getSoilEnergy(), soil));
         this.tile.setSoilEnergy(0);
     }
 
-    private void eatBot(Bot bot){
+    public void eatBot(Bot bot){
         changeEnergy(getEnergyFromSource(bot.getEnergy() / 5, predation));
         bot.die();
     }
@@ -104,7 +106,7 @@ public class Bot extends AbstractTileObject{
     }
 
     // TODO: нужно доделать механику размножения с учетом алгоритма поведения
-    private void produceNewBot(Tile tile){
+    public void produceNewBot(Tile tile){
         Random random = new Random();
         int newPredation = this.predation + random.nextInt(-mutationSpread, mutationSpread);
         int newPhotosynthesis = this.photosynthesis + random.nextInt(-mutationSpread, mutationSpread);

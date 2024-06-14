@@ -2,6 +2,7 @@ package com.tkach360.evolutionsimulation;
 
 import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class VisibleArea {
@@ -49,5 +50,19 @@ public class VisibleArea {
         if(tY < 0) tY = TileMap.getInstance().getCountRows() - 1;
 
         return TileMap.getInstance().getTiles()[tX][tY];
+    }
+
+    public ArrayList<Tile> getTilesNear(Tile thisTile){
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
+
+        for(int i = 0; i < 9; i++){
+            if(i == 4) continue;
+            else{
+                Tile tile = getTileInVisibleArea(i, thisTile);
+                tiles.add(tile);
+            }
+        }
+
+        return tiles;
     }
 }

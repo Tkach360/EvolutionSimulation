@@ -34,14 +34,19 @@ public class BotsController {
                 botsList[prev].setNext(i);
                 botsList[next].setPrev(i);
 
+                System.out.println("добавил " + prev + " -> " + i + " -> " + next);
+
                 return;
             }
         }
+        System.out.println("ЖОПА");
     }
 
     public void delBot(Bot bot){
         int prevInd = bot.getBotNode().getPrev();
         int nextInd = bot.getBotNode().getNext();
+
+        System.out.println("удалил " + bot.getBotNode().getIndex() + " теперь: " + prevInd + " -> " + nextInd);
 
         botsList[nextInd].setPrev(prevInd);
         botsList[prevInd].setNext(nextInd);
