@@ -7,6 +7,7 @@ public class BotsController {
     private BotNode[] botsList;
 
     private BotsController(int maxCountBots) {
+        maxCountBots++;
         this.botsList = new BotNode[maxCountBots];
         for (int i = 0; i < maxCountBots; i++) this.botsList[i] = new BotNode();
     }
