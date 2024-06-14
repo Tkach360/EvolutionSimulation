@@ -14,7 +14,6 @@ public class BotsAdder implements IMouseFunction{
     public void doFunc(Tile tile) {
         if(tile.getAbstractTileObject() == null) {
             BotsController.getInstance().addBot(new Bot(tile, random), 0);
-            System.out.println("добавил бота");
-        } else System.out.println("тут не пусто ");
+        }
     }
 }

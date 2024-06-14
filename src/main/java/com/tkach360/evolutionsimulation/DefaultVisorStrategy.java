@@ -29,8 +29,6 @@ public class DefaultVisorStrategy extends AbstractVisorStrategy {
                 drawTileLight(tile);
             }
         }
-
-        System.out.println("перерисовал");
     }
 
     private void drawBot(Bot bot){

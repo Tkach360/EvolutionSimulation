@@ -111,8 +111,6 @@ public class MainController implements Initializable {
         updateController.getVisorStrategy().drawAll();
         updateController.updateValues();
         updateTable();
-
-        System.out.println("нажал");
     }
 
     @FXML
