@@ -2,6 +2,7 @@ package com.tkach360.evolutionsimulation;
 
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /** класс бота
@@ -31,18 +32,18 @@ public class Bot extends AbstractTileObject{
     /** ссылка на узел в botsController, устанавливается при вызове IBotsController.addBot() */
     private BotNode botNode;
 
-    private AbstractBehavior behavior;
-    private VisibleArea visibleArea;
+    private final AbstractBehavior behavior;
+    private Direction direction;
     private Color color; // бот получает цвет в зависимости от последнего источника энергии
     private int energy;
     private int predation;
     private int photosynthesis;
     private int soil;
 
-    public Bot(Tile tile, AbstractBehavior behavior, VisibleArea visibleArea, Color color, int energy, int predation, int photosynthesis, int soil) {
+    public Bot(Tile tile, AbstractBehavior behavior, Direction direction, Color color, int energy, int predation, int photosynthesis, int soil) {
         this.tile = tile;
         this.behavior = behavior;
-        this.visibleArea = visibleArea;
+        this.direction = direction;
         this.color = color;
         this.energy = energy;
         this.predation = predation;
@@ -54,31 +55,57 @@ public class Bot extends AbstractTileObject{
     public Bot(Tile tile, Random random){
         this.tile = tile;
         this.behavior = new TestBehavior(); //TODO изменить при дорпботке механизма неследования поведения
-        this.visibleArea = new VisibleArea(random);
+        this.direction = Direction.getRandom(random);
         this.color = PHOTOSYNTHESIS_COLOR;
         this.energy = defaultEnergy;
-        this.predation = random.nextInt(5);
-        this.photosynthesis = random.nextInt(5);
-        this.soil = random.nextInt(5);
+        this.predation = random.nextInt(10);
+        this.photosynthesis = random.nextInt(10);
+        this.soil = random.nextInt(10);
 
         tile.setAbstractTileObject(this);
     }
 
     public void moveForward(){
-        Tile tileForward = visibleArea.getTileInVisibleArea(1, this.tile);
+        Tile tileForward = getTileInVisibleArea(1);
         if(tileForward.getAbstractTileObject() == null){
             setTile(tileForward);
         }
+    }
+
+    public Tile getTileInVisibleArea(int index){
+
+        int[][] arrayBias = Direction.getArrayVisibleAreaBias(this.direction);
+
+        int tX = this.tile.getCx() + arrayBias[0][index];
+        int tY = this.tile.getCy() + arrayBias[1][index];
+
+        if(tX > TileMap.getInstance().getCountColumns() - 1) tX = 0;
+        if(tY > TileMap.getInstance().getCountRows() - 1) tY = 0;
+        if(tX < 0) tX = TileMap.getInstance().getCountColumns() - 1;
+        if(tY < 0) tY = TileMap.getInstance().getCountRows() - 1;
+
+        return TileMap.getInstance().getTiles()[tX][tY];
+    }
+
+    /** возвращает список тайлов поблизости
+     * среди этих тайлов нет передаваемого тайла */
+    public ArrayList<Tile> getTilesNear(Tile thisTile){
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
+
+        for(int i = 0; i < 9; i++){
+            if(i != 4) {
+                Tile tile = getTileInVisibleArea(i);
+                tiles.add(tile);
+            }
+        }
+
+        return tiles;
     }
 
     // TODO: этот метод отвечает за принятие решения о действии и собственно действии
     public void update(){
         behavior.doSomething(this);
         updateState();
-    }
-
-    public void rotate(int[][] visibleArea) {
-        this.visibleArea = new VisibleArea(visibleArea);
     }
 
     public void photosynthesize(){
@@ -115,7 +142,7 @@ public class Bot extends AbstractTileObject{
         Bot newBot = new Bot(
                 tile,
                 this.behavior,
-                new VisibleArea(random),
+                Direction.getRandom(random),
                 this.color,
                 minEnergyReproduction,
                 this.predation + random.nextInt(-mutationSpread, mutationSpread),
@@ -127,7 +154,7 @@ public class Bot extends AbstractTileObject{
     }
 
     public void die(){
-        for(int i = 0; i < 9; i++) visibleArea.getTileInVisibleArea(i, this.tile).changeSoil(residualEnergyInSoil);
+        for(int i = 0; i < 9; i++) getTileInVisibleArea(i).changeSoil(residualEnergyInSoil);
         delete();
     }
 
@@ -145,6 +172,14 @@ public class Bot extends AbstractTileObject{
         this.tile.setAbstractTileObject(null);
         this.tile = tile;
         tile.setAbstractTileObject(this);
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     public int getPredation() {
@@ -177,14 +212,6 @@ public class Bot extends AbstractTileObject{
 
     public void setColor(Color color) {
         this.color = color;
-    }
-
-    public VisibleArea getVisibleArea() {
-        return visibleArea;
-    }
-
-    public void setVisibleArea(VisibleArea visibleArea) {
-        this.visibleArea = visibleArea;
     }
 
     public BotNode getBotNode() {

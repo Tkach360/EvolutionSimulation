@@ -10,7 +10,7 @@ public class TestBehavior extends AbstractBehavior{
 
         Random random = new Random();
 
-        ArrayList<Tile> tilesNear = bot.getVisibleArea().getTilesNear(bot.getTile());
+        ArrayList<Tile> tilesNear = bot.getTilesNear(bot.getTile());
         ArrayList<Tile> cleanTiles = new ArrayList<>();
         ArrayList<Tile> notCleanTiles = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class TestBehavior extends AbstractBehavior{
                         bot.moveForward();
                         break;
                     case 1:
-                        bot.setVisibleArea(new VisibleArea(random));
+                        bot.setDirection(Direction.getRandom(random));
                         break;
                 }
             }
@@ -50,7 +50,7 @@ public class TestBehavior extends AbstractBehavior{
                                     bot.moveForward();
                                     break;
                                 case 1:
-                                    bot.setVisibleArea(new VisibleArea(random));
+                                    bot.setDirection(Direction.getRandom(random));
                                     break;
                             }
                         }
