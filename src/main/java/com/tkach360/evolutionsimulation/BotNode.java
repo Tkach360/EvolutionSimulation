@@ -4,21 +4,28 @@ public class BotNode{
     private Bot bot;
     private int next;
     private int prev;
+    private final int index;
+    private final IBotsController botsController;
 
-    public BotNode() {
+    public BotNode(IBotsController botsController, int index) {
+        this.botsController = botsController;
         this.bot = null;
         this.next = 0;
         this.prev = 0;
+        this.index = index;
     }
 
-    public BotNode(Bot bot, int next, int prev) {
-        this.bot = bot;
-        this.next = next;
-        this.prev = prev;
+    public void registerNewBot(Bot bot){
+        botsController.addBot(bot, this.index);
+    }
+
+    public void unRegisterBot(){
+        botsController.delBot(this.bot);
+        this.bot = null;
     }
 
     public int getIndex(){
-        return BotsController.getInstance().getNextBotNodeIndex(prev);
+        return this.index;
     }
 
     public Bot getBot() {
