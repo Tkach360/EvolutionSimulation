@@ -3,8 +3,6 @@ package com.tkach360.evolutionsimulation;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -51,25 +50,33 @@ public class MainController implements Initializable {
 
     @FXML private Canvas canvas;
     private Timeline timeline;
+    private Random random;
 
+    private IBotsController botsController;
     private UpdateController updateController;
     private MouseFunctionController mouseFunction;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        random = new Random();
         currentTimeRate = 1.0;
-        mouseFunction = new MouseFunctionController(1, new BotsAdder()); // slider для контроля за этим идеально подходит
+        mouseFunction = new MouseFunctionController(1, new BotsAdder(botsController, random)); // slider для контроля за этим идеально подходит
         sliderWidthBrush.valueProperty().addListener((observable, oldValue, newValue) -> {
             mouseFunction.setWidthBrush(newValue.intValue());
         });
 
         TileMap.getInstance(canvas);
-        BotsController.getInstance(TileMap.getInstance().getCountTiles());
+        botsController = new BotsControllerWithArray(TileMap.getInstance().getCountTiles());
 
-        updateController = new UpdateController(new DefaultVisorStrategy(
+        updateController = new UpdateController(
+                new DefaultVisorStrategy(
                         canvas.getGraphicsContext2D(),
-                        TileMap.getInstance())
+                        botsController,
+                        TileMap.getInstance(),
+                        new DefaultBotPainter(),
+                        new DefaultLightPainter()),
+                botsController
         );
 
         timeline = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
@@ -138,10 +145,7 @@ public class MainController implements Initializable {
     private void changeSpeed(double delta){
         double newRate = currentTimeRate * delta;
 
-        if(newRate < MIN_TIME_SPEED || newRate > MAX_TIME_SPEED){
-            System.out.println("так " + Double.toString(newRate));
-            return;
-        }
+        if(newRate < MIN_TIME_SPEED || newRate > MAX_TIME_SPEED) return;
 
         currentTimeRate = newRate;
         timeSpeedLabel.setText("x" + Double.toString(currentTimeRate));
@@ -152,7 +156,13 @@ public class MainController implements Initializable {
         wisorsToggle = new ToggleGroup();
         RBsetDefaultVisor.setToggleGroup(wisorsToggle);
         RBsetSoilVisor.setToggleGroup(wisorsToggle);
-        RBsetDefaultVisor.setOnAction(actionEvent -> {updateController.updateVisor(new DefaultVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance()));});
+        RBsetDefaultVisor.setOnAction(actionEvent -> {updateController.updateVisor(
+                new DefaultVisorStrategy(
+                        canvas.getGraphicsContext2D(),
+                        botsController,
+                        TileMap.getInstance(),
+                        new DefaultBotPainter(),
+                        new DefaultLightPainter()));});
         RBsetSoilVisor.setOnAction(actionEvent -> {updateController.updateVisor(new SoilEnergyVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance()));});
 
         RBsetDefaultVisor.fire();
@@ -169,7 +179,7 @@ public class MainController implements Initializable {
         RBviewBot.setToggleGroup(functionsToggle);
         RBviewTile.setToggleGroup(functionsToggle);
 
-        RBaddBot.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new BotsAdder()));
+        RBaddBot.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new BotsAdder(botsController, random)));
         RBdelBot.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new BotsDeleter())); // TODO: изменить размер кисти
         RBaddLight.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new LightAdder(1)));
         RBdelLight.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new LightAdder(-1)));
