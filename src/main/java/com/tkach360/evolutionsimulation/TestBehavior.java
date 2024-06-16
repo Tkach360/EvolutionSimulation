@@ -5,12 +5,8 @@ import java.util.Random;
 
 public class TestBehavior extends AbstractBehavior{
 
-    public TestBehavior(Bot bot) {
-        super(bot);
-    }
-
     @Override
-    public void doSomething() {
+    public void doSomething(Bot bot) {
 
         Random random = new Random();
 
@@ -24,37 +20,37 @@ public class TestBehavior extends AbstractBehavior{
         }
 
         if (!cleanTiles.isEmpty()){
-            if(this.bot.getEnergy() > 70) {
-                this.bot.produceNewBot(cleanTiles.get(random.nextInt(cleanTiles.size())));
+            if(bot.getEnergy() > Bot.minEnergyReproduction + 20) {
+                bot.produceNewBot(cleanTiles.get(random.nextInt(cleanTiles.size())));
                 switch (random.nextInt(2)){
                     case 0:
-                        this.bot.moveForward();
+                        bot.moveForward();
                         break;
                     case 1:
-                        this.bot.setVisibleArea(new VisibleArea(random));
+                        bot.setVisibleArea(new VisibleArea(random));
                         break;
                 }
             }
             else{
                 switch (random.nextInt(3)){
                     case 0:
-                        this.bot.photosynthesize();
+                        bot.photosynthesize();
                         break;
                     case 1:
-                        this.bot.consumeSoil();
+                        bot.consumeSoil();
                         break;
                     case 2:
                         if(!notCleanTiles.isEmpty()){
                             Tile tile = notCleanTiles.get(random.nextInt(notCleanTiles.size()));
-                            this.bot.eatBot((Bot)(tile.getAbstractTileObject()));
+                            bot.eatBot((Bot)(tile.getAbstractTileObject()));
                         }
                         else {
                             switch (random.nextInt(2)){
                                 case 0:
-                                    this.bot.moveForward();
+                                    bot.moveForward();
                                     break;
                                 case 1:
-                                    this.bot.setVisibleArea(new VisibleArea(random));
+                                    bot.setVisibleArea(new VisibleArea(random));
                                     break;
                             }
                         }
@@ -64,7 +60,7 @@ public class TestBehavior extends AbstractBehavior{
         }
         else{
             Tile tile = notCleanTiles.get(random.nextInt(notCleanTiles.size()));
-            this.bot.eatBot((Bot)(tile.getAbstractTileObject()));
+            bot.eatBot((Bot)(tile.getAbstractTileObject()));
         }
     }
 }
