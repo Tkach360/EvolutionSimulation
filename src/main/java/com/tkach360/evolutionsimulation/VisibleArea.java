@@ -52,12 +52,13 @@ public class VisibleArea {
         return TileMap.getInstance().getTiles()[tX][tY];
     }
 
+    /** возвращает список тайлов поблизости
+     * среди этих тайлов нет передаваемого тайла */
     public ArrayList<Tile> getTilesNear(Tile thisTile){
         ArrayList<Tile> tiles = new ArrayList<Tile>();
 
         for(int i = 0; i < 9; i++){
-            if(i == 4) continue;
-            else{
+            if(i != 4) {
                 Tile tile = getTileInVisibleArea(i, thisTile);
                 tiles.add(tile);
             }
