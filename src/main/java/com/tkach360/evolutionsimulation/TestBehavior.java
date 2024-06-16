@@ -15,8 +15,8 @@ public class TestBehavior extends AbstractBehavior{
         Random random = new Random();
 
         ArrayList<Tile> tilesNear = bot.getVisibleArea().getTilesNear(bot.getTile());
-        ArrayList<Tile> cleanTiles = new ArrayList<Tile>();
-        ArrayList<Tile> notCleanTiles = new ArrayList<Tile>();
+        ArrayList<Tile> cleanTiles = new ArrayList<>();
+        ArrayList<Tile> notCleanTiles = new ArrayList<>();
 
         for(Tile tile : tilesNear) {
             if(tile.getAbstractTileObject() == null) cleanTiles.add(tile);
@@ -24,7 +24,17 @@ public class TestBehavior extends AbstractBehavior{
         }
 
         if (!cleanTiles.isEmpty()){
-            if(this.bot.getEnergy() > 70) this.bot.produceNewBot(cleanTiles.get(random.nextInt(cleanTiles.size())));
+            if(this.bot.getEnergy() > 70) {
+                this.bot.produceNewBot(cleanTiles.get(random.nextInt(cleanTiles.size())));
+                switch (random.nextInt(2)){
+                    case 0:
+                        this.bot.moveForward();
+                        break;
+                    case 1:
+                        this.bot.setVisibleArea(new VisibleArea(random));
+                        break;
+                }
+            }
             else{
                 switch (random.nextInt(3)){
                     case 0:

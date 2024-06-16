@@ -33,8 +33,6 @@ public class BotsControllerWithArray implements IBotsController {
         int prevInd = bot.getBotNode().getPrev();
         int nextInd = bot.getBotNode().getNext();
 
-        System.out.println("удалил " + bot.getBotNode().getIndex() + " теперь: " + prevInd + " -> " + nextInd);
-
         botsList[nextInd].setPrev(prevInd);
         botsList[prevInd].setNext(nextInd);
     }
