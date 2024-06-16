@@ -1,53 +1,36 @@
 package com.tkach360.evolutionsimulation;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
 
 /** описывает стандартный режим рисования объектов на поле*/
 public class DefaultVisorStrategy extends AbstractVisorStrategy {
+    private IBotsController botsController;
+    private IBotPaint botPainter;
+    private ILightPaint lightPainter;
 
-    public DefaultVisorStrategy(GraphicsContext gc, TileMap tileMap) {
+    public DefaultVisorStrategy(GraphicsContext gc, IBotsController botsController, TileMap tileMap, IBotPaint botPainter, ILightPaint lightPainter) {
         super(gc, tileMap);
+        this.botsController = botsController;
+        this.botPainter = botPainter;
+        this.lightPainter = lightPainter;
     }
 
     @Override
-    public void drawAll() {
+    public void drawAll(){
         gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
 
         // рисуем ботов
-        int index = BotsController.getInstance().getNextBotNodeIndex(0);
-        while(index != 0){
-            drawBot(BotsController.getInstance().getBot(index));
-            index = BotsController.getInstance().getNextBotNodeIndex(index);
+        Bot bot = botsController.getFirst();
+        while (bot != null){
+            botPainter.drawBot(bot, gc);
+            bot = botsController.getNextBot(bot);
         }
 
         // накладываем освещение
         for(Tile[] rowTiles : tileMap.getTiles()){
             for(Tile tile : rowTiles){
-                drawTileLight(tile);
+                lightPainter.drawLight(tile, gc);
             }
         }
-    }
-
-    private void drawBot(Bot bot){
-        gc.setFill(Color.BLACK);
-        Field bt = bot.getTile().getField();
-        gc.fillRect(bt.getCx(), bt.getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
-        gc.setFill(bot.getColor());
-        gc.fillRect(
-                bt.getCx()+TileMap.EDGE_DISTANCE,
-                bt.getCy()+TileMap.EDGE_DISTANCE,
-                TileMap.TILE_SIDE - 2*TileMap.EDGE_DISTANCE,
-                TileMap.TILE_SIDE - 2*TileMap.EDGE_DISTANCE
-        );
-    }
-
-    private void drawTileLight(Tile tile){
-
-        Color colorLight = Color.rgb(0, 0, 0, 0.1 * (4 - tile.getLighting()));
-        gc.setFill(colorLight);
-        gc.fillRect(tile.getField().getCx(), tile.getField().getCy(), TileMap.TILE_SIDE, TileMap.TILE_SIDE);
     }
 }

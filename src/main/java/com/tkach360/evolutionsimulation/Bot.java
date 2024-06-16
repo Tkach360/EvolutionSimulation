@@ -1,8 +1,6 @@
 package com.tkach360.evolutionsimulation;
 
-import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
-import javafx.util.Pair;
 
 import java.util.Random;
 
@@ -32,12 +30,11 @@ public class Bot extends AbstractTileObject{
     /** устанавливается если последним источником энергии бота была энергия почвы */
     public static final Color SOIL_COLOR = Color.rgb(0, 0, 210);
 
-    private Color color; // бот получает цвет в зависимости от последнего источника энергии
     private BotNode botNode;
 
-    private AbstractBehavior behavior;
     private int energy;
-
+    private Color color; // бот получает цвет в зависимости от последнего источника энергии
+    private AbstractBehavior behavior;
     private VisibleArea visibleArea;
     private int predation;
     private int photosynthesis;
@@ -47,6 +44,7 @@ public class Bot extends AbstractTileObject{
         this.behavior = new TestBehavior(this);//
         this.energy = defaultEnergy;
         this.tile = tile;
+        tile.setAbstractTileObject(this);
         this.visibleArea = new VisibleArea(direction);
         this.predation = NumRangeController.setInRange(predation, 0, 4);
         this.photosynthesis = NumRangeController.setInRange(photosynthesis, 0, 4);
@@ -74,8 +72,9 @@ public class Bot extends AbstractTileObject{
     }
 
     // TODO: этот метод отвечает за принятие решения о действии и собственно действии
-    public void doSomething(){
+    public void update(){
         behavior.doSomething();
+        updateState();
     }
 
     public void rotate(int[][] visibleArea) {
@@ -104,7 +103,7 @@ public class Bot extends AbstractTileObject{
         setEnergy(this.energy + delta);
     }
 
-    public void updateState(){
+    private void updateState(){
         changeEnergy(-energyPerTik);
         if(this.energy == 0) die();
     }
@@ -119,7 +118,10 @@ public class Bot extends AbstractTileObject{
 
         Bot newBot = new Bot(tile, newVisibleArea.getDirection(), newPredation, newPhotosynthesis, newSoil);
         newBot.setColor(this.color);
-        BotsController.getInstance().addBot(newBot, botNode.getIndex());
+        //Bot newBot = new Bot(tile, random);
+        this.botNode.registerNewBot(newBot);
+
+        //this.botNode.registerNewBot(this);
     }
 
     public void die(){
@@ -129,7 +131,8 @@ public class Bot extends AbstractTileObject{
 
     public void delete(){
         this.tile.setAbstractTileObject(null);
-        BotsController.getInstance().delBot(this);
+        this.tile = null;
+        this.botNode.unRegisterBot();
     }
 
     public Tile getTile() {

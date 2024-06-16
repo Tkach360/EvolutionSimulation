@@ -1,35 +1,28 @@
 package com.tkach360.evolutionsimulation;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 public class UpdateController {
 
     private int countUpdate;
     private int countBots;
     private long lastUpdateTime;
     private AbstractVisorStrategy visorStrategy;
+    private final IBotsController botsController;
 
-    public UpdateController(AbstractVisorStrategy visorStrategy) {
+    public UpdateController(AbstractVisorStrategy visorStrategy, IBotsController botsController) {
+        this.botsController = botsController;
         this.visorStrategy = visorStrategy;
         this.lastUpdateTime = 0;
         this.countUpdate = 0;
         this.countBots = 0;
     }
 
-    // TODO: тестовый
+    // TODO: тестовый, пока нет других TileObjects
     private void updateTileObjects(){
-        BotsController.getInstance().update();
+        updateBots();
     }
 
     public void updateValues(){
-        int newCountBots = 0;
-        int index = BotsController.getInstance().getNextBotNodeIndex(0);
-        while(index != 0){
-            newCountBots++;
-            index = BotsController.getInstance().getNextBotNodeIndex(index);
-        }
-        countBots = newCountBots;
+        this.countBots = botsController.getCountBots();
     }
 
     public void updateAll(){
@@ -48,6 +41,14 @@ public class UpdateController {
     public void updateVisor(AbstractVisorStrategy newVisorStrategy){
         setVisorStrategy(newVisorStrategy);
         this.visorStrategy.drawAll();
+    }
+
+    private void updateBots(){
+        Bot bot = botsController.getFirst();
+        while (bot != null){
+            bot.update();
+            bot = botsController.getNextBot(bot);
+        }
     }
 
     public AbstractVisorStrategy getVisorStrategy() {
