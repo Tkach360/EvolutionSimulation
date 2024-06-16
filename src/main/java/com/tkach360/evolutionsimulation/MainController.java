@@ -94,7 +94,7 @@ public class MainController implements Initializable {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
 
-        initializeWisorsToggle();
+        initializeVisorsToggle();
         initializeFunctionsToggle();
         updateTable();
     }
@@ -152,7 +152,7 @@ public class MainController implements Initializable {
         timeline.setRate(currentTimeRate);
     }
 
-    private void initializeWisorsToggle(){
+    private void initializeVisorsToggle(){
         wisorsToggle = new ToggleGroup();
         RBsetDefaultVisor.setToggleGroup(wisorsToggle);
         RBsetSoilVisor.setToggleGroup(wisorsToggle);
