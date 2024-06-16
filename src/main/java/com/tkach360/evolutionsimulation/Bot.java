@@ -23,45 +23,45 @@ public class Bot extends AbstractTileObject{
 
     /** устанавливается если последним источником энергии бота был фотосинтез */
     public static final Color PHOTOSYNTHESIS_COLOR = Color.rgb(0, 210, 0);
-
     /** устанавливается если последним источником энергии бота было хищничество */
     public static final Color PREDATION_COLOR = Color.rgb(210, 0, 0);
-
     /** устанавливается если последним источником энергии бота была энергия почвы */
     public static final Color SOIL_COLOR = Color.rgb(0, 0, 210);
 
+    /** ссылка на узел в botsController, устанавливается при вызове IBotsController.addBot() */
     private BotNode botNode;
 
-    private int energy;
-    private Color color; // бот получает цвет в зависимости от последнего источника энергии
     private AbstractBehavior behavior;
     private VisibleArea visibleArea;
+    private Color color; // бот получает цвет в зависимости от последнего источника энергии
+    private int energy;
     private int predation;
     private int photosynthesis;
     private int soil;
 
-    public Bot(Tile tile, int[][] direction, int predation, int photosynthesis, int soil) {
-        this.behavior = new TestBehavior(this);//
-        this.energy = defaultEnergy;
+    public Bot(Tile tile, AbstractBehavior behavior, VisibleArea visibleArea, Color color, int energy, int predation, int photosynthesis, int soil) {
         this.tile = tile;
+        this.behavior = behavior;
+        this.visibleArea = visibleArea;
+        this.color = color;
+        this.energy = energy;
+        this.predation = predation;
+        this.photosynthesis = photosynthesis;
+        this.soil = soil;
         tile.setAbstractTileObject(this);
-        this.visibleArea = new VisibleArea(direction);
-        this.predation = NumRangeController.setInRange(predation, 0, 4);
-        this.photosynthesis = NumRangeController.setInRange(photosynthesis, 0, 4);
-        this.soil = NumRangeController.setInRange(soil, 0, 4);
-        this.color = PHOTOSYNTHESIS_COLOR;
     }
 
     public Bot(Tile tile, Random random){
-        this.behavior = new TestBehavior(this);//
-        this.energy = defaultEnergy;
         this.tile = tile;
+        this.behavior = new TestBehavior(); //TODO изменить при дорпботке механизма неследования поведения
         this.visibleArea = new VisibleArea(random);
-        tile.setAbstractTileObject(this);
+        this.color = PHOTOSYNTHESIS_COLOR;
+        this.energy = defaultEnergy;
         this.predation = random.nextInt(5);
         this.photosynthesis = random.nextInt(5);
         this.soil = random.nextInt(5);
-        this.color = PHOTOSYNTHESIS_COLOR;
+
+        tile.setAbstractTileObject(this);
     }
 
     public void moveForward(){
@@ -73,7 +73,7 @@ public class Bot extends AbstractTileObject{
 
     // TODO: этот метод отвечает за принятие решения о действии и собственно действии
     public void update(){
-        behavior.doSomething();
+        behavior.doSomething(this);
         updateState();
     }
 
@@ -111,17 +111,19 @@ public class Bot extends AbstractTileObject{
     // TODO: нужно доделать механику размножения с учетом алгоритма поведения
     public void produceNewBot(Tile tile){
         Random random = new Random();
-        int newPredation = this.predation + random.nextInt(-mutationSpread, mutationSpread);
-        int newPhotosynthesis = this.photosynthesis + random.nextInt(-mutationSpread, mutationSpread);
-        int newSoil = this.soil + random.nextInt(-mutationSpread, mutationSpread);
-        VisibleArea newVisibleArea = new VisibleArea(random);
 
-        Bot newBot = new Bot(tile, newVisibleArea.getDirection(), newPredation, newPhotosynthesis, newSoil);
-        newBot.setColor(this.color);
-        //Bot newBot = new Bot(tile, random);
+        Bot newBot = new Bot(
+                tile,
+                this.behavior,
+                new VisibleArea(random),
+                this.color,
+                minEnergyReproduction,
+                this.predation + random.nextInt(-mutationSpread, mutationSpread),
+                this.photosynthesis + random.nextInt(-mutationSpread, mutationSpread),
+                this.soil + random.nextInt(-mutationSpread, mutationSpread)
+        );
+
         this.botNode.registerNewBot(newBot);
-
-        //this.botNode.registerNewBot(this);
     }
 
     public void die(){
