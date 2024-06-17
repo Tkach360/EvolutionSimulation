@@ -52,7 +52,7 @@ public class MainController implements Initializable {
     private Timeline timeline;
     private Random random;
 
-    private IBotsController botsController;
+    private UpdatableTileObjectsController botsController;
     private UpdateController updateController;
     private MouseFunctionController mouseFunction;
 
@@ -67,7 +67,7 @@ public class MainController implements Initializable {
         });
 
         TileMap.getInstance(canvas);
-        botsController = new BotsControllerWithArray(TileMap.getInstance().getCountTiles());
+        botsController = new UpdatableTileObjectsControllerWithArray(TileMap.getInstance().getCountTiles());
 
         updateController = new UpdateController(
                 new DefaultVisorStrategy(
@@ -87,7 +87,7 @@ public class MainController implements Initializable {
                     pauseButton.setText("▶");
                     return;
                 }*/
-                if(updateController.getCountBots() == 0) pause();
+                if(updateController.getCount(TypeTileObject.Bot) == 0) pause();
                 updateController.updateAll();
                 updateTable();
             }
@@ -102,7 +102,7 @@ public class MainController implements Initializable {
     private void updateTable(){
         timeSpeedLabel.setText("x" + Double.toString(currentTimeRate));
         countTiksLabel.setText(Integer.toString(updateController.getCountUpdate()));
-        countBotsLabel.setText(Integer.toString(updateController.getCountBots()));
+        countBotsLabel.setText(Integer.toString(updateController.getCount(TypeTileObject.Bot)));
         lastUpdateTimeLabel.setText(Long.toString(updateController.getLastUpdateTime()) + "ns");
     }
 
@@ -116,13 +116,13 @@ public class MainController implements Initializable {
 
         mouseFunction.changeTiles(TileMap.getInstance().getTiles()[tX][tY]);
         updateController.getVisorStrategy().drawAll();
-        updateController.updateValues();
+        updateController.recalculateObjects();
         updateTable();
     }
 
     @FXML
     private void pause(){
-        if(timeline.getStatus() == Animation.Status.RUNNING || updateController.getCountBots() == 0){
+        if(timeline.getStatus() == Animation.Status.RUNNING || updateController.getCountAllObjects() == 0){
             timeline.pause();
             pauseButton.setText("▶");
         }

@@ -5,17 +5,17 @@ import java.util.Random;
 public class BotsAdder implements IMouseFunction{
 
     private Random random;
-    private final IBotsController botsController;
+    private final UpdatableTileObjectsController updatableTileObjectsController;
 
-    public BotsAdder(IBotsController botsController, Random random) {
-        this.botsController = botsController;
+    public BotsAdder(UpdatableTileObjectsController updatableTileObjectsController, Random random) {
+        this.updatableTileObjectsController = updatableTileObjectsController;
         this.random = random;
     }
 
     @Override
     public void doFunc(Tile tile) {
         if(tile.getAbstractTileObject() == null) {
-            botsController.addBot(new Bot(tile, random), 0);
+            updatableTileObjectsController.add(new Bot(tile, random), 0);
         }
     }
 }
