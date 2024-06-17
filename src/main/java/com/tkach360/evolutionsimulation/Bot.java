@@ -11,7 +11,7 @@ import java.util.Random;
 public class Bot extends UpdatableTileObject{
 
     /** количество энергии которое тратится за один тик */
-    public static int energyPerTik = 5;
+    public static int energyPerTik = 1;
     /** максимально возможное количество энергии бота */
     public static int maxEnergy = 100;
     /** энергия, оставляемая ботом в почве после смерти */
@@ -49,18 +49,6 @@ public class Bot extends UpdatableTileObject{
         this.soil = soil;
         tile.setAbstractTileObject(this);
     }
-
-/*    public Bot(Tile tile, AbstractBehavior behavior, Direction direction, Color color, int energy, int predation, int photosynthesis, int soil) {
-        this.tile = tile;
-        this.behavior = behavior;
-        this.direction = direction;
-        this.color = color;
-        this.energy = energy;
-        this.predation = predation;
-        this.photosynthesis = photosynthesis;
-        this.soil = soil;
-        tile.setAbstractTileObject(this);
-    }*/
 
     public Bot(Tile tile, Random random){
         super(tile, TypeTileObject.Bot);

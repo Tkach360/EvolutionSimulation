@@ -10,6 +10,5 @@ public class SoilEnergyAdder implements IMouseFunction{
     @Override
     public void doFunc(Tile tile) {
         tile.changeSoil(delta);
-        System.out.println("Soil en");
     }
 }
