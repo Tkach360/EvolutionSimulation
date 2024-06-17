@@ -75,6 +75,7 @@
                                  </VBox.margin>
                                  <children>
                                     <RadioButton fx:id="RBsetDefaultVisor" mnemonicParsing="false" text="обычный просмотр" textFill="WHITE" />
+                                    <RadioButton fx:id="RBwithoutLightingVisor" mnemonicParsing="false" text="без освещения" textFill="WHITE" />
                                     <RadioButton fx:id="RBsetSoilVisor" mnemonicParsing="false" text="энергия почвы" textFill="WHITE" />
                                  </children>
                               </VBox>

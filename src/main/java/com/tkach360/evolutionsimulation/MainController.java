@@ -25,6 +25,7 @@ public class MainController implements Initializable {
     private ToggleGroup wisorsToggle;
     @FXML private RadioButton RBsetDefaultVisor;
     @FXML private RadioButton RBsetSoilVisor;
+    @FXML private RadioButton RBwithoutLightingVisor;
 
     private ToggleGroup functionsToggle;
     @FXML private RadioButton RBviewBot;
@@ -156,6 +157,8 @@ public class MainController implements Initializable {
         wisorsToggle = new ToggleGroup();
         RBsetDefaultVisor.setToggleGroup(wisorsToggle);
         RBsetSoilVisor.setToggleGroup(wisorsToggle);
+        RBwithoutLightingVisor.setToggleGroup(wisorsToggle);
+
         RBsetDefaultVisor.setOnAction(actionEvent -> {updateController.updateVisor(
                 new DefaultVisorStrategy(
                         canvas.getGraphicsContext2D(),
@@ -163,7 +166,19 @@ public class MainController implements Initializable {
                         TileMap.getInstance(),
                         new DefaultBotPainter(),
                         new DefaultLightPainter()));});
-        RBsetSoilVisor.setOnAction(actionEvent -> {updateController.updateVisor(new SoilEnergyVisorStrategy(canvas.getGraphicsContext2D(), TileMap.getInstance()));});
+
+        RBwithoutLightingVisor.setOnAction(actionEvent -> {updateController.updateVisor(
+                new DefaultVisorStrategy(
+                        canvas.getGraphicsContext2D(),
+                        botsController,
+                        TileMap.getInstance(),
+                        new DefaultBotPainter(),
+                        new WithoutLightPainter()));});
+
+        RBsetSoilVisor.setOnAction(actionEvent -> {updateController.updateVisor(
+                new SoilEnergyVisorStrategy(
+                        canvas.getGraphicsContext2D(),
+                        TileMap.getInstance()));});
 
         RBsetDefaultVisor.fire();
     }
