@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /** класс бота
@@ -37,6 +38,8 @@ public class Bot extends UpdatableTileObject{
     private int predation;
     private int photosynthesis;
     private int soil;
+
+    private ArrayList<Integer> edible = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0)); // список последних пяти источников энергии 0 - фотосинтез, 1 - почва, 2 - хищничество
 
     public Bot(Tile tile, IBehavior behavior, Direction direction, Color color, int energy, int predation, int photosynthesis, int soil) {
         super(tile, TypeTileObject.Bot);
@@ -134,17 +137,42 @@ public class Bot extends UpdatableTileObject{
             case 3: rotateLeft(); break;
             case 4: rotateRight(); break;
             case 5: rotateDown(); break;
-            case 6: photosynthesize(); setColor(PHOTOSYNTHESIS_COLOR); break;
-            case 7: consumeSoil(); setColor(SOIL_COLOR); break;
-            case 8: eat((Bot)getTileInVisibleArea(0).getAbstractTileObject()); setColor(PREDATION_COLOR); break;
-            case 9: eat((Bot)getTileInVisibleArea(1).getAbstractTileObject());  setColor(PREDATION_COLOR); break;
-            case 10: eat((Bot)getTileInVisibleArea(2).getAbstractTileObject());  setColor(PREDATION_COLOR); break;
+            case 6: photosynthesize(); updateColor(0); break;
+            case 7: consumeSoil(); updateColor(1); break;
+            case 8: eat((Bot)getTileInVisibleArea(0).getAbstractTileObject()); updateColor(2); break;
+            case 9: eat((Bot)getTileInVisibleArea(1).getAbstractTileObject()); updateColor(2); break;
+            case 10: eat((Bot)getTileInVisibleArea(2).getAbstractTileObject()); updateColor(2); break;
             case 11: produceNewBot(getTileInVisibleArea(0)); break;
             case 12: produceNewBot(getTileInVisibleArea(1)); break;
             case 13: produceNewBot(getTileInVisibleArea(2)); break;
         }
 
         updateState();
+    }
+
+    private Color getColorFromLastEdible(){
+        int r = 0;
+        int g = 0;
+        int b = 0;
+        for(int i : edible){
+            switch (i){
+                case 0: g += 51; break;
+                case 1: b += 51; break;
+                case 2: r += 51; break;
+            }
+        }
+
+        return Color.rgb(r, g, b);
+    }
+
+    private void addSourceEnergy(int i){
+        edible.removeFirst();
+        edible.add(i);
+    }
+
+    private void updateColor(int i){
+        addSourceEnergy(i);
+        setColor(getColorFromLastEdible());
     }
 
     private void rotateLeft(){
