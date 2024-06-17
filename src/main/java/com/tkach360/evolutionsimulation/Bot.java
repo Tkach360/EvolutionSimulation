@@ -57,9 +57,9 @@ public class Bot extends UpdatableTileObject{
         this.direction = Direction.getRandom(random);
         this.color = PHOTOSYNTHESIS_COLOR;
         this.energy = defaultEnergy;
-        this.predation = random.nextInt(10);
-        this.photosynthesis = random.nextInt(10);
-        this.soil = random.nextInt(10);
+        this.predation = 5;
+        this.photosynthesis = 5;
+        this.soil = 5;
 
         tile.setAbstractTileObject(this);
     }
@@ -184,14 +184,14 @@ public class Bot extends UpdatableTileObject{
     }
 
     public void eat(Bot bot){
-        changeEnergy(getEnergyFromSource(bot.getEnergy() / 5, predation));
+        changeEnergy(getEnergyFromSource(bot.getEnergy() / 10, predation));
         Tile tile = bot.getTile();
         bot.die();
         changeTile(tile);
     }
 
     private int getEnergyFromSource(int source, int efficiency){
-        return (source + 1) * efficiency;
+        return source * efficiency;
     }
 
     private void changeEnergy(int delta){
@@ -213,9 +213,9 @@ public class Bot extends UpdatableTileObject{
                 Direction.getRandom(random),
                 this.color,
                 minEnergyReproduction,
-                this.predation + random.nextInt(-mutationSpread, mutationSpread),
-                this.photosynthesis + random.nextInt(-mutationSpread, mutationSpread),
-                this.soil + random.nextInt(-mutationSpread, mutationSpread)
+                NumRangeController.setInRange(this.predation + random.nextInt(-mutationSpread, mutationSpread), 0, 10),
+                NumRangeController.setInRange(this.photosynthesis + random.nextInt(-mutationSpread, mutationSpread), 0, 10),
+                NumRangeController.setInRange(this.soil + random.nextInt(-mutationSpread, mutationSpread), 0, 10)
         );
 
         this.updatableObjectNode.registerNewObject(newBot);
@@ -245,7 +245,7 @@ public class Bot extends UpdatableTileObject{
     }
 
     public void setPredation(int predation) {
-        this.predation = NumRangeController.setInRange(predation, 0, 4);
+        this.predation = NumRangeController.setInRange(predation, 0, 10);
     }
 
     public int getPhotosynthesis() {
@@ -253,7 +253,7 @@ public class Bot extends UpdatableTileObject{
     }
 
     public void setPhotosynthesis(int photosynthesis) {
-        this.photosynthesis = NumRangeController.setInRange(photosynthesis, 0, 4);
+        this.photosynthesis = NumRangeController.setInRange(photosynthesis, 0, 10);
     }
 
     public int getSoil() {
@@ -261,7 +261,7 @@ public class Bot extends UpdatableTileObject{
     }
 
     public void setSoil(int soil) {
-        this.soil = NumRangeController.setInRange(soil, 0, 4);;
+        this.soil = NumRangeController.setInRange(soil, 0, 10);
     }
 
     public Color getColor() {
