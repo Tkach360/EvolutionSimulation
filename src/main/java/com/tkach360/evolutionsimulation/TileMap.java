@@ -6,7 +6,7 @@ import javafx.scene.canvas.Canvas;
 public class TileMap {
 
     private static TileMap instance;
-    public static final double TILE_SIDE = 5; // размер тайла
+    public static final double TILE_SIDE = 7; // размер тайла
     public static final double EDGE_DISTANCE = 0.5; // // TODO: подумать
 
     private Canvas canvas;
