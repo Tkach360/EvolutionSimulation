@@ -53,7 +53,6 @@ public class UpdatableTileObjectsControllerWithArray implements UpdatableTileObj
         return updatableObjectNodes[updatableObjectNodes[0].getNext()].getObj();
     }
 
-    @Override
     public int getCount(TypeTileObject type) {
         int count = 0;
         UpdatableTileObject obj = getFirst();
