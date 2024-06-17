@@ -60,4 +60,9 @@ public class TestBehavior implements IBehavior{
         }
         return 3;
     }
+
+    @Override
+    public TestBehavior copyWitchChange(int mutationSpread, Random random){
+        return new TestBehavior();
+    }
 }

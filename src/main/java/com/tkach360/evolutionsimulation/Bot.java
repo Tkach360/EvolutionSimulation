@@ -209,7 +209,7 @@ public class Bot extends UpdatableTileObject{
 
         Bot newBot = new Bot(
                 tile,
-                this.behavior,
+                this.behavior.copyWitchChange(mutationSpread, random),
                 Direction.getRandom(random),
                 this.color,
                 minEnergyReproduction,
