@@ -134,11 +134,11 @@ public class Bot extends UpdatableTileObject{
             case 3: rotateLeft(); break;
             case 4: rotateRight(); break;
             case 5: rotateDown(); break;
-            case 6: photosynthesize(); break;
-            case 7: consumeSoil(); break;
-            case 8: eat((Bot)getTileInVisibleArea(0).getAbstractTileObject());break;
-            case 9: eat((Bot)getTileInVisibleArea(1).getAbstractTileObject());break;
-            case 10: eat((Bot)getTileInVisibleArea(2).getAbstractTileObject());break;
+            case 6: photosynthesize(); setColor(PHOTOSYNTHESIS_COLOR); break;
+            case 7: consumeSoil(); setColor(SOIL_COLOR); break;
+            case 8: eat((Bot)getTileInVisibleArea(0).getAbstractTileObject()); setColor(PREDATION_COLOR); break;
+            case 9: eat((Bot)getTileInVisibleArea(1).getAbstractTileObject());  setColor(PREDATION_COLOR); break;
+            case 10: eat((Bot)getTileInVisibleArea(2).getAbstractTileObject());  setColor(PREDATION_COLOR); break;
             case 11: produceNewBot(getTileInVisibleArea(0)); break;
             case 12: produceNewBot(getTileInVisibleArea(1)); break;
             case 13: produceNewBot(getTileInVisibleArea(2)); break;
