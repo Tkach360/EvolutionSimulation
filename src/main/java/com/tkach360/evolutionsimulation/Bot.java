@@ -7,7 +7,7 @@ import java.util.Random;
 
 /** класс бота
  * основной класс проекта*/
-public class Bot extends AbstractTileObject{
+public class Bot extends UpdatableTileObject{
 
     /** количество энергии которое тратится за один тик */
     public static int energyPerTik = 5;
@@ -29,9 +29,6 @@ public class Bot extends AbstractTileObject{
     /** устанавливается если последним источником энергии бота была энергия почвы */
     public static final Color SOIL_COLOR = Color.rgb(0, 0, 210);
 
-    /** ссылка на узел в botsController, устанавливается при вызове IBotsController.addBot() */
-    private BotNode botNode;
-
     private final AbstractBehavior behavior;
     private Direction direction;
     private Color color; // бот получает цвет в зависимости от последнего источника энергии
@@ -41,7 +38,7 @@ public class Bot extends AbstractTileObject{
     private int soil;
 
     public Bot(Tile tile, AbstractBehavior behavior, Direction direction, Color color, int energy, int predation, int photosynthesis, int soil) {
-        this.tile = tile;
+        super(tile, TypeTileObject.Bot);
         this.behavior = behavior;
         this.direction = direction;
         this.color = color;
@@ -52,7 +49,20 @@ public class Bot extends AbstractTileObject{
         tile.setAbstractTileObject(this);
     }
 
+/*    public Bot(Tile tile, AbstractBehavior behavior, Direction direction, Color color, int energy, int predation, int photosynthesis, int soil) {
+        this.tile = tile;
+        this.behavior = behavior;
+        this.direction = direction;
+        this.color = color;
+        this.energy = energy;
+        this.predation = predation;
+        this.photosynthesis = photosynthesis;
+        this.soil = soil;
+        tile.setAbstractTileObject(this);
+    }*/
+
     public Bot(Tile tile, Random random){
+        super(tile, TypeTileObject.Bot);
         this.tile = tile;
         this.behavior = new TestBehavior(); //TODO изменить при дорпботке механизма неследования поведения
         this.direction = Direction.getRandom(random);
@@ -68,7 +78,7 @@ public class Bot extends AbstractTileObject{
     public void moveForward(){
         Tile tileForward = getTileInVisibleArea(1);
         if(tileForward.getAbstractTileObject() == null){
-            setTile(tileForward);
+            changeTile(tileForward);
         }
     }
 
@@ -150,7 +160,7 @@ public class Bot extends AbstractTileObject{
                 this.soil + random.nextInt(-mutationSpread, mutationSpread)
         );
 
-        this.botNode.registerNewBot(newBot);
+        this.updatableObjectNode.registerNewObject(newBot);
     }
 
     public void die(){
@@ -161,17 +171,7 @@ public class Bot extends AbstractTileObject{
     public void delete(){
         this.tile.setAbstractTileObject(null);
         this.tile = null;
-        this.botNode.unRegisterBot();
-    }
-
-    public Tile getTile() {
-        return tile;
-    }
-
-    public void setTile(Tile tile) {
-        this.tile.setAbstractTileObject(null);
-        this.tile = tile;
-        tile.setAbstractTileObject(this);
+        this.updatableObjectNode.unRegisterObject();
     }
 
     public Direction getDirection() {
@@ -214,12 +214,12 @@ public class Bot extends AbstractTileObject{
         this.color = color;
     }
 
-    public BotNode getBotNode() {
-        return botNode;
+    public UpdatableObjectNode getUpdatableObjectNode() {
+        return updatableObjectNode;
     }
 
-    public void setBotNode(BotNode botNode) {
-        this.botNode = botNode;
+    public void setUpdatableObjectNode(UpdatableObjectNode updatableObjectNode) {
+        this.updatableObjectNode = updatableObjectNode;
     }
 
     public int getEnergy() {
