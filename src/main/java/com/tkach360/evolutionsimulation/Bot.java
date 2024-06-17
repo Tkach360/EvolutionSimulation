@@ -1,6 +1,7 @@
 package com.tkach360.evolutionsimulation;
 
 import javafx.scene.paint.Color;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,7 +30,7 @@ public class Bot extends UpdatableTileObject{
     /** устанавливается если последним источником энергии бота была энергия почвы */
     public static final Color SOIL_COLOR = Color.rgb(0, 0, 210);
 
-    private final AbstractBehavior behavior;
+    private final IBehavior behavior;
     private Direction direction;
     private Color color; // бот получает цвет в зависимости от последнего источника энергии
     private int energy;
@@ -37,7 +38,7 @@ public class Bot extends UpdatableTileObject{
     private int photosynthesis;
     private int soil;
 
-    public Bot(Tile tile, AbstractBehavior behavior, Direction direction, Color color, int energy, int predation, int photosynthesis, int soil) {
+    public Bot(Tile tile, IBehavior behavior, Direction direction, Color color, int energy, int predation, int photosynthesis, int soil) {
         super(tile, TypeTileObject.Bot);
         this.behavior = behavior;
         this.direction = direction;
@@ -75,8 +76,8 @@ public class Bot extends UpdatableTileObject{
         tile.setAbstractTileObject(this);
     }
 
-    public void moveForward(){
-        Tile tileForward = getTileInVisibleArea(1);
+    private void move(int tileIndex){
+        Tile tileForward = getTileInVisibleArea(tileIndex);
         if(tileForward.getAbstractTileObject() == null){
             changeTile(tileForward);
         }
@@ -97,9 +98,33 @@ public class Bot extends UpdatableTileObject{
         return TileMap.getInstance().getTiles()[tX][tY];
     }
 
-    /** возвращает список тайлов поблизости
+    /** возвращает список трех тайлов перед ботом */
+    public ArrayList<Tile> getTilesInVisibleArea(){
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
+
+        for(int i = 0; i < 3; i++){
+            Tile tile = getTileInVisibleArea(i);
+            tiles.add(tile);
+        }
+
+        return tiles;
+    }
+
+    /** возвращает список трех тайлов перед ботом */
+    public ArrayList<Pair<Integer, Tile>> getTilesInVisibleAreaWitchIndex(){
+        ArrayList<Pair<Integer, Tile>> tiles = new ArrayList<Pair<Integer, Tile>>();
+
+        for(int i = 0; i < 3; i++){
+            Tile tile = getTileInVisibleArea(i);
+            tiles.add(new Pair<>(i, tile));
+        }
+
+        return tiles;
+    }
+
+    /** возвращает список тайлов поблизости (8 тайлов вокруг)
      * среди этих тайлов нет передаваемого тайла */
-    public ArrayList<Tile> getTilesNear(Tile thisTile){
+    public ArrayList<Tile> getTilesNear(){
         ArrayList<Tile> tiles = new ArrayList<Tile>();
 
         for(int i = 0; i < 9; i++){
@@ -114,8 +139,51 @@ public class Bot extends UpdatableTileObject{
 
     // TODO: этот метод отвечает за принятие решения о действии и собственно действии
     public void update(){
-        behavior.doSomething(this);
+        switch(behavior.decide(this)){
+            case 0: move(0); break;
+            case 1: move(1); break;
+            case 2: move(2); break;
+            case 3: rotateLeft(); break;
+            case 4: rotateRight(); break;
+            case 5: rotateDown(); break;
+            case 6: photosynthesize(); break;
+            case 7: consumeSoil(); break;
+            case 8: eat((Bot)getTileInVisibleArea(0).getAbstractTileObject());break;
+            case 9: eat((Bot)getTileInVisibleArea(1).getAbstractTileObject());break;
+            case 10: eat((Bot)getTileInVisibleArea(2).getAbstractTileObject());break;
+            case 11: produceNewBot(getTileInVisibleArea(0)); break;
+            case 12: produceNewBot(getTileInVisibleArea(1)); break;
+            case 13: produceNewBot(getTileInVisibleArea(2)); break;
+        }
+
         updateState();
+    }
+
+    private void rotateLeft(){
+        switch (this.direction){
+            case UP: this.direction = Direction.LEFT; break;
+            case LEFT: this.direction = Direction.DOWN; break;
+            case DOWN: this.direction = Direction.RIGHT; break;
+            case RIGHT: this.direction = Direction.UP; break;
+        }
+    }
+
+    private void rotateRight(){
+        switch (this.direction){
+            case UP: this.direction = Direction.RIGHT; break;
+            case LEFT: this.direction = Direction.UP; break;
+            case DOWN: this.direction = Direction.LEFT; break;
+            case RIGHT: this.direction = Direction.DOWN; break;
+        }
+    }
+
+    private void rotateDown(){
+        switch (this.direction){
+            case UP: this.direction = Direction.DOWN; break;
+            case LEFT: this.direction = Direction.RIGHT; break;
+            case DOWN: this.direction = Direction.UP; break;
+            case RIGHT: this.direction = Direction.LEFT; break;
+        }
     }
 
     public void photosynthesize(){
@@ -127,9 +195,11 @@ public class Bot extends UpdatableTileObject{
         this.tile.setSoilEnergy(0);
     }
 
-    public void eatBot(Bot bot){
+    public void eat(Bot bot){
         changeEnergy(getEnergyFromSource(bot.getEnergy() / 5, predation));
+        Tile tile = bot.getTile();
         bot.die();
+        changeTile(tile);
     }
 
     private int getEnergyFromSource(int source, int efficiency){
@@ -212,14 +282,6 @@ public class Bot extends UpdatableTileObject{
 
     public void setColor(Color color) {
         this.color = color;
-    }
-
-    public UpdatableObjectNode getUpdatableObjectNode() {
-        return updatableObjectNode;
-    }
-
-    public void setUpdatableObjectNode(UpdatableObjectNode updatableObjectNode) {
-        this.updatableObjectNode = updatableObjectNode;
     }
 
     public int getEnergy() {

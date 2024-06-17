@@ -1,57 +1,53 @@
 package com.tkach360.evolutionsimulation;
 
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Random;
 
-public class TestBehavior extends AbstractBehavior{
+public class TestBehavior implements IBehavior{
 
     @Override
-    public void doSomething(Bot bot) {
+    public int decide(Bot bot) {
 
         Random random = new Random();
 
-        ArrayList<Tile> tilesNear = bot.getTilesNear(bot.getTile());
-        ArrayList<Tile> cleanTiles = new ArrayList<>();
-        ArrayList<Tile> notCleanTiles = new ArrayList<>();
+        ArrayList<Pair<Integer, Tile>> tilesNear = bot.getTilesInVisibleAreaWitchIndex();
+        ArrayList<Pair<Integer, Tile>> cleanTiles = new ArrayList<>();
+        ArrayList<Pair<Integer, Tile>> notCleanTiles = new ArrayList<>();
 
-        for(Tile tile : tilesNear) {
-            if(tile.getAbstractTileObject() == null) cleanTiles.add(tile);
+        for(Pair<Integer, Tile> tile : tilesNear) {
+            if(tile.getValue().getAbstractTileObject() == null) cleanTiles.add(tile);
             else notCleanTiles.add(tile);
         }
 
         if (!cleanTiles.isEmpty()){
             if(bot.getEnergy() > Bot.minEnergyReproduction + 20) {
-                bot.produceNewBot(cleanTiles.get(random.nextInt(cleanTiles.size())));
+                bot.produceNewBot(cleanTiles.get(random.nextInt(cleanTiles.size())).getValue());
                 switch (random.nextInt(2)){
                     case 0:
-                        bot.moveForward();
-                        break;
+                        return 1;
                     case 1:
-                        bot.setDirection(Direction.getRandom(random));
-                        break;
+                        return random.nextInt(3, 6);
                 }
             }
             else{
                 switch (random.nextInt(3)){
                     case 0:
-                        bot.photosynthesize();
-                        break;
+                        return 6;
                     case 1:
-                        bot.consumeSoil();
-                        break;
+                        return 7;
                     case 2:
                         if(!notCleanTiles.isEmpty()){
-                            Tile tile = notCleanTiles.get(random.nextInt(notCleanTiles.size()));
-                            bot.eatBot((Bot)(tile.getAbstractTileObject()));
+                            int i = notCleanTiles.get(random.nextInt(notCleanTiles.size())).getKey();
+                            return i + 8;
                         }
                         else {
                             switch (random.nextInt(2)){
                                 case 0:
-                                    bot.moveForward();
-                                    break;
+                                    return 1;
                                 case 1:
-                                    bot.setDirection(Direction.getRandom(random));
-                                    break;
+                                    return random.nextInt(3, 6);
                             }
                         }
                         break;
@@ -59,8 +55,9 @@ public class TestBehavior extends AbstractBehavior{
             }
         }
         else{
-            Tile tile = notCleanTiles.get(random.nextInt(notCleanTiles.size()));
-            bot.eatBot((Bot)(tile.getAbstractTileObject()));
+            int i = notCleanTiles.get(random.nextInt(notCleanTiles.size())).getKey();
+            return i + 8;
         }
+        return 3;
     }
 }
