@@ -50,6 +50,8 @@ public class MainController implements Initializable {
     private final double MAX_TIME_SPEED = 32.0;
     private double currentTimeRate;
 
+    private GraphBotsAndTime graphBotsAndTime;
+
     @FXML private Canvas canvas;
     private Timeline timeline;
     private Random random;
@@ -92,9 +94,20 @@ public class MainController implements Initializable {
                 if(updateController.getCount(TypeTileObject.Bot) == 0) pause();
                 updateController.updateAll();
                 updateTable();
+                graphBotsAndTime.addData(updateController.getCountUpdate(), updateController.getCount(TypeTileObject.Bot));
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
+
+        this.graphBotsAndTime = new GraphBotsAndTime(
+                "График количества ботов от времени",
+                800,
+                600,
+                1000,
+                50,
+                1000,
+                100
+        );
 
         initializeVisorsToggle();
         initializeFunctionsToggle();
@@ -207,7 +220,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void showGraphBotsAndTime() throws IOException {
-        GraphBotsAndTime.newWindow("Bots and Time");
+        this.graphBotsAndTime.show();
     }
 
     @FXML

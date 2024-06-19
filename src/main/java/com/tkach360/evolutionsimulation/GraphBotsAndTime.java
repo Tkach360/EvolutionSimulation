@@ -1,31 +1,32 @@
 package com.tkach360.evolutionsimulation;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 
-import java.io.IOException;
+public class GraphBotsAndTime extends AbstractGraphWindow {
 
-public abstract class GraphBotsAndTime {
+    private Series series;
 
-    private static Stage window;
+    public GraphBotsAndTime(String graphName, double width, double height, int showXAxisRange, int xTick, int yMinUpperBound, int yTick) {
+        super(graphName, width, height, "Время", showXAxisRange, xTick, "Количество", yMinUpperBound, yTick);
+        this.series = new Series();
+        this.lineChart.getData().add(series);
+        this.series.setName("Боты");
+    }
 
-    public static void newWindow(String string) throws IOException {
+    public void addData(int time, int count){
 
-        if (window != null) return;
+        this.series.getData().add(new XYChart.Data<>(time, count));
 
-        window = new Stage();
-        Pane pane = new Pane();
-        window.setTitle("Bots and Time");
-        window.setScene(new Scene(pane, 600, 400));
-        window.show();
+        if(count > yMinUpperBound) {
+            this.yAxis.setUpperBound(count + 100);
+            yMinUpperBound = count;
+        }
 
-        /*window = new Stage();
-
-        Pane pane = new
-        Scene scene = new Scene(pane, 300, 200);
-        window.setScene(scene);
-        window.setTitle(string);*/
+        if (this.series.getData().size() > xAxisUpperBound) {
+            this.xAxis.setLowerBound(xAxisLowerBound++);
+            this.xAxis.setUpperBound(xAxisUpperBound++);
+            this.series.getData().removeFirst();
+        }
     }
 }
