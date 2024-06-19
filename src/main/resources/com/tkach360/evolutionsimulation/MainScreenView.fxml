@@ -89,8 +89,8 @@
                                     <Insets left="2.0" />
                                  </VBox.margin>
                                  <children>
-                                    <RadioButton mnemonicParsing="false" text="кол-во ботов/время" textFill="WHITE" />
-                                    <RadioButton layoutX="10.0" layoutY="59.0" mnemonicParsing="false" text="кол-во типов/время" textFill="WHITE" />
+                                    <CheckBox fx:id="CBgraphBotsAndTime" mnemonicParsing="false" onAction="#showGraphBotsAndTime" text="боты/время" textFill="WHITE" />
+                                    <CheckBox fx:id="CBgraphTypeAndTime" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showGraphTypesAndTime" text="типы/время" textFill="WHITE" />
                                  </children>
                               </VBox>
                            </children>

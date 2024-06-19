@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -202,6 +203,16 @@ public class MainController implements Initializable {
         RBdelSoilEnergy.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new SoilEnergyAdder(-1)));
 
         RBaddBot.fire();
+    }
+
+    @FXML
+    private void showGraphBotsAndTime() throws IOException {
+        GraphBotsAndTime.newWindow("Bots and Time");
+    }
+
+    @FXML
+    private void showGraphTypesAndTime() throws IOException {
+        //GraphBotsAndTime.newWindow("Types and Time");
     }
 
 }
