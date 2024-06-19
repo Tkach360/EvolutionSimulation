@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class UpdateController {
 
     private final HashMap<TypeTileObject, Integer> tableCount;
+    private final HashMap<EnergySource, Integer> tableCountEnergySource;
     private int countUpdate;
     private long lastUpdateTime;
     private AbstractVisorStrategy visorStrategy;
@@ -16,9 +17,14 @@ public class UpdateController {
         this.lastUpdateTime = 0;
         this.countUpdate = 0;
         this.tableCount = new HashMap<>();
+        this.tableCountEnergySource = new HashMap<>();
 
         for(TypeTileObject type : TypeTileObject.values()){
             tableCount.put(type, 0);
+        }
+
+        for(EnergySource source : EnergySource.values()){
+            tableCountEnergySource.put(source, 0);
         }
     }
 
@@ -52,17 +58,28 @@ public class UpdateController {
 
     private void updateObjects(){
         for(TypeTileObject type : TypeTileObject.values()) tableCount.put(type, 0);
+        for(EnergySource source : EnergySource.values()) tableCountEnergySource.put(source, 0);
 
         UpdatableTileObject obj = updatableObjectsController.getFirst();
         while (obj != null){
             tableCount.merge(obj.getType(), 1, Integer::sum); // увеличиваем счетчик определенных объектов потому что зачем проходить по массиву несколько раз?
             obj.update();
+
+            if(obj.getType() == TypeTileObject.Bot){
+                Bot bot = (Bot) obj;
+                tableCountEnergySource.merge(bot.getLastEdible(), 1, Integer::sum);
+            }
+
             obj = updatableObjectsController.getNext(obj);
         }
     }
 
     public int getCount(TypeTileObject type){
         return tableCount.get(type);
+    }
+
+    public int getCountEdible(EnergySource source){
+        return tableCountEnergySource.get(source);
     }
 
     public void recalculateObjects(){

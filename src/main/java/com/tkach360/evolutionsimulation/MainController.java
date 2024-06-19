@@ -51,6 +51,7 @@ public class MainController implements Initializable {
     private double currentTimeRate;
 
     private GraphBotsAndTime graphBotsAndTime;
+    private GraphEdibleAndTime graphEdibleAndTime;
 
     @FXML private Canvas canvas;
     private Timeline timeline;
@@ -95,19 +96,26 @@ public class MainController implements Initializable {
                 updateController.updateAll();
                 updateTable();
                 graphBotsAndTime.addData(updateController.getCountUpdate(), updateController.getCount(TypeTileObject.Bot));
+                graphEdibleAndTime.addData(
+                        updateController.getCountEdible(EnergySource.PHOTOSYNTHESIS),
+                        updateController.getCountEdible(EnergySource.PREDATION),
+                        updateController.getCountEdible(EnergySource.SOIL)
+                );
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
 
         this.graphBotsAndTime = new GraphBotsAndTime(
                 "График количества ботов от времени",
-                800,
-                600,
+                700,
+                500,
                 1000,
                 50,
                 1000,
                 100
         );
+
+        this.graphEdibleAndTime = new GraphEdibleAndTime("График популярности источников энергии", 400, 300);
 
         initializeVisorsToggle();
         initializeFunctionsToggle();
@@ -219,13 +227,13 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void showGraphBotsAndTime() throws IOException {
+    private void showGraphBotsAndTime() {
         this.graphBotsAndTime.show();
     }
 
     @FXML
-    private void showGraphTypesAndTime() throws IOException {
-        //GraphBotsAndTime.newWindow("Types and Time");
+    private void showGraphTypesAndTime() {
+        this.graphEdibleAndTime.show();
     }
 
 }
