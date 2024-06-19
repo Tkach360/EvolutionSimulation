@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
 
-public class GraphEdibleAndTime {
+public class GraphEdible {
 
     private PieChart edible;
     private PieChart.Data predationData;
@@ -17,7 +17,7 @@ public class GraphEdibleAndTime {
     protected final Scene scene;
     protected final Stage stage;
 
-    public GraphEdibleAndTime(String graphName, double width, double height) {
+    public GraphEdible(String graphName, double width, double height) {
 
         photosyntesisData = new PieChart.Data("Фотосинтез", 0);
         soilData = new PieChart.Data("Почва", 0);
@@ -34,7 +34,8 @@ public class GraphEdibleAndTime {
         this.stage = new Stage();
         this.stage.setScene(scene);
         this.stage.setTitle(graphName);
-
+        this.stage.setAlwaysOnTop(true);
+        Main.addChildWindow(this.stage);
     }
 
     public void addData(int countPhotosyntesis, int countPredation, int countSoil){
@@ -44,6 +45,7 @@ public class GraphEdibleAndTime {
     }
 
     public void show(){
-        this.stage.show();
+        if(this.stage.isShowing()) this.stage.hide();
+        else this.stage.show();
     }
 }

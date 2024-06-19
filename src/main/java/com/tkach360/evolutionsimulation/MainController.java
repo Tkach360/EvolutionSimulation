@@ -13,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -51,7 +50,7 @@ public class MainController implements Initializable {
     private double currentTimeRate;
 
     private GraphBotsAndTime graphBotsAndTime;
-    private GraphEdibleAndTime graphEdibleAndTime;
+    private GraphEdible graphEdible;
 
     @FXML private Canvas canvas;
     private Timeline timeline;
@@ -96,7 +95,7 @@ public class MainController implements Initializable {
                 updateController.updateAll();
                 updateTable();
                 graphBotsAndTime.addData(updateController.getCountUpdate(), updateController.getCount(TypeTileObject.Bot));
-                graphEdibleAndTime.addData(
+                graphEdible.addData(
                         updateController.getCountEdible(EnergySource.PHOTOSYNTHESIS),
                         updateController.getCountEdible(EnergySource.PREDATION),
                         updateController.getCountEdible(EnergySource.SOIL)
@@ -115,7 +114,7 @@ public class MainController implements Initializable {
                 100
         );
 
-        this.graphEdibleAndTime = new GraphEdibleAndTime("График популярности источников энергии", 400, 300);
+        this.graphEdible = new GraphEdible("График популярности источников энергии", 450, 300);
 
         initializeVisorsToggle();
         initializeFunctionsToggle();
@@ -232,8 +231,8 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void showGraphTypesAndTime() {
-        this.graphEdibleAndTime.show();
+    private void showGraphEdible() {
+        this.graphEdible.show();
     }
 
 }

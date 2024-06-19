@@ -89,8 +89,16 @@
                                     <Insets left="2.0" />
                                  </VBox.margin>
                                  <children>
-                                    <CheckBox fx:id="CBgraphBotsAndTime" mnemonicParsing="false" onAction="#showGraphBotsAndTime" text="боты/время" textFill="WHITE" />
-                                    <CheckBox fx:id="CBgraphTypeAndTime" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showGraphTypesAndTime" text="типы/время" textFill="WHITE" />
+                                    <Button minHeight="10.0" mnemonicParsing="false" onAction="#showGraphBotsAndTime" prefHeight="25.0" prefWidth="150.0" text="боты/время">
+                                       <VBox.margin>
+                                          <Insets left="3.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button layoutX="10.0" layoutY="10.0" minHeight="10.0" mnemonicParsing="false" onAction="#showGraphEdible" prefHeight="25.0" prefWidth="150.0" text="источники энергии">
+                                       <VBox.margin>
+                                          <Insets left="3.0" />
+                                       </VBox.margin>
+                                    </Button>
                                  </children>
                               </VBox>
                            </children>

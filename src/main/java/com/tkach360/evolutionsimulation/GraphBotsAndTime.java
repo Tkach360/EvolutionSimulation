@@ -13,9 +13,9 @@ public class GraphBotsAndTime {
 
     protected int yMinUpperBound = 1000;
 
-    protected final NumberAxis xAxis;
-    protected final NumberAxis yAxis;
-    protected final LineChart<Number,Number> lineChart;
+    protected NumberAxis xAxis;
+    protected NumberAxis yAxis;
+    protected LineChart<Number,Number> lineChart;
     private Series series;
 
     protected int xAxisUpperBound;
@@ -49,6 +49,8 @@ public class GraphBotsAndTime {
         this.stage = new Stage();
         this.stage.setScene(scene);
         this.stage.setTitle(graphName);
+        this.stage.setAlwaysOnTop(true);
+        Main.addChildWindow(this.stage);
     }
 
     public void addData(int time, int count){
@@ -68,6 +70,7 @@ public class GraphBotsAndTime {
     }
 
     public void show(){
-        this.stage.show();
+        if(this.stage.isShowing()) this.stage.hide();
+        else this.stage.show();
     }
 }
