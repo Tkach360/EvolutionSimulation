@@ -39,7 +39,7 @@ public class Bot extends UpdatableTileObject{
     private int photosynthesis;
     private int soil;
 
-    private ArrayList<Integer> edible = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0)); // список последних пяти источников энергии 0 - фотосинтез, 1 - почва, 2 - хищничество
+    private ArrayList<EnergySource> edible = new ArrayList<>(Arrays.asList(EnergySource.PHOTOSYNTHESIS, EnergySource.PHOTOSYNTHESIS, EnergySource.PHOTOSYNTHESIS, EnergySource.PHOTOSYNTHESIS)); // список последних пяти источников энергии 0 - фотосинтез, 1 - почва, 2 - хищничество
 
     public Bot(Tile tile, IBehavior behavior, Direction direction, Color color, int energy, int predation, int photosynthesis, int soil) {
         super(tile, TypeTileObject.Bot);
@@ -137,11 +137,11 @@ public class Bot extends UpdatableTileObject{
             case 3: rotateLeft(); break;
             case 4: rotateRight(); break;
             case 5: rotateDown(); break;
-            case 6: photosynthesize(); updateColor(0); break;
-            case 7: consumeSoil(); updateColor(1); break;
-            case 8: eat((Bot)getTileInVisibleArea(0).getAbstractTileObject()); updateColor(2); break;
-            case 9: eat((Bot)getTileInVisibleArea(1).getAbstractTileObject()); updateColor(2); break;
-            case 10: eat((Bot)getTileInVisibleArea(2).getAbstractTileObject()); updateColor(2); break;
+            case 6: photosynthesize(); updateColor(EnergySource.PHOTOSYNTHESIS); break;
+            case 7: consumeSoil(); updateColor(EnergySource.SOIL); break;
+            case 8: eat((Bot)getTileInVisibleArea(0).getAbstractTileObject()); updateColor(EnergySource.PREDATION); break;
+            case 9: eat((Bot)getTileInVisibleArea(1).getAbstractTileObject()); updateColor(EnergySource.PREDATION); break;
+            case 10: eat((Bot)getTileInVisibleArea(2).getAbstractTileObject()); updateColor(EnergySource.PREDATION); break;
             case 11: produceNewBot(getTileInVisibleArea(0)); break;
             case 12: produceNewBot(getTileInVisibleArea(1)); break;
             case 13: produceNewBot(getTileInVisibleArea(2)); break;
@@ -154,23 +154,27 @@ public class Bot extends UpdatableTileObject{
         int r = 0;
         int g = 0;
         int b = 0;
-        for(int i : edible){
+        for(EnergySource i : edible){
             switch (i){
-                case 0: g += 51; break;
-                case 1: b += 51; break;
-                case 2: r += 51; break;
+                case PHOTOSYNTHESIS: g += 51; break;
+                case SOIL: b += 51; break;
+                case PREDATION: r += 51; break;
             }
         }
 
         return Color.rgb(r, g, b);
     }
 
-    private void addSourceEnergy(int i){
+    public EnergySource getLastEdible(){
+        return edible.getLast();
+    }
+
+    private void addSourceEnergy(EnergySource i){
         edible.removeFirst();
         edible.add(i);
     }
 
-    private void updateColor(int i){
+    private void updateColor(EnergySource i){
         addSourceEnergy(i);
         setColor(getColorFromLastEdible());
     }
