@@ -108,7 +108,7 @@
                         <Insets bottom="2.0" left="3.0" right="3.0" top="1.0" />
                      </VBox.margin>
                   </HBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #353535" styleClass="data-panel">
+                  <VBox prefHeight="251.0" prefWidth="349.0" style="-fx-background-color: #353535" styleClass="data-panel">
                      <children>
                         <Label text="functions" textFill="WHITE" />
                         <HBox prefHeight="35.0" prefWidth="349.0">
@@ -117,7 +117,7 @@
                               <Slider fx:id="sliderWidthBrush" min="1.0" prefHeight="33.0" prefWidth="243.0" showTickLabels="true" value="1.0" />
                            </children>
                         </HBox>
-                        <HBox prefHeight="180.0" prefWidth="360.0">
+                        <HBox prefHeight="98.0" prefWidth="349.0">
                            <children>
                               <VBox prefHeight="180.0" prefWidth="139.0">
                                  <children>
@@ -142,6 +142,23 @@
                                     <RadioButton fx:id="RBdelSoilEnergy" layoutX="10.0" layoutY="45.0" mnemonicParsing="false" text="- энергия почвы" textFill="WHITE" />
                                  </children>
                               </VBox>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <VBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="77.0" spacing="3.0">
+                                 <children>
+                                    <Spinner fx:id="SPenergyPerTik" prefHeight="26.0" prefWidth="98.0" />
+                                    <Spinner fx:id="SPminEnergyReproduction" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="102.0" />
+                                    <Spinner fx:id="SPmaxBotEnergy" layoutX="10.0" layoutY="36.0" prefHeight="26.0" prefWidth="125.0" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="97.0" prefWidth="195.0" spacing="10.0">
+                                 <children>
+                                    <Label prefHeight="18.0" prefWidth="197.0" text="Трата энергии за тик" textFill="WHITE" />
+                                    <Label prefHeight="18.0" prefWidth="205.0" text="Мин. энергия для размножения" textFill="WHITE" />
+                                    <Label prefHeight="18.0" prefWidth="217.0" text="Макс. энергия бота" textFill="WHITE" />
+                                 </children></VBox>
                            </children>
                         </HBox>
                      </children>

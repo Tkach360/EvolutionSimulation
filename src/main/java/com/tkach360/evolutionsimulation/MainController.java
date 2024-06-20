@@ -44,6 +44,10 @@ public class MainController implements Initializable {
     @FXML private Label timeSpeedLabel;
     @FXML private Label lastUpdateTimeLabel;
 
+    @FXML private Spinner<Integer> SPenergyPerTik;
+    @FXML private Spinner<Integer> SPminEnergyReproduction;
+    @FXML private Spinner<Integer> SPmaxBotEnergy;
+
     private final double MIN_TIME_SPEED = 0.25;
     private final double DEFAULT_TIME_SPEED = 1.0;
     private final double MAX_TIME_SPEED = 32.0;
@@ -68,6 +72,18 @@ public class MainController implements Initializable {
         mouseFunction = new MouseFunctionController(1, new BotsAdder(botsController, random)); // slider для контроля за этим идеально подходит
         sliderWidthBrush.valueProperty().addListener((observable, oldValue, newValue) -> {
             mouseFunction.setWidthBrush(newValue.intValue());
+        });
+
+        SPenergyPerTik.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Bot.maxEnergy, Bot.energyPerTik));
+        SPminEnergyReproduction.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Bot.maxEnergy, Bot.minEnergyReproduction));
+        SPmaxBotEnergy.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, Bot.maxEnergy));
+
+        SPenergyPerTik.valueProperty().addListener((observable, oldValue, newValue) -> {Bot.energyPerTik = newValue;});
+        SPminEnergyReproduction.valueProperty().addListener((observable, oldValue, newValue) -> {Bot.minEnergyReproduction = newValue;});
+        SPmaxBotEnergy.valueProperty().addListener((observable, oldValue, newValue) -> {
+            Bot.maxEnergy = newValue;
+            SPenergyPerTik.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Bot.maxEnergy, Bot.energyPerTik));
+            SPminEnergyReproduction.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Bot.maxEnergy, Bot.minEnergyReproduction));
         });
 
         TileMap.getInstance(canvas);
