@@ -117,7 +117,7 @@
                               <Slider fx:id="sliderWidthBrush" min="1.0" prefHeight="33.0" prefWidth="243.0" showTickLabels="true" value="1.0" />
                            </children>
                         </HBox>
-                        <HBox prefHeight="98.0" prefWidth="349.0">
+                        <HBox prefHeight="78.0" prefWidth="349.0">
                            <children>
                               <VBox prefHeight="180.0" prefWidth="139.0">
                                  <children>
@@ -144,7 +144,7 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                            <children>
                               <VBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="77.0" spacing="3.0">
                                  <children>
