@@ -12,16 +12,16 @@ public class MouseFunctionController {
     public void changeTiles(Tile tile){
         int leftBorder, rightBorder, topBorder, downBorder;
 
-        leftBorder = tile.getCx() - widthBrush;
+        leftBorder = tile.getCx() - widthBrush / 2;
         if(leftBorder < 0) leftBorder = 0;
 
-        topBorder = tile.getCy() - widthBrush;
+        topBorder = tile.getCy() - widthBrush / 2;
         if(topBorder < 0) topBorder = 0;
 
-        rightBorder = tile.getCx() + widthBrush;
+        rightBorder = tile.getCx() + widthBrush / 2;
         if(rightBorder > TileMap.getInstance().getCountColumns() - 1) rightBorder = TileMap.getInstance().getCountColumns() - 1;
 
-        downBorder = tile.getCy() + widthBrush;
+        downBorder = tile.getCy() + widthBrush / 2;
         if(downBorder > TileMap.getInstance().getCountRows() - 1) downBorder = TileMap.getInstance().getCountRows() - 1;
 
         for(int cX = leftBorder; cX <= rightBorder; cX++){
