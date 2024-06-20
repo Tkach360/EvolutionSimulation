@@ -156,9 +156,9 @@ public class Bot extends UpdatableTileObject{
         int b = 0;
         for(EnergySource i : edible){
             switch (i){
-                case PHOTOSYNTHESIS: g += 51; break;
-                case SOIL: b += 51; break;
-                case PREDATION: r += 51; break;
+                case PHOTOSYNTHESIS: g += 63; break;
+                case SOIL: b += 63; break;
+                case PREDATION: r += 63; break;
             }
         }
 
