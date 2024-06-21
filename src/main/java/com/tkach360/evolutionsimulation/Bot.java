@@ -216,13 +216,13 @@ public class Bot extends UpdatableTileObject{
     }
 
     public void consumeSoil(){
-        changeEnergy(getEnergyFromSource(this.tile.getSoilEnergy(), soil));
+        changeEnergy(getEnergyFromSource(this.tile.getSoilEnergy() + 10, soil));
         this.tile.setSoilEnergy(0);
         updateColor(EnergySource.SOIL);
     }
 
     public void eat(Bot bot){
-        changeEnergy(getEnergyFromSource(bot.getEnergy() / 10, predation));
+        changeEnergy(getEnergyFromSource(bot.getEnergy() / 10 + 5, predation));
         Tile tile = bot.getTile();
         bot.die();
         changeTile(tile);
@@ -262,11 +262,12 @@ public class Bot extends UpdatableTileObject{
 
     // TODO: нужно доделать механику размножения с учетом алгоритма поведения
     public void produceNewBot(Tile tile){
+        System.out.println("родила"); //////
         Random random = new Random();
 
         Bot newBot = new Bot(
                 tile,
-                this.behavior.copyWitchChange(0, 0.3),
+                this.behavior.copyWitchChange(0, 0.2),
                 Direction.getRandom(random),
                 this.color,
                 minEnergyReproduction,
