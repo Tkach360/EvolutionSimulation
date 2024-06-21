@@ -23,7 +23,7 @@ public class TileMap {
 //      заполняем мировое поле тайлами
         for(int i=0;i<countColumns;i++){
             for(int j=0;j<countRows;j++){
-                this.tiles[i][j] = new Tile(i, j, 2, 10); // TODO: изменить
+                this.tiles[i][j] = new Tile(i, j, 2, 4); // TODO: изменить
             }
         }
     }

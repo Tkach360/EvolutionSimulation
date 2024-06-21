@@ -1,6 +1,5 @@
 package com.tkach360.evolutionsimulation;
 
-import com.tkach360.evolutionsimulation.neuralnetwork.NuralNetworkTest;
 import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
@@ -60,7 +59,7 @@ public class Bot extends UpdatableTileObject{
     public Bot(Tile tile, Random random){
         super(tile, TypeTileObject.Bot);
         this.tile = tile;
-        this.behavior = new NuralNetworkTest(); //TODO изменить при дорпботке механизма неследования поведения
+        this.behavior = new NeuralNetwork(); //TODO изменить при дорпботке механизма неследования поведения
         this.direction = Direction.getRandom(random);
         this.color = PHOTOSYNTHESIS_COLOR;
         this.energy = defaultEnergy;
@@ -257,7 +256,7 @@ public class Bot extends UpdatableTileObject{
             if (this.old == 100) die();
             this.old++;
         }
-        //if(this.behavior instanceof NuralNetworkTest) ((NuralNetworkTest) this.behavior).getPerceptronNetwork().mutate(0.1, 0.1);
+        //if(this.behavior instanceof NeuralNetwork) ((NeuralNetwork) this.behavior).getPerceptronNetwork().mutate(0.1, 0.1);
     }
 
     // TODO: нужно доделать механику размножения с учетом алгоритма поведения

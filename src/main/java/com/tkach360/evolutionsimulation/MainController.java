@@ -61,7 +61,7 @@ public class MainController implements Initializable {
     private Timeline timeline;
     private Random random;
 
-    private UpdatableTileObjectsController botsController;
+    private UpdatableTileObjectsController updatableTileObjectsController;
     private UpdateController updateController;
     private MouseFunctionController mouseFunction;
 
@@ -70,7 +70,7 @@ public class MainController implements Initializable {
 
         random = new Random();
         currentTimeRate = 1.0;
-        mouseFunction = new MouseFunctionController(1, new BotsAdder(botsController, random)); // slider для контроля за этим идеально подходит
+        mouseFunction = new MouseFunctionController(1, new BotsAdder(updatableTileObjectsController, random)); // slider для контроля за этим идеально подходит
         sliderWidthBrush.valueProperty().addListener((observable, oldValue, newValue) -> {
             mouseFunction.setWidthBrush(newValue.intValue());
         });
@@ -90,16 +90,16 @@ public class MainController implements Initializable {
         });
 
         TileMap.getInstance(canvas);
-        botsController = new UpdatableTileObjectsControllerWithArray(TileMap.getInstance().getCountTiles());
+        updatableTileObjectsController = new UpdatableTileObjectsControllerWithArray(TileMap.getInstance().getCountTiles());
 
         updateController = new UpdateController(
                 new DefaultVisorStrategy(
                         canvas.getGraphicsContext2D(),
-                        botsController,
+                        updatableTileObjectsController,
                         TileMap.getInstance(),
                         new DefaultBotPainter(),
                         new DefaultLightPainter()),
-                botsController
+                updatableTileObjectsController
         );
 
         timeline = new Timeline(new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
@@ -156,9 +156,7 @@ public class MainController implements Initializable {
         if(tX >= TileMap.getInstance().getCountColumns() || tY >= TileMap.getInstance().getCountRows()) return;
 
         mouseFunction.changeTiles(TileMap.getInstance().getTiles()[tX][tY]);
-        updateController.getVisorStrategy().drawAll();
-        updateController.recalculateObjects();
-        updateTable();
+        updateView();
     }
 
     @FXML
@@ -202,7 +200,7 @@ public class MainController implements Initializable {
         RBsetDefaultVisor.setOnAction(actionEvent -> {updateController.updateVisor(
                 new DefaultVisorStrategy(
                         canvas.getGraphicsContext2D(),
-                        botsController,
+                        updatableTileObjectsController,
                         TileMap.getInstance(),
                         new DefaultBotPainter(),
                         new DefaultLightPainter()));});
@@ -210,7 +208,7 @@ public class MainController implements Initializable {
         RBwithoutLightingVisor.setOnAction(actionEvent -> {updateController.updateVisor(
                 new DefaultVisorStrategy(
                         canvas.getGraphicsContext2D(),
-                        botsController,
+                        updatableTileObjectsController,
                         TileMap.getInstance(),
                         new DefaultBotPainter(),
                         new WithoutLightPainter()));});
@@ -234,7 +232,7 @@ public class MainController implements Initializable {
         RBviewBot.setToggleGroup(functionsToggle);
         RBviewTile.setToggleGroup(functionsToggle);
 
-        RBaddBot.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new BotsAdder(botsController, random)));
+        RBaddBot.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new BotsAdder(updatableTileObjectsController, random)));
         RBdelBot.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new BotsDeleter())); // TODO: изменить размер кисти
         RBaddLight.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new LightAdder(1)));
         RBdelLight.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new LightAdder(-1)));
@@ -252,6 +250,22 @@ public class MainController implements Initializable {
     @FXML
     private void showGraphEdible() {
         this.graphEdible.show();
+    }
+
+    @FXML
+    private void randomFill(){
+        for(Tile[] row : TileMap.getInstance().getTiles()){
+            for(Tile tile : row){
+                if(random.nextInt(3) == 1 && tile.getAbstractTileObject() == null) updatableTileObjectsController.add(new Bot(tile, random), 0);
+            }
+        }
+        updateView();
+    }
+
+    private void updateView(){
+        updateController.getVisorStrategy().drawAll();
+        updateController.recalculateObjects();
+        updateTable();
     }
 
 }

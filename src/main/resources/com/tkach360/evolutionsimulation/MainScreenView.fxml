@@ -117,6 +117,7 @@
                               <Slider fx:id="sliderWidthBrush" min="1.0" prefHeight="33.0" prefWidth="243.0" showTickLabels="true" value="1.0" />
                            </children>
                         </HBox>
+                        <Button mnemonicParsing="false" onAction="#randomFill" prefHeight="26.0" prefWidth="162.0" text="Случайное заполнение" />
                         <HBox prefHeight="78.0" prefWidth="349.0">
                            <children>
                               <VBox prefHeight="180.0" prefWidth="139.0">
