@@ -1,5 +1,6 @@
 package com.tkach360.evolutionsimulation;
 
+import com.tkach360.evolutionsimulation.neuralnetwork.NuralNetworkTest;
 import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
@@ -23,6 +24,8 @@ public class Bot extends UpdatableTileObject{
     public static int defaultEnergy = minEnergyReproduction;
     /** показатель того, на сколько параметры потомка могут отличаться от параметров родителя */
     public static int mutationSpread = 1;
+    /** максимальный возраст бота (если -1 то без старости) */
+    public static int maxOld = 100;
 
     /** устанавливается если последним источником энергии бота был фотосинтез */
     public static final Color PHOTOSYNTHESIS_COLOR = Color.rgb(0, 210, 0);
@@ -38,6 +41,7 @@ public class Bot extends UpdatableTileObject{
     private int predation;
     private int photosynthesis;
     private int soil;
+    private int old;
 
     private ArrayList<EnergySource> edible = new ArrayList<>(Arrays.asList(EnergySource.PHOTOSYNTHESIS, EnergySource.PHOTOSYNTHESIS, EnergySource.PHOTOSYNTHESIS, EnergySource.PHOTOSYNTHESIS)); // список последних пяти источников энергии 0 - фотосинтез, 1 - почва, 2 - хищничество
 
@@ -56,7 +60,7 @@ public class Bot extends UpdatableTileObject{
     public Bot(Tile tile, Random random){
         super(tile, TypeTileObject.Bot);
         this.tile = tile;
-        this.behavior = new TestBehavior(); //TODO изменить при дорпботке механизма неследования поведения
+        this.behavior = new NuralNetworkTest(); //TODO изменить при дорпботке механизма неследования поведения
         this.direction = Direction.getRandom(random);
         this.color = PHOTOSYNTHESIS_COLOR;
         this.energy = defaultEnergy;
@@ -67,7 +71,7 @@ public class Bot extends UpdatableTileObject{
         tile.setAbstractTileObject(this);
     }
 
-    private void move(int tileIndex){
+    private void tryMove(int tileIndex){
         Tile tileForward = getTileInVisibleArea(tileIndex);
         if(tileForward.getAbstractTileObject() == null){
             changeTile(tileForward);
@@ -131,20 +135,20 @@ public class Bot extends UpdatableTileObject{
     // TODO: этот метод отвечает за принятие решения о действии и собственно действии
     public void update(){
         switch(behavior.decide(this)){
-            case 0: move(0); break;
-            case 1: move(1); break;
-            case 2: move(2); break;
-            case 3: rotateLeft(); break;
-            case 4: rotateRight(); break;
-            case 5: rotateDown(); break;
-            case 6: photosynthesize(); updateColor(EnergySource.PHOTOSYNTHESIS); break;
-            case 7: consumeSoil(); updateColor(EnergySource.SOIL); break;
-            case 8: eat((Bot)getTileInVisibleArea(0).getAbstractTileObject()); updateColor(EnergySource.PREDATION); break;
-            case 9: eat((Bot)getTileInVisibleArea(1).getAbstractTileObject()); updateColor(EnergySource.PREDATION); break;
-            case 10: eat((Bot)getTileInVisibleArea(2).getAbstractTileObject()); updateColor(EnergySource.PREDATION); break;
-            case 11: produceNewBot(getTileInVisibleArea(0)); break;
-            case 12: produceNewBot(getTileInVisibleArea(1)); break;
-            case 13: produceNewBot(getTileInVisibleArea(2)); break;
+            case MOVE_0: tryMove(0); break;
+            case MOVE_1: tryMove(1); break;
+            case MOVE_2: tryMove(2); break;
+            case ROTATE_LEFT: rotateLeft(); break;
+            case ROTATE_RIGHT: rotateRight(); break;
+            case ROTATE_DOWN: rotateDown(); break;
+            case PHOTOSYNTHESIZE: photosynthesize(); break;
+            case CONSUME_SOIL: consumeSoil(); break;
+            case EAT_0: tryEat(0); break;
+            case EAT_1: tryEat(1); break;
+            case EAT_2: tryEat(2); break;
+            case PRODUCE_0: tryProduceNewBot(0); break;
+            case PRODUCE_1: tryProduceNewBot(1); break;
+            case PRODUCE_2: tryProduceNewBot(2); break;
         }
 
         updateState();
@@ -208,11 +212,13 @@ public class Bot extends UpdatableTileObject{
 
     public void photosynthesize(){
         changeEnergy(getEnergyFromSource(this.tile.getLighting(), photosynthesis));
+        updateColor(EnergySource.PHOTOSYNTHESIS);
     }
 
     public void consumeSoil(){
         changeEnergy(getEnergyFromSource(this.tile.getSoilEnergy(), soil));
         this.tile.setSoilEnergy(0);
+        updateColor(EnergySource.SOIL);
     }
 
     public void eat(Bot bot){
@@ -220,6 +226,19 @@ public class Bot extends UpdatableTileObject{
         Tile tile = bot.getTile();
         bot.die();
         changeTile(tile);
+        updateColor(EnergySource.PREDATION);
+    }
+
+    public void tryEat(int index){
+        Tile tile = getTileInVisibleArea(index);
+
+        if(tile.getAbstractTileObject() != null){
+            if(tile.getAbstractTileObject().getType() == TypeTileObject.Bot) {
+                eat((Bot)tile.getAbstractTileObject());
+            }
+            else tryMove(index);
+        }
+        else tryMove(index);
     }
 
     private int getEnergyFromSource(int source, int efficiency){
@@ -233,6 +252,12 @@ public class Bot extends UpdatableTileObject{
     private void updateState(){
         changeEnergy(-energyPerTik);
         if(this.energy == 0) die();
+
+        if(maxOld != -1) {
+            if (this.old == 100) die();
+            this.old++;
+        }
+        //if(this.behavior instanceof NuralNetworkTest) ((NuralNetworkTest) this.behavior).getPerceptronNetwork().mutate(0.1, 0.1);
     }
 
     // TODO: нужно доделать механику размножения с учетом алгоритма поведения
@@ -241,7 +266,7 @@ public class Bot extends UpdatableTileObject{
 
         Bot newBot = new Bot(
                 tile,
-                this.behavior.copyWitchChange(mutationSpread, random),
+                this.behavior.copyWitchChange(0, 0.3),
                 Direction.getRandom(random),
                 this.color,
                 minEnergyReproduction,
@@ -251,6 +276,12 @@ public class Bot extends UpdatableTileObject{
         );
 
         this.updatableObjectNode.registerNewObject(newBot);
+        this.energy -= minEnergyReproduction;
+    }
+
+    public void tryProduceNewBot(int index){
+        Tile tile = getTileInVisibleArea(index);
+        if(tile.getAbstractTileObject() == null && this.energy > minEnergyReproduction) produceNewBot(tile);
     }
 
     public void die(){

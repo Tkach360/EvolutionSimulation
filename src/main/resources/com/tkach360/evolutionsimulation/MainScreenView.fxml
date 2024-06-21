@@ -151,6 +151,7 @@
                                     <Spinner fx:id="SPenergyPerTik" prefHeight="26.0" prefWidth="98.0" />
                                     <Spinner fx:id="SPminEnergyReproduction" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="102.0" />
                                     <Spinner fx:id="SPmaxBotEnergy" layoutX="10.0" layoutY="36.0" prefHeight="26.0" prefWidth="125.0" />
+                                    <Spinner fx:id="SPmaxBotOld" layoutX="10.0" layoutY="69.0" prefHeight="26.0" prefWidth="125.0" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="97.0" prefWidth="195.0" spacing="10.0">
@@ -158,6 +159,7 @@
                                     <Label prefHeight="18.0" prefWidth="197.0" text="Трата энергии за тик" textFill="WHITE" />
                                     <Label prefHeight="18.0" prefWidth="205.0" text="Мин. энергия для размножения" textFill="WHITE" />
                                     <Label prefHeight="18.0" prefWidth="217.0" text="Макс. энергия бота" textFill="WHITE" />
+                                    <Label layoutX="10.0" layoutY="68.0" prefHeight="18.0" prefWidth="217.0" text="Макс. возраст бота" textFill="WHITE" />
                                  </children></VBox>
                            </children>
                         </HBox>

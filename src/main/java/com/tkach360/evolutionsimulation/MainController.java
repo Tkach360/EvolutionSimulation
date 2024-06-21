@@ -47,6 +47,7 @@ public class MainController implements Initializable {
     @FXML private Spinner<Integer> SPenergyPerTik;
     @FXML private Spinner<Integer> SPminEnergyReproduction;
     @FXML private Spinner<Integer> SPmaxBotEnergy;
+    @FXML private Spinner<Integer> SPmaxBotOld;
 
     private final double MIN_TIME_SPEED = 0.25;
     private final double DEFAULT_TIME_SPEED = 1.0;
@@ -77,7 +78,9 @@ public class MainController implements Initializable {
         SPenergyPerTik.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Bot.maxEnergy, Bot.energyPerTik));
         SPminEnergyReproduction.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Bot.maxEnergy, Bot.minEnergyReproduction));
         SPmaxBotEnergy.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, Bot.maxEnergy));
+        SPmaxBotOld.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 1000, Bot.maxOld));
 
+        SPmaxBotOld.valueProperty().addListener((observable, oldValue, newValue) -> {Bot.maxOld = newValue;});
         SPenergyPerTik.valueProperty().addListener((observable, oldValue, newValue) -> {Bot.energyPerTik = newValue;});
         SPminEnergyReproduction.valueProperty().addListener((observable, oldValue, newValue) -> {Bot.minEnergyReproduction = newValue;});
         SPmaxBotEnergy.valueProperty().addListener((observable, oldValue, newValue) -> {
