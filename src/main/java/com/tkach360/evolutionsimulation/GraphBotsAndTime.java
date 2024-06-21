@@ -19,16 +19,15 @@ public class GraphBotsAndTime {
     private Series series;
 
     protected int xAxisUpperBound;
-    protected int xAxisLowerBound;
+    protected int showXAxisRange;
 
     public GraphBotsAndTime(String graphName, double width, double height, int showXAxisRange, int xTick, int yMinUpperBound, int yTick) {
 
         this.xAxis = new NumberAxis();
         this.xAxis.setLabel("Время");
-        this.xAxisLowerBound = 0;
-        this.xAxisUpperBound = showXAxisRange;
-        this.xAxis.setUpperBound(this.xAxisUpperBound);
-        this.xAxis.setLowerBound(this.xAxisLowerBound);
+        this.showXAxisRange = showXAxisRange;
+        this.xAxis.setUpperBound(showXAxisRange);
+        this.xAxis.setLowerBound(0);
         this.xAxis.setAutoRanging(false);
         this.xAxis.setTickUnit(xTick);
 
@@ -62,9 +61,9 @@ public class GraphBotsAndTime {
             yMinUpperBound = count;
         }
 
-        if (this.series.getData().size() > xAxisUpperBound) {
-            this.xAxis.setLowerBound(xAxisLowerBound++);
-            this.xAxis.setUpperBound(xAxisUpperBound++);
+        if (this.series.getData().size() > showXAxisRange) {
+            this.xAxis.setUpperBound(this.xAxis.getUpperBound() + 1);
+            this.xAxis.setLowerBound(this.xAxis.getLowerBound() + 1);
             this.series.getData().removeFirst();
         }
     }
