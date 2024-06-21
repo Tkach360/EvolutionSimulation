@@ -18,7 +18,7 @@ public class Bot extends UpdatableTileObject{
     /** энергия, оставляемая ботом в почве после смерти */
     public static int residualEnergyInSoil = 1;
     /** минимальная энергия необходимая для размножения, она передается потомку */
-    public static int minEnergyReproduction = 50;
+    public static int minEnergyReproduction = 10;
     /** начальное количество энергии бота */
     public static int defaultEnergy = minEnergyReproduction;
     /** показатель того, на сколько параметры потомка могут отличаться от параметров родителя */
@@ -215,13 +215,13 @@ public class Bot extends UpdatableTileObject{
     }
 
     public void consumeSoil(){
-        changeEnergy(getEnergyFromSource(this.tile.getSoilEnergy() + 10, soil));
+        changeEnergy(getEnergyFromSource(this.tile.getSoilEnergy(), soil));
         this.tile.setSoilEnergy(0);
         updateColor(EnergySource.SOIL);
     }
 
     public void eat(Bot bot){
-        changeEnergy(getEnergyFromSource(bot.getEnergy() / 10 + 5, predation));
+        changeEnergy(getEnergyFromSource(bot.getEnergy() / 10, predation));
         Tile tile = bot.getTile();
         bot.die();
         changeTile(tile);
@@ -261,7 +261,6 @@ public class Bot extends UpdatableTileObject{
 
     // TODO: нужно доделать механику размножения с учетом алгоритма поведения
     public void produceNewBot(Tile tile){
-        System.out.println("родила"); //////
         Random random = new Random();
 
         Bot newBot = new Bot(

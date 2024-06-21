@@ -64,7 +64,7 @@ public class GraphBotsAndTime {
         if (this.series.getData().size() > showXAxisRange) {
             this.xAxis.setUpperBound(this.xAxis.getUpperBound() + 1);
             this.xAxis.setLowerBound(this.xAxis.getLowerBound() + 1);
-            this.series.getData().removeFirst();
+            //this.series.getData().removeFirst();
         }
     }
 

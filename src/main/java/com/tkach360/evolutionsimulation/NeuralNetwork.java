@@ -9,7 +9,7 @@ public class NeuralNetwork implements IBehavior {
     private PerceptronNetwork perceptronNetwork;
 
     public NeuralNetwork() {
-        this.perceptronNetwork = new PerceptronNetwork(9, 9, 9, 14);
+        this.perceptronNetwork = new PerceptronNetwork(9, 15, 15, 14);
         this.perceptronNetwork.mutate(0, 0.5);
     }
 
