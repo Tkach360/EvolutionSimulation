@@ -96,7 +96,7 @@ public class Bot extends UpdatableTileObject{
     public ArrayList<Tile> getTilesInVisibleArea(){
         ArrayList<Tile> tiles = new ArrayList<Tile>();
 
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 6; i++){
             Tile tile = getTileInVisibleArea(i);
             tiles.add(tile);
         }

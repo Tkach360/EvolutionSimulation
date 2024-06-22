@@ -9,7 +9,7 @@ public class NeuralNetwork implements IBehavior {
     private PerceptronNetwork perceptronNetwork;
 
     public NeuralNetwork() {
-        this.perceptronNetwork = new PerceptronNetwork(9, 15, 15, 14);
+        this.perceptronNetwork = new PerceptronNetwork(13, 15, 15, 14);
         this.perceptronNetwork.mutate(0, 0.5);
     }
 
@@ -19,7 +19,7 @@ public class NeuralNetwork implements IBehavior {
 
     @Override
     public Decide decide(Bot bot) {
-        double[] inputData = new double[9];
+        double[] inputData = new double[13];
         ArrayList<Tile> tiles = bot.getTilesInVisibleArea();
 
         if(tiles.get(0).getAbstractTileObject() == null) inputData[0] = (double)bot.getTile().getSoilEnergy() / 10;
@@ -31,13 +31,21 @@ public class NeuralNetwork implements IBehavior {
         if(tiles.get(2).getAbstractTileObject() == null) inputData[2] = (double)bot.getTile().getSoilEnergy() / 10;
         else inputData[2] = 1.0;
 
-        inputData[3] = (double)tiles.get(0).getLighting() / 10;
-        inputData[4] = (double)tiles.get(1).getLighting() / 10;
-        inputData[5] = (double)tiles.get(2).getLighting() / 10;
+        if(tiles.get(3).getAbstractTileObject() == null) inputData[2] = (double)bot.getTile().getSoilEnergy() / 10;
+        else inputData[3] = 1.0;
 
-        inputData[6] = bot.getEnergy();
-        inputData[7] = bot.getTile().getLighting();
-        inputData[8] = bot.getTile().getSoilEnergy();
+        if(tiles.get(5).getAbstractTileObject() == null) inputData[2] = (double)bot.getTile().getSoilEnergy() / 10;
+        else inputData[4] = 1.0;
+
+        inputData[5] = (double)tiles.get(0).getLighting() / 10;
+        inputData[6] = (double)tiles.get(1).getLighting() / 10;
+        inputData[7] = (double)tiles.get(2).getLighting() / 10;
+        inputData[8] = (double)tiles.get(3).getLighting() / 10;
+        inputData[9] = (double)tiles.get(5).getLighting() / 10;
+
+        inputData[10] = bot.getEnergy();
+        inputData[11] = bot.getTile().getLighting();
+        inputData[12] = bot.getTile().getSoilEnergy();
 
         this.perceptronNetwork.process(inputData);
         double[] outputs = this.perceptronNetwork.getOutputs();
