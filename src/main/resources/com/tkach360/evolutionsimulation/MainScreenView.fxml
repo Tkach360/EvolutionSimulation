@@ -117,18 +117,12 @@
                               <Slider fx:id="sliderWidthBrush" min="1.0" prefHeight="33.0" prefWidth="243.0" showTickLabels="true" value="1.0" />
                            </children>
                         </HBox>
-                        <Button mnemonicParsing="false" onAction="#randomFill" prefHeight="26.0" prefWidth="162.0" text="Случайное заполнение" />
+                        <Button mnemonicParsing="false" onAction="#randomFill" prefHeight="26.0" prefWidth="162.0" text="Случайное заполнение">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin></Button>
                         <HBox prefHeight="78.0" prefWidth="349.0">
                            <children>
-                              <VBox prefHeight="180.0" prefWidth="139.0">
-                                 <children>
-                                    <RadioButton fx:id="RBviewBot" mnemonicParsing="false" text="просмотр бота" textFill="WHITE" />
-                                    <RadioButton fx:id="RBviewTile" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="просмотр тайла" textFill="WHITE" />
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="2.0" />
-                                 </HBox.margin>
-                              </VBox>
                               <VBox prefHeight="180.0" prefWidth="96.0">
                                  <children>
                                     <RadioButton fx:id="RBaddBot" mnemonicParsing="false" text="+ бот" textFill="WHITE" />
@@ -143,6 +137,7 @@
                                     <RadioButton fx:id="RBdelSoilEnergy" layoutX="10.0" layoutY="45.0" mnemonicParsing="false" text="- энергия почвы" textFill="WHITE" />
                                  </children>
                               </VBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #353535" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
