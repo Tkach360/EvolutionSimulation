@@ -26,4 +26,31 @@ public enum Direction {
             case RIGHT -> new int[][]{{1, 1, 1, 0, 0, 0, -1, -1, -1}, {-1, 0, 1, -1, 0, 1, -1, 0, 1}};
         };
     }
+
+    public Direction rotateLeft(){
+        return switch (this){
+            case UP -> Direction.LEFT;
+            case LEFT -> Direction.DOWN;
+            case DOWN -> Direction.RIGHT;
+            case RIGHT -> Direction.UP;
+        };
+    }
+
+    public Direction rotateRight(){
+        return switch (this){
+            case UP -> Direction.RIGHT;
+            case LEFT -> Direction.UP;
+            case DOWN -> Direction.LEFT;
+            case RIGHT -> Direction.DOWN;
+        };
+    }
+
+    public Direction rotateDown(){
+        return switch (this){
+            case UP -> Direction.DOWN;
+            case LEFT -> Direction.RIGHT;
+            case DOWN -> Direction.UP;
+            case RIGHT -> Direction.LEFT;
+        };
+    }
 }

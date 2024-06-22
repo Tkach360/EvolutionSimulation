@@ -9,7 +9,7 @@ public class NeuralNetwork implements IBehavior {
     private PerceptronNetwork perceptronNetwork;
 
     public NeuralNetwork() {
-        this.perceptronNetwork = new PerceptronNetwork(13, 15, 15, 14);
+        this.perceptronNetwork = new PerceptronNetwork(13, 15, 15, 23);
         this.perceptronNetwork.mutate(0, 0.5);
     }
 
@@ -75,10 +75,19 @@ public class NeuralNetwork implements IBehavior {
             case 8 -> Decide.EAT_0;
             case 9 -> Decide.EAT_1;
             case 10 -> Decide.EAT_2;
-            case 11 -> Decide.PRODUCE_0;
-            case 12 -> Decide.PRODUCE_1;
-            case 13 -> Decide.PRODUCE_2;
-            default -> Decide.PRODUCE_0;
+            case 11 -> Decide.PRODUCE_0_DOWN;
+            case 12 -> Decide.PRODUCE_0_LEFT;
+            case 13 -> Decide.PRODUCE_0_RIGHT;
+            case 14 -> Decide.PRODUCE_0_UP;
+            case 15 -> Decide.PRODUCE_1_DOWN;
+            case 16 -> Decide.PRODUCE_1_LEFT;
+            case 17 -> Decide.PRODUCE_1_RIGHT;
+            case 18 -> Decide.PRODUCE_1_UP;
+            case 19 -> Decide.PRODUCE_2_DOWN;
+            case 20 -> Decide.PRODUCE_2_LEFT;
+            case 21 -> Decide.PRODUCE_2_RIGHT;
+            case 22 -> Decide.PRODUCE_2_UP;
+            default -> throw new IllegalStateException("Unexpected value: " + numMax);
         };
 
         /*if(outputs[0] < 0.33){

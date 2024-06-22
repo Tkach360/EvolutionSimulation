@@ -33,7 +33,7 @@ public class Bot extends UpdatableTileObject{
     /** устанавливается если последним источником энергии бота была энергия почвы */
     public static final Color SOIL_COLOR = Color.rgb(0, 0, 210);
 
-    private final IBehavior behavior;
+    private IBehavior behavior;
     private Direction direction;
     private Color color; // бот получает цвет в зависимости от последнего источника энергии
     private int energy;
@@ -78,18 +78,20 @@ public class Bot extends UpdatableTileObject{
     }
 
     public Tile getTileInVisibleArea(int index){
+        if(this.tile != null) {
+            int[][] arrayBias = Direction.getArrayVisibleAreaBias(this.direction);
 
-        int[][] arrayBias = Direction.getArrayVisibleAreaBias(this.direction);
+            int tX = this.tile.getCx() + arrayBias[0][index];
+            int tY = this.tile.getCy() + arrayBias[1][index];
 
-        int tX = this.tile.getCx() + arrayBias[0][index];
-        int tY = this.tile.getCy() + arrayBias[1][index];
+            if (tX > TileMap.getInstance().getCountColumns() - 1) tX = 0;
+            if (tY > TileMap.getInstance().getCountRows() - 1) tY = 0;
+            if (tX < 0) tX = TileMap.getInstance().getCountColumns() - 1;
+            if (tY < 0) tY = TileMap.getInstance().getCountRows() - 1;
 
-        if(tX > TileMap.getInstance().getCountColumns() - 1) tX = 0;
-        if(tY > TileMap.getInstance().getCountRows() - 1) tY = 0;
-        if(tX < 0) tX = TileMap.getInstance().getCountColumns() - 1;
-        if(tY < 0) tY = TileMap.getInstance().getCountRows() - 1;
-
-        return TileMap.getInstance().getTiles()[tX][tY];
+            return TileMap.getInstance().getTiles()[tX][tY];
+        }
+        else return TileMap.getInstance().getTiles()[0][0];
     }
 
     /** возвращает список трех тайлов перед ботом */
@@ -137,17 +139,26 @@ public class Bot extends UpdatableTileObject{
             case MOVE_0: tryMove(0); break;
             case MOVE_1: tryMove(1); break;
             case MOVE_2: tryMove(2); break;
-            case ROTATE_LEFT: rotateLeft(); break;
-            case ROTATE_RIGHT: rotateRight(); break;
-            case ROTATE_DOWN: rotateDown(); break;
+            case ROTATE_LEFT: setDirection(this.direction.rotateLeft()); break;
+            case ROTATE_RIGHT: setDirection(this.direction.rotateRight()); break;
+            case ROTATE_DOWN: setDirection(this.direction.rotateDown()); break;
             case PHOTOSYNTHESIZE: photosynthesize(); break;
             case CONSUME_SOIL: consumeSoil(); break;
             case EAT_0: tryEat(0); break;
             case EAT_1: tryEat(1); break;
             case EAT_2: tryEat(2); break;
-            case PRODUCE_0: tryProduceNewBot(0); break;
-            case PRODUCE_1: tryProduceNewBot(1); break;
-            case PRODUCE_2: tryProduceNewBot(2); break;
+            case PRODUCE_0_DOWN: tryProduceNewBot(0, this.direction.rotateDown()); break;
+            case PRODUCE_0_LEFT: tryProduceNewBot(0, this.direction.rotateLeft()); break;
+            case PRODUCE_0_RIGHT: tryProduceNewBot(0, this.direction.rotateRight()); break;
+            case PRODUCE_0_UP: tryProduceNewBot(0, this.direction); break;
+            case PRODUCE_1_DOWN: tryProduceNewBot(1, this.direction.rotateDown()); break;
+            case PRODUCE_1_LEFT: tryProduceNewBot(1, this.direction.rotateLeft()); break;
+            case PRODUCE_1_RIGHT: tryProduceNewBot(1, this.direction.rotateRight()); break;
+            case PRODUCE_1_UP: tryProduceNewBot(1, this.direction); break;
+            case PRODUCE_2_DOWN: tryProduceNewBot(2, this.direction.rotateDown()); break;
+            case PRODUCE_2_LEFT: tryProduceNewBot(2, this.direction.rotateLeft()); break;
+            case PRODUCE_2_RIGHT: tryProduceNewBot(2, this.direction.rotateRight()); break;
+            case PRODUCE_2_UP: tryProduceNewBot(2, this.direction); break;
         }
 
         updateState();
@@ -182,7 +193,7 @@ public class Bot extends UpdatableTileObject{
         setColor(getColorFromLastEdible());
     }
 
-    private void rotateLeft(){
+    /*private void rotateLeft(){
         switch (this.direction){
             case UP: this.direction = Direction.LEFT; break;
             case LEFT: this.direction = Direction.DOWN; break;
@@ -207,7 +218,7 @@ public class Bot extends UpdatableTileObject{
             case DOWN: this.direction = Direction.UP; break;
             case RIGHT: this.direction = Direction.LEFT; break;
         }
-    }
+    }*/
 
     public void photosynthesize(){
         changeEnergy(getEnergyFromSource(this.tile.getLighting(), photosynthesis));
@@ -260,27 +271,32 @@ public class Bot extends UpdatableTileObject{
     }
 
     // TODO: нужно доделать механику размножения с учетом алгоритма поведения
-    public void produceNewBot(Tile tile){
+    public void produceNewBot(Tile tile, Direction dir){
         Random random = new Random();
 
         Bot newBot = new Bot(
                 tile,
                 this.behavior.copyWitchChange(0, 0.2),
-                Direction.getRandom(random),
+                this.direction,
                 this.color,
                 minEnergyReproduction,
-                NumRangeController.setInRange(this.predation + random.nextInt(-mutationSpread, mutationSpread), 0, 10),
+                /*NumRangeController.setInRange(this.predation + random.nextInt(-mutationSpread, mutationSpread), 0, 10),
                 NumRangeController.setInRange(this.photosynthesis + random.nextInt(-mutationSpread, mutationSpread), 0, 10),
-                NumRangeController.setInRange(this.soil + random.nextInt(-mutationSpread, mutationSpread), 0, 10)
+                NumRangeController.setInRange(this.soil + random.nextInt(-mutationSpread, mutationSpread), 0, 10)*/
+                this.predation,
+                this.photosynthesis,
+                this.soil
+
         );
+        newBot.setDirection(dir);
 
         this.updatableObjectNode.registerNewObject(newBot);
         this.energy -= minEnergyReproduction;
     }
 
-    public void tryProduceNewBot(int index){
+    public void tryProduceNewBot(int index, Direction dir){
         Tile tile = getTileInVisibleArea(index);
-        if(tile.getAbstractTileObject() == null && this.energy > minEnergyReproduction) produceNewBot(tile);
+        if(tile.getAbstractTileObject() == null && this.energy > minEnergyReproduction) produceNewBot(tile, dir);
     }
 
     public void die(){
@@ -340,6 +356,14 @@ public class Bot extends UpdatableTileObject{
 
     public void setEnergy(int energy) {
         this.energy = NumRangeController.setInRange(energy, 0, maxEnergy);
+    }
+
+    public IBehavior getBehavior() {
+        return behavior;
+    }
+
+    public void setBehavior(IBehavior behavior) {
+        this.behavior = behavior;
     }
 
     // TODO: добавить стандартные методы
