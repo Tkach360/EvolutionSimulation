@@ -1,5 +1,7 @@
 package com.tkach360.evolutionsimulation;
 
+import java.io.IOException;
+
 public class MouseFunctionController {
     private int widthBrush;
     private IMouseFunction mouseFunction;
@@ -9,7 +11,7 @@ public class MouseFunctionController {
         this.mouseFunction = mouseFunction;
     }
 
-    public void changeTiles(Tile tile){
+    public void changeTiles(Tile tile) throws IOException, ClassNotFoundException {
         int leftBorder, rightBorder, topBorder, downBorder;
 
         leftBorder = tile.getCx() - widthBrush / 2;

@@ -4,16 +4,16 @@ import com.tkach360.evolutionsimulation.neuralnetwork.PerceptronNetwork;
 
 import java.util.ArrayList;
 
-public class NeuralNetwork implements IBehavior {
+public class NeuralNetworkBehavior implements IBehavior {
 
     private PerceptronNetwork perceptronNetwork;
 
-    public NeuralNetwork() {
+    public NeuralNetworkBehavior() {
         this.perceptronNetwork = new PerceptronNetwork(13, 15, 15, 23);
         this.perceptronNetwork.mutate(0, 0.5);
     }
 
-    public NeuralNetwork(PerceptronNetwork perceptronNetwork) {
+    public NeuralNetworkBehavior(PerceptronNetwork perceptronNetwork) {
         this.perceptronNetwork = perceptronNetwork;
     }
 
@@ -129,7 +129,7 @@ public class NeuralNetwork implements IBehavior {
 
         PerceptronNetwork p = this.perceptronNetwork.copy();
         p.mutate(rate, strength);
-        return new NeuralNetwork(p);
+        return new NeuralNetworkBehavior(p);
     }
 
     public PerceptronNetwork getPerceptronNetwork() {

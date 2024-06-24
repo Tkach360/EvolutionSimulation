@@ -1,6 +1,8 @@
 package com.tkach360.evolutionsimulation.neuralnetwork;
 
-public class HiddenLayer {
+import java.io.Serializable;
+
+public class HiddenLayer implements Serializable {
 
     private double[][] weights;
     private double[] biases;

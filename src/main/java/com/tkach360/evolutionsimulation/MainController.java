@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -28,8 +29,6 @@ public class MainController implements Initializable {
     @FXML private RadioButton RBwithoutLightingVisor;
 
     private ToggleGroup functionsToggle;
-    @FXML private RadioButton RBviewBot;
-    @FXML private RadioButton RBviewTile;
     @FXML private RadioButton RBaddBot;
     @FXML private RadioButton RBdelBot;
     @FXML private RadioButton RBaddSoilEnergy;
@@ -148,7 +147,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void onMouseClicked(MouseEvent e){
+    private void onMouseClicked(MouseEvent e) throws IOException, ClassNotFoundException {
         int tX = (int)(e.getX() / TileMap.TILE_SIDE);
         int tY = (int)(e.getY() / TileMap.TILE_SIDE);
 
@@ -229,8 +228,8 @@ public class MainController implements Initializable {
         RBdelLight.setToggleGroup(functionsToggle);
         RBaddSoilEnergy.setToggleGroup(functionsToggle);
         RBdelSoilEnergy.setToggleGroup(functionsToggle);
-        RBviewBot.setToggleGroup(functionsToggle);
-        RBviewTile.setToggleGroup(functionsToggle);
+        /*RBsaveBot.setToggleGroup(functionsToggle);
+        RBloadBot.setToggleGroup(functionsToggle);*/
 
         RBaddBot.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new BotsAdder(updatableTileObjectsController, random)));
         RBdelBot.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new BotsDeleter())); // TODO: изменить размер кисти
@@ -238,6 +237,8 @@ public class MainController implements Initializable {
         RBdelLight.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new LightAdder(-1)));
         RBaddSoilEnergy.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new SoilEnergyAdder(1)));
         RBdelSoilEnergy.setOnAction(actionEvent -> mouseFunction.setMouseFunction(new SoilEnergyAdder(-1)));
+        /*RBsaveBot.setOnAction(actionEvent -> {mouseFunction.setMouseFunction(new BotsSaver());});
+        RBloadBot.setOnAction(actionEvent -> {mouseFunction.setMouseFunction(new BotsLoader(updatableTileObjectsController, random));});*/
 
         RBaddBot.fire();
     }
