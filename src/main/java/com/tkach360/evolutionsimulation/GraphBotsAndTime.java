@@ -18,7 +18,7 @@ public class GraphBotsAndTime {
     protected LineChart<Number,Number> lineChart;
     private Series series;
 
-    protected int xAxisUpperBound;
+    //protected int xAxisUpperBound;
     protected int showXAxisRange;
 
     public GraphBotsAndTime(String graphName, double width, double height, int showXAxisRange, int xTick, int yMinUpperBound, int yTick) {

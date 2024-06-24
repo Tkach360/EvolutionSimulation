@@ -1,10 +1,12 @@
 package com.tkach360.evolutionsimulation.neuralnetwork;
 
+import java.io.*;
 import java.util.Random;
 
-public class PerceptronNetwork {
+// See https://github.com/AppliedCodingClub/YouTubeVideos
+public class PerceptronNetwork implements Serializable {
 
-    private int mutationCount;
+    private String filename;
 
     private double[][] activations;
     private HiddenLayer[] hiddenLayers;
@@ -58,7 +60,6 @@ public class PerceptronNetwork {
                 for (int j = 0; j < weights[0].length; j++) {
                     if (Math.random() < rate) {
                         weights[i][j] += random.nextGaussian() * strength;
-                        mutationCount++;
                     }
                 }
             }
@@ -67,13 +68,12 @@ public class PerceptronNetwork {
             for (int i = 0; i < biases.length; i++) {
                 if (Math.random() < rate) {
                     biases[i] += random.nextGaussian() * strength;
-                    mutationCount++;
                 }
             }
         }
     }
 
-    public int getActivatedOutput() {
+/*    public int getActivatedOutput() {
         double[] outputs = getOutputs();
         int result = 0;
         double maxOutput = outputs[0];
@@ -86,7 +86,7 @@ public class PerceptronNetwork {
         }
 
         return maxOutput == 0 ? -1 : result;
-    }
+    }*/
 
     public double[] getOutputs() {
         return activations[activations.length - 1];
@@ -108,5 +108,35 @@ public class PerceptronNetwork {
 
         return p;
     }
+
+    /*public NeuralNetworkBehavior(String filename) {
+        this(XmlSerializer.fromXml(new File(filename), PerceptronNetwork.class));
+        this.filename = filename;
+    }*/
+
+    /*public void saveInFile(String filename) throws IOException {
+        FileOutputStream fileOut = new FileOutputStream(filename);
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(this);
+        out.close();
+        fileOut.close();
+    }
+
+    public static PerceptronNetwork load(String filename) throws IOException, ClassNotFoundException {
+        FileInputStream fileIn = new FileInputStream(filename);
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        PerceptronNetwork obj = (PerceptronNetwork) in.readObject();
+        in.close();
+        fileIn.close();
+        return obj;
+    }
+
+    public void clearActivations() {
+        for (int i = 0; i < activations.length; i++) {
+            for (int j = 0; j < activations[i].length; j++) {
+                activations[i][j] = 0;
+            }
+        }
+    }*/
 
 }

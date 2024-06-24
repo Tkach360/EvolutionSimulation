@@ -59,7 +59,7 @@ public class Bot extends UpdatableTileObject{
     public Bot(Tile tile, Random random){
         super(tile, TypeTileObject.Bot);
         this.tile = tile;
-        this.behavior = new NeuralNetwork(); //TODO изменить при дорпботке механизма неследования поведения
+        this.behavior = new NeuralNetworkBehavior(); //TODO изменить при дорпботке механизма неследования поведения
         this.direction = Direction.getRandom(random);
         this.color = PHOTOSYNTHESIS_COLOR;
         this.energy = defaultEnergy;
@@ -94,7 +94,7 @@ public class Bot extends UpdatableTileObject{
         else return TileMap.getInstance().getTiles()[0][0];
     }
 
-    /** возвращает список трех тайлов перед ботом */
+    /** возвращает список тайлов в зоне видимости бота */
     public ArrayList<Tile> getTilesInVisibleArea(){
         ArrayList<Tile> tiles = new ArrayList<Tile>();
 
@@ -246,9 +246,7 @@ public class Bot extends UpdatableTileObject{
             if(tile.getAbstractTileObject().getType() == TypeTileObject.Bot) {
                 eat((Bot)tile.getAbstractTileObject());
             }
-            else tryMove(index);
         }
-        else tryMove(index);
     }
 
     private int getEnergyFromSource(int source, int efficiency){
@@ -267,7 +265,7 @@ public class Bot extends UpdatableTileObject{
             if (this.old == 100) die();
             this.old++;
         }
-        //if(this.behavior instanceof NeuralNetwork) ((NeuralNetwork) this.behavior).getPerceptronNetwork().mutate(0.1, 0.1);
+        //if(this.behavior instanceof NeuralNetworkBehavior) ((NeuralNetworkBehavior) this.behavior).getPerceptronNetwork().mutate(0.1, 0.1);
     }
 
     // TODO: нужно доделать механику размножения с учетом алгоритма поведения
