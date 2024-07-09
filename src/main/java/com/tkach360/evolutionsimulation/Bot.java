@@ -281,10 +281,9 @@ public class Bot extends UpdatableTileObject{
                 /*NumRangeController.setInRange(this.predation + random.nextInt(-mutationSpread, mutationSpread), 0, 10),
                 NumRangeController.setInRange(this.photosynthesis + random.nextInt(-mutationSpread, mutationSpread), 0, 10),
                 NumRangeController.setInRange(this.soil + random.nextInt(-mutationSpread, mutationSpread), 0, 10)*/
-                this.predation,
-                this.photosynthesis,
-                this.soil
-
+                8,
+                8,
+                8
         );
         newBot.setDirection(dir);
 

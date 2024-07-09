@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Main-Class: com.tkach360.evolutionsimulation.Launcher
+Class-Path: javafx-controls-21-ea+24-win.jar javafx-controls-21-ea+24.ja
+ r javafx-fxml-21-ea+24.jar javafx-base-21-ea+24-win.jar javafx-graphics
+ -21-ea+24-win.jar javafx-graphics-21-ea+24.jar javafx-base-21-ea+24.jar
+  javafx-fxml-21-ea+24-win.jar
+
